@@ -1,0 +1,82 @@
+/* You can add global styles to this file, and also import other style files */
+.bg-gradient-primary {
+	height: 100vh;
+}
+
+.custom-control-label {
+	cursor: pointer;
+}
+
+.editable-cancel {
+	background-color: lightgrey !important;
+}
+
+div.editable-error-block {
+  color: red;
+}
+
+div.editable-error-block:before {
+	content: '\f06a';
+	font-family: "Font Awesome 5 Free";
+	font-weight: 900;
+	padding-right: 5px;
+	color:red;
+}
+
+form.editableform div.control-group.form-group {
+	z-index: 100;
+}
+
+.has-error {
+  display: block !important;
+	font-size: 0.8rem;
+}
+
+a {
+	cursor: pointer;
+}
+
+.help-error {
+  color: red;
+  font-size: 0.8rem;
+  padding: 5px;
+}
+
+div.help-error:before {
+	content: '\f06a';
+	font-family: "Font Awesome 5 Free";
+	font-weight: 900;
+	padding: 2px;
+	color:red;
+}
+
+div.help-txt:before {
+	content: '\f06a';
+	font-family: "Font Awesome 5 Free";
+	font-weight: 900;
+	padding: 2px;
+	color: #4e73df;
+}
+
+.display, .datatable {
+	max-width: 100%;
+	font-size: 0.825rem !important;
+}
+
+.datepicker-days {
+	display: block !important;
+}
+
+.input-group-addon {
+	padding: 5px;
+	background-color: #dddfeb !important;
+	font-size: 15px;
+}
+
+.input-daterange input:first-child {
+	border-radius: 10px 0 0 10px;
+}
+
+.input-daterange input:last-child {
+	border-radius: 0 10px 10px 0;
+}
