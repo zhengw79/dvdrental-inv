@@ -12,6 +12,7 @@ import { environment } from "src/environments/environment";
 export class LoginComponent implements OnInit {
 
   loginFormModel: FormGroup;
+  verified_url?: string;
   $: any;
 
   constructor(

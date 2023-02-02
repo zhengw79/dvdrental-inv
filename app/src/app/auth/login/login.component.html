@@ -13,6 +13,12 @@
 							<div class="form-group">
 								<input type="email" class="form-control form-control-user" aria-describedby="emailHelp"
 									placeholder="Enter Email Address..." formControlName="email" />
+								<div *ngIf="email && email.invalid && (email.dirty || email.touched)">
+									<div *ngIf="email.errors?.['required']" class="help-error">Email is required</div>
+									<div *ngIf="email.errors?.['email']" class="help-error">Please enter a valid email address.</div>
+									<div *ngIf="email.errors?.['not_found']" class="help-error">Sorry, we cannot find this email in our system.</div>
+									<div *ngIf="email.errors?.['email_unverified']" class="help-error">Please click <a [routerLink]="[verified_url]">here</a> to verify your email.</div>
+								</div>
 							</div>
 							<div class="form-group">
 								<input type="password" class="form-control form-control-user" id="password" placeholder="Password"
@@ -29,8 +35,10 @@
 							</div>
 							<button type="submit" class="btn btn-primary btn-user btn-block">Login</button>
 							<hr />
-							<a class="btn btn-google btn-user btn-block"><i class="fab fa-google fa-fw"></i>&nbsp;Login with Google</a>
-							<a class="btn btn-facebook btn-user btn-block"><i class="fab fa-facebook-f fa-fw"></i>&nbsp;Login with Facebook</a>
+							<a class="btn btn-google btn-user btn-block"><i class="fab fa-google fa-fw"></i>&nbsp;Login with
+								Google</a>
+							<a class="btn btn-facebook btn-user btn-block"><i class="fab fa-facebook-f fa-fw"></i>&nbsp;Login with
+								Facebook</a>
 						</form>
 						<hr />
 						<div class="text-center">
