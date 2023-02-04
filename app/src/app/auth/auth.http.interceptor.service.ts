@@ -2,6 +2,7 @@ import { HttpErrorResponse, HttpEvent, HttpHandler, HttpRequest } from '@angular
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, Observable, throwError } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -12,9 +13,11 @@ export class AuthHttpInterceptorService {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const bear_token = localStorage.getItem("access_token");
+    const baseUrl = environment.apiUrl;
 
     if(bear_token) {
       req = req.clone({
+        url: `${baseUrl}/${req.url}`,
         responseType: "json",
         setHeaders: {
           Authorization: `Bearer ${bear_token}`

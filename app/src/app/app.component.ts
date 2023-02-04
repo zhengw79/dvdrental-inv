@@ -17,7 +17,7 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     const baseUrl = environment.apiUrl;
     this.httpClient
-      .get<any>(`${baseUrl}/api/_token`)
+      .get<any>(`api/_token`)
       .subscribe(({ _token }) => {
         localStorage.setItem("_csrf", _token);
       });
