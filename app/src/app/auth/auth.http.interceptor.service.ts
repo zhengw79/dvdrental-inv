@@ -15,9 +15,12 @@ export class AuthHttpInterceptorService {
     const bear_token = localStorage.getItem("access_token");
     const baseUrl = environment.apiUrl;
 
+    req = req.clone( {
+      url: `${baseUrl}/${req.url}`
+    });
+
     if(bear_token) {
       req = req.clone({
-        url: `${baseUrl}/${req.url}`,
         responseType: "json",
         setHeaders: {
           Authorization: `Bearer ${bear_token}`

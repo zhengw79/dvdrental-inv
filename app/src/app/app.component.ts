@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +14,6 @@ export class AppComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    const baseUrl = environment.apiUrl;
     this.httpClient
       .get<any>(`api/_token`)
       .subscribe(({ _token }) => {
