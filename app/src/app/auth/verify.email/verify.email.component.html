@@ -1,0 +1,44 @@
+<AuthLayout>
+	<ng-template #child>
+		<!------Nested Row within Card Body -->
+		<div class="row">
+			<div class="col-lg-6 d-none d-lg-block bg-password-image"></div>
+			<div class="col-lg-6" id="emailForm">
+				<div class="p-5">
+					<div class="text-center">
+						<h1 class="h4 text-gray-900 mb-2">
+							Please verify your email
+						</h1>
+						<p>
+							Thanks for registration, we have sent a verified email. If you didn't receive it, just enter your email
+							address and we'll send you a link to verify your email.
+						</p>
+
+						<form class="user" [formGroup]="formModel" (ngSubmit)="onSubmit()">
+							<div class="form-group">
+								<input aria-describedby="emailHelp" class="form-control form-control-user" formControlName="email"
+									placeholder="Enter email address ..." type="email">
+								<div *ngIf="email && email.invalid && (email.dirty || email.touched)">
+									<div *ngIf="email.errors?.['required']" class="help-error">Please enter your email.</div>
+									<div *ngIf="email.errors?.['invalid_email']" class="help-error">Sorry, we cannot find this email.
+									</div>
+								</div>
+								<div *ngIf="email_sent" class="help-txt small p-2">
+									We have sent verification email, please check your email box.
+								</div>
+							</div>
+							<button type="submit" class="btn btn-primary btn-user btn-block">Resent verify email</button>
+						</form>
+						<hr>
+						<div class="text-center">
+							<a class="small" [routerLink]="['/register']">Create an Account!</a>
+						</div>
+						<div class="text-center">
+							<a class="small" [routerLink]="['/login']">Already have an account? Login!</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</ng-template>
+</AuthLayout>

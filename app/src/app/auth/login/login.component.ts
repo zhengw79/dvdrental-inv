@@ -1,6 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from "@angular/router";
 import { BLOCK_CSS } from 'src/app/constants';
 import { environment } from "src/environments/environment";
 
@@ -16,7 +17,8 @@ export class LoginComponent implements OnInit {
   $: any;
 
   constructor(
-    private httpClient: HttpClient
+    private httpClient: HttpClient,
+    private _router: Router
   ) {
     this.loginFormModel = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
@@ -28,12 +30,7 @@ export class LoginComponent implements OnInit {
     this.$ = window.jQuery;
   }
 
-  ngOnInit(): void {
-    const baseUrl = environment.apiUrl;
-    this.httpClient.get<any>(`${baseUrl}/api/_token`).subscribe(data => {
-      console.log(data);
-    });
-  }
+  ngOnInit(): void {}
 
   get email() {
     return this.loginFormModel.get("email");
@@ -52,6 +49,30 @@ export class LoginComponent implements OnInit {
     this.$('#loginForm').block({
       message: null,
       css: BLOCK_CSS
+    });
+
+    this.httpClient.post<any>("/api/auth/login", this.loginFormModel.value).subscribe(resp => {
+      localStorage.setItem("access_token", resp.access_token);
+      console.log(resp);
+      // this._router.navigate(["/main"]);
+    }, (err) => {
+      const { error: { statusCode, message } } = err;
+      if (statusCode === 401) {
+        if (/email_unverified;\d+/.test(message)) {
+          const msgs = message.split(";");
+          this.verified_url = `/verify-email/${msgs[1]}`;
+          this.email?.setErrors({ "email_unverified": true });
+        } else if (message === "credential_invalid") {
+          this.email!.setErrors({ "credential_invalid": true });
+        } else {
+          this.email!.setErrors({ "not_found": true });
+        }
+      } else if (statusCode === 429) {
+        this.email!.setErrors({ "too_many_tries": true });
+      }
+      this.$("#loginForm").unblock();
+    }, () => {
+      this.$("#loginForm").unblock();
     });
   }
 }

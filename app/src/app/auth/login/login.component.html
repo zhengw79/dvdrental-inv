@@ -16,8 +16,14 @@
 								<div *ngIf="email && email.invalid && (email.dirty || email.touched)">
 									<div *ngIf="email.errors?.['required']" class="help-error">Email is required</div>
 									<div *ngIf="email.errors?.['email']" class="help-error">Please enter a valid email address.</div>
-									<div *ngIf="email.errors?.['not_found']" class="help-error">Sorry, we cannot find this email in our system.</div>
-									<div *ngIf="email.errors?.['email_unverified']" class="help-error">Please click <a [routerLink]="[verified_url]">here</a> to verify your email.</div>
+									<div *ngIf="email.errors?.['not_found']" class="help-error">Sorry, we cannot find this email in our
+										system.</div>
+									<div *ngIf="email.errors?.['email_unverified']" class="help-error">Please click <a
+											[routerLink]="[verified_url]">here</a> to verify your email.</div>
+									<div *ngIf="email.errors?.['credential_invalid']" class="help-error">Sorry, your credential doesn't
+										match.</div>
+									<div *ngIf="email.errors?.['too_many_tries']" class="help-error">Sorry, too many tries. Please wait
+										for 1 minutes and try it again.</div>
 								</div>
 							</div>
 							<div class="form-group">
