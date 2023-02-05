@@ -44,7 +44,7 @@ export class VerifyEmailComponent implements OnInit {
       css: BLOCK_CSS
     });
 
-    this.httpClient.get(`/api/auth/staff/${this.staff_id}`).subscribe(staff => {
+    this.httpClient.get(`api/auth/staff/${this.staff_id}`).subscribe(staff => {
       if (staff) {
         const { email, email_verified_at } = staff as any;
         if (email_verified_at) {
@@ -75,7 +75,7 @@ export class VerifyEmailComponent implements OnInit {
       css: BLOCK_CSS
     });
 
-    this.httpClient.post<any>("/api/auth/verify", this.formModel.value).subscribe(resp => {
+    this.httpClient.post<any>("api/auth/verify", this.formModel.value).subscribe(resp => {
       const { status, code } = resp;
       if (status === "ok" && code === "verified") {
         this._router.navigate(["/login"]);

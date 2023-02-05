@@ -52,7 +52,7 @@ export class LoginComponent implements OnInit {
       css: BLOCK_CSS
     });
 
-    this.httpClient.post<any>(`api/auth/login`, this.loginFormModel.value).subscribe(resp => {
+    this.httpClient.post<any>("api/auth/login", this.loginFormModel.value).subscribe(resp => {
       localStorage.setItem("access_token", resp.access_token);
       console.log(resp);
       // this._router.navigate(["/main"]);
