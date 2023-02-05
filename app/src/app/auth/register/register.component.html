@@ -1,0 +1,92 @@
+<AuthLayout>
+  <ng-template #child>
+    <div class="card-body p-0">
+      <!-- Nested Row within Card Body -->
+      <div class="row">
+        <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
+        <div class="col-lg-7" id="regForm">
+          <div class="p-5">
+            <div class="text-center">
+              <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
+            </div>
+            <form class="user" [formGroup]="registerFormModel" (ngSubmit)="onSubmit()">
+              <div class="form-group row">
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                  <input type="text" class="form-control form-control-user" placeholder="First Name" formControlName="first_name"/>
+                  <div *ngIf="first_name && first_name.invalid && (first_name.dirty || first_name.touched)">
+                    <div *ngIf="first_name.errors?.['required']" class="help-error">
+                      Please enter first name.
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <input type="text" class="form-control form-control-user" placeholder="Last Name" formControlName="last_name"/>
+                  <div *ngIf="last_name && last_name.invalid && (last_name.dirty || last_name.touched)">
+                    <div *ngIf="last_name.errors?.['required']" class="help-error">
+                      Please enter last name.
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-sm-12">
+                  <input type="text" class="form-control form-control-user" placeholder="User name" formControlName="username"/>
+                  <div *ngIf="username && username.invalid && (username.dirty || username.touched)">
+                    <div *ngIf="username.errors?.['required']" class="help-error">Please enter user name.</div>
+                    <div *ngIf="username.errors?.['maxlength']" class="help-error">User name length must be less than 16.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <input type="email" class="form-control form-control-user" id="email" placeholder="Email Address" formControlName="email"/>
+                <div *ngIf="email && email.invalid && (email.dirty || email.touched)">
+                  <div *ngIf="email.errors?.['required']" class="help-error">
+                    Please enter an email.
+                  </div>
+                  <div *ngIf="email.errors?.['email']" class="help-error">
+                    Please enter a valid email address.
+                  </div>
+                  <div *ngIf="email.errors?.['DUP_EMAIL']" class="help-error">
+                    Sorry, this email has already been used.
+                  </div>
+                </div>
+              </div>
+               <div class="form-group row">
+                 <div class="col-sm-6 mb-3 mb-sm-0">
+                   <input type="password" class="form-control form-control-user" placeholder="Password" name="password" formControlName="password" (input)="onPasswordChange()"/>
+                   <div *ngIf="password && password.invalid && (password.dirty || password.touched)">
+                     <div *ngIf="password.errors?.['required']" class="help-error">Password is required.</div>
+                     <div *ngIf="password.errors?.['minlength']" class="help-error">Min length of password is 8.</div>
+                   </div>
+                 </div>
+                 <div class="col-sm-6">
+                  <input type="password" class="form-control form-control-user" placeholder="Repeat Password" name="password2" formControlName="password2" (input)="onPasswordChange()"/>
+                  <div *ngIf="password2 && password2.invalid && (password2.dirty || password2.touched)">
+                    <div *ngIf="password2.errors?.['required'] || password2.errors?.['mismatch']" class="help-error">Please repeat your password.</div>
+                  </div>
+                 </div>
+              </div>
+              <button type="submit" class="btn btn-primary btn-user btn-block">
+                Register Account
+              </button>
+              <hr />
+              <a href="#" class="btn btn-google btn-user btn-block">
+                <i class="fab fa-google fa-fw"></i>
+                Register with Google
+              </a>
+              <a href="#" class="btn btn-facebook btn-user btn-block">
+                <i class="fab fa-facebook-f fa-fw"></i>Register with Facebook</a>
+            </form>
+            <hr/>
+            <div class="text-center">
+              <a class="small" [routerLink]="['/']">Forgot Password?</a>
+            </div>
+            <div class="text-center">
+              <a class="small" [routerLink]="['/login']">Already have an account? Login!</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</AuthLayout>
