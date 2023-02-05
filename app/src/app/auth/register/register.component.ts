@@ -99,12 +99,14 @@ export class RegisterComponent implements OnInit {
 		});
 
 		const payload = this.registerFormModel.value;
-		this.httpClient.post<any>("/api/auth/register", payload)
-			.subscribe(({ access_token }) => {
-				if (access_token) {
-					localStorage.setItem("access_token", access_token);
+		this.httpClient
+			.post<any>("api/auth/register", payload)
+			.subscribe((result) => {
+				if (result.access_token) {
+					localStorage.setItem("access_token", result.access_token);
 					this._router.navigate(["/main"]);
-				} else {
+				} else if (result.status === "failed" &&
+					result.code === "staff_email_unique") {
 					this.email?.setErrors({ 'DUP_EMAIL': true });
 				}
 			}, null, () => { this.$("#regForm").unblock(); });

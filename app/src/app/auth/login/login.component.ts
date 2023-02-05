@@ -55,7 +55,7 @@ export class LoginComponent implements OnInit {
     this.httpClient.post<any>("api/auth/login", this.loginFormModel.value).subscribe(resp => {
       localStorage.setItem("access_token", resp.access_token);
       console.log(resp);
-      // this._router.navigate(["/main"]);
+      this._router.navigate(["/main"]);
     }, (err) => {
       const { error: { statusCode, message } } = err;
       if (statusCode === 401) {
