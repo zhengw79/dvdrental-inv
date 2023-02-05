@@ -14,10 +14,10 @@ export class AppComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.httpClient
-      .get<any>(`api/_token`)
-      .subscribe(({ _token }) => {
-        localStorage.setItem("_csrf", _token);
-      });
+    // this.httpClient
+    //   .get<any>(`api/_token`)
+    //   .subscribe(({ _token }) => {
+    //     localStorage.setItem("_csrf", _token);
+    //   });
   }
 }
