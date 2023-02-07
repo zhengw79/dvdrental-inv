@@ -25,7 +25,8 @@ export class AuthHttpInterceptorService {
 				responseType: "json",
 				setHeaders: {
 					Authorization: `Bearer ${bear_token}`
-				}
+				},
+				withCredentials: true
 			});
 		}
 
