@@ -16,8 +16,7 @@ export class AuthHttpInterceptorService {
 		const baseUrl = environment.apiUrl;
 
 		req = req.clone( {
-			url: `${baseUrl}/${req.url}`,
-			withCredentials: true
+			url: `${baseUrl}/${req.url}`
 		});
 
 		if(bear_token) {
@@ -25,8 +24,7 @@ export class AuthHttpInterceptorService {
 				responseType: "json",
 				setHeaders: {
 					Authorization: `Bearer ${bear_token}`
-				},
-				withCredentials: true
+				}
 			});
 		}
 
