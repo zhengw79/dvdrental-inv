@@ -55,6 +55,7 @@ export class LoginComponent implements OnInit {
 
 		this.httpClient.post<any>("api/auth/login", this.loginFormModel.value).subscribe({
 			next: resp => {
+				console.log(resp);
 				localStorage.setItem("access_token", resp.access_token);
 				localStorage.setItem("remember_token", resp.remember_token);
 				this._router.navigate(["/main"]);

@@ -21,8 +21,8 @@ export class TopbarComponent implements OnInit {
         if (!data) {
           this.router.navigate(['/login']);
         } else {
-          const { access_token } = data as any;
-          localStorage.setItem("access_token", access_token);
+          // const { access_token } = data as any;
+          // localStorage.setItem("access_token", access_token);
         }
       },
       error: (error) => { console.error(error); },
