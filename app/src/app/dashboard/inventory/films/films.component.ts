@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-films',
@@ -18,6 +19,7 @@ export class FilmsComponent implements OnInit {
   ngOnInit(): void {
     const bear_token = localStorage.getItem("access_token");
     const _csrf = localStorage.getItem("_csrf");
+    const baseUrl = environment.apiUrl;
 
     this.$("#myTable").DataTable({
       responsive: true,
@@ -48,7 +50,7 @@ export class FilmsComponent implements OnInit {
         { target: 4, data: "release_year" }
       ],
       ajax: {
-        url: `/graphql`,
+        url: `${baseUrl}/graphql`,
         type: "POST",
         contentType: "application/json",
         headers: {
