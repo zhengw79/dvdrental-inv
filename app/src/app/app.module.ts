@@ -9,23 +9,23 @@ import { AuthModule } from './auth/auth.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    AppRoutingModule,
-    AuthModule,
-    BrowserModule,
-    DashboardModule,
-    HttpClientModule
-  ],
-  providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthHttpInterceptorService,
-      multi: true
-    }
-  ],
-  bootstrap: [AppComponent]
+	declarations: [
+		AppComponent
+	],
+	imports: [
+		AppRoutingModule,
+		AuthModule,
+		BrowserModule,
+		DashboardModule,
+		HttpClientModule
+	],
+	providers: [
+		{
+		  provide: HTTP_INTERCEPTORS,
+		  useClass: AuthHttpInterceptorService,
+		  multi: true
+		}
+	],
+	bootstrap: [AppComponent]
 })
 export class AppModule { }

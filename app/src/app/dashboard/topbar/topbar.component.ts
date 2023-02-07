@@ -16,6 +16,18 @@ export class TopbarComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.httpClient.get("api/auth/logged").subscribe({
+      next: (data) => {
+        if (!data) {
+          this.router.navigate(['/login']);
+        } else {
+          const { access_token } = data as any;
+          localStorage.setItem("access_token", access_token);
+        }
+      },
+      error: (error) => { console.error(error); },
+      complete: () => { }
+    });
   }
 
   logout() {
@@ -30,5 +42,5 @@ export class TopbarComponent implements OnInit {
       });
   }
 
-  onSubmit(data:any) {}
+  onSubmit(data: any) { }
 }

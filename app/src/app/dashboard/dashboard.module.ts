@@ -7,6 +7,9 @@ import { RouterModule } from '@angular/router';
 import { TopbarComponent } from './topbar/topbar.component';
 import { FormsModule } from '@angular/forms';
 import { FooterComponent } from './footer/footer.component';
+import { FilmsComponent } from './inventory/films/films.component';
+import { InventoryComponent } from './inventory/inventory.component';
+import { FilmDetailsComponent } from './inventory/film.details/film.details.component';
 
 
 
@@ -16,7 +19,10 @@ import { FooterComponent } from './footer/footer.component';
     LayoutComponent,
     SidebarComponent,
     TopbarComponent,
-    FooterComponent
+    FooterComponent,
+    FilmsComponent,
+    InventoryComponent,
+    FilmDetailsComponent
   ],
   imports: [
     CommonModule,
