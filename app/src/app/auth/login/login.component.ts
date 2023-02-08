@@ -12,7 +12,6 @@ import { environment } from "src/environments/environment";
 	styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-	baseUrl: string;
 	loginFormModel: FormGroup;
 	verified_url?: string;
 	$: any;
@@ -29,7 +28,6 @@ export class LoginComponent implements OnInit {
 
 		// @ts-ignore
 		this.$ = window.jQuery;
-		this.baseUrl = environment.apiUrl;
 	}
 
 	ngOnInit(): void {}
@@ -55,7 +53,6 @@ export class LoginComponent implements OnInit {
 
 		this.httpClient.post<any>("api/auth/login", this.loginFormModel.value).subscribe({
 			next: resp => {
-				console.log(resp);
 				localStorage.setItem("access_token", resp.access_token);
 				localStorage.setItem("remember_token", resp.remember_token);
 				this._router.navigate(["/main"]);

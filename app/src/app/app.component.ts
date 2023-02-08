@@ -21,8 +21,8 @@ export class AppComponent implements OnInit {
     //   .subscribe(({ _token }) => {
     //     localStorage.setItem("_csrf", _token);
     //   });
-    if (localStorage.getItem("remember_token")) {
-      this._router.navigate(['/main']);
-    }
+    // if (localStorage.getItem("remember_token")) {
+    //   this._router.navigate(['/main']);
+    // }
   }
 }

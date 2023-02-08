@@ -50,7 +50,7 @@ export class FilmsComponent implements OnInit {
         { target: 4, data: "release_year" }
       ],
       ajax: {
-        url: `${baseUrl}/graphql`,
+        url: `${baseUrl}graphql`,
         type: "POST",
         contentType: "application/json",
         headers: {
@@ -91,9 +91,9 @@ export class FilmsComponent implements OnInit {
           return JSON.stringify(query);
         },
         "dataSrc": (json: any) => {
-          json.recordsTotal = json.data.retrieveFilmDatatableRowsPagination.totalCount;
-          json.recordsFiltered = json.data.retrieveFilmDatatableRowsPagination.totalCount;
-          return json.data.retrieveFilmDatatableRowsPagination.data;
+          json.recordsTotal = json.data?.retrieveFilmDatatableRowsPagination?.totalCount;
+          json.recordsFiltered = json.data?.retrieveFilmDatatableRowsPagination?.totalCount;
+          return json.data?.retrieveFilmDatatableRowsPagination?.data;
         }
       }
     });

@@ -22,11 +22,11 @@ const routes: Routes = [
       { path: "film", component: FilmsComponent },
       { path: "film/:film_id", component: FilmDetailsComponent }
     ]
-  }
+  },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { useHash: true })],
+  imports: [RouterModule.forRoot(routes, { useHash: true, onSameUrlNavigation: "reload" })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

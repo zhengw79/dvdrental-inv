@@ -10,6 +10,7 @@ import { FooterComponent } from './footer/footer.component';
 import { FilmsComponent } from './inventory/films/films.component';
 import { InventoryComponent } from './inventory/inventory.component';
 import { FilmDetailsComponent } from './inventory/film.details/film.details.component';
+import { FilmInfoComponent } from './inventory/film.details/film.info/film.info.component';
 
 
 
@@ -22,7 +23,8 @@ import { FilmDetailsComponent } from './inventory/film.details/film.details.comp
     FooterComponent,
     FilmsComponent,
     InventoryComponent,
-    FilmDetailsComponent
+    FilmDetailsComponent,
+    FilmInfoComponent
   ],
   imports: [
     CommonModule,

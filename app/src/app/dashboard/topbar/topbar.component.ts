@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Apollo } from 'apollo-angular';
 
 @Component({
   selector: 'app-topbar',
@@ -12,20 +13,18 @@ export class TopbarComponent implements OnInit {
 
   constructor(
     private httpClient: HttpClient,
-    private router: Router
+    private router: Router,
+    private apollo: Apollo
   ) { }
 
   ngOnInit(): void {
-    this.httpClient.get("api/auth/logged").subscribe({
+    this.httpClient.get("api/auth/loggedin").subscribe({
       next: (data) => {
         if (!data) {
           this.router.navigate(['/login']);
-        } else {
-          // const { access_token } = data as any;
-          // localStorage.setItem("access_token", access_token);
         }
       },
-      error: (error) => { console.error(error); },
+      error: (error) => {},
       complete: () => { }
     });
   }
@@ -34,9 +33,9 @@ export class TopbarComponent implements OnInit {
     this.httpClient
       .get<any>('api/auth/logout')
       .subscribe(data => {
-        console.log(data);
         if (data.status === 'ok') {
           localStorage.clear();
+          this.apollo.client.resetStore();
           this.router.navigate(['/login']);
         }
       });

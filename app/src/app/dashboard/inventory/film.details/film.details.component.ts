@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-film.details',
@@ -6,10 +7,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./film.details.component.css']
 })
 export class FilmDetailsComponent implements OnInit {
+  public film_id?: number;
 
-  constructor() { }
-
-  ngOnInit(): void {
+  constructor(
+    private route: ActivatedRoute
+  ) {
+    this.film_id = parseInt(this.route.snapshot.paramMap.get("film_id")!);
   }
 
+  ngOnInit(): void { }
 }
