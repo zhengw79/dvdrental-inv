@@ -58,7 +58,7 @@ import { setContext } from '@apollo/client/link/context';
 				const link = ApolloLink.from([
 					basic,
 					auth,
-					httpLink.create({ uri: `${baseUri}graphql` })]);
+					httpLink.create({ uri: 'graphql' })]);
 				const cache = new InMemoryCache();
 
 				return {
