@@ -16,7 +16,7 @@ export class AuthHttpInterceptorService {
 		const baseUrl = environment.apiUrl;
 
 		req = req.clone( {
-			url: `${baseUrl}/${req.url}`
+			url: `${baseUrl}${req.url}`
 		});
 
 		if(bear_token) {
