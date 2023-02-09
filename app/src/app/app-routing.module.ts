@@ -4,6 +4,7 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { VerifyEmailComponent } from './auth/verify.email/verify.email.component';
+import { ActorsComponent } from './dashboard/inventory/actors/actors.component';
 import { FilmDetailsComponent } from './dashboard/inventory/film.details/film.details.component';
 import { FilmsComponent } from './dashboard/inventory/films/films.component';
 import { InventoryComponent } from './dashboard/inventory/inventory.component';
@@ -20,7 +21,8 @@ const routes: Routes = [
     component: InventoryComponent,
     children: [
       { path: "film", component: FilmsComponent },
-      { path: "film/:film_id", component: FilmDetailsComponent }
+      { path: "film/:film_id", component: FilmDetailsComponent },
+      { path: "actor", component: ActorsComponent}
     ]
   },
 ];
