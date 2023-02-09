@@ -80,3 +80,11 @@ div.help-txt:before {
 .input-daterange input:last-child {
 	border-radius: 0 10px 10px 0;
 }
+
+#actorTable > thead > tr > * {
+	text-align: center;
+}
+
+#actorTable > tbody {
+	text-align: center;
+}

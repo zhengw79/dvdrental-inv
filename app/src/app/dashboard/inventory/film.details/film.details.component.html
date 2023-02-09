@@ -1,7 +1,9 @@
-<div class="d-sm-flex align-items-center justify-content-between mb-4">
+<div class="d-sm-flex align-items-center justify-content-start mb-4">
+	<a class="btn btn-primary" [routerLink]="['/inventory/film']"><i class="fas fa-arrow-circle-left"></i></a>&nbsp;&nbsp;
 	<h1 class="h3 mb-0 text-gray-800">Film Details</h1>
 </div>
 
 <div>
 	<app-film-info [film_id]="film_id"></app-film-info>
+	<app-film-actor [film_id]="film_id"></app-film-actor>
 </div>

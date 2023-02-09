@@ -11,6 +11,7 @@ import { FilmsComponent } from './inventory/films/films.component';
 import { InventoryComponent } from './inventory/inventory.component';
 import { FilmDetailsComponent } from './inventory/film.details/film.details.component';
 import { FilmInfoComponent } from './inventory/film.details/film.info/film.info.component';
+import { FilmActorComponent } from './inventory/film.details/film.actor/film.actor.component';
 
 
 
@@ -24,7 +25,8 @@ import { FilmInfoComponent } from './inventory/film.details/film.info/film.info.
     FilmsComponent,
     InventoryComponent,
     FilmDetailsComponent,
-    FilmInfoComponent
+    FilmInfoComponent,
+    FilmActorComponent
   ],
   imports: [
     CommonModule,

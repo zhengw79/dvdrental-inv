@@ -8,6 +8,136 @@
 			</div>
 			<div class="card-body">
 				<div class="container">
+					<div class="row">
+						<div class="row col-6">
+							<div class="col-4 col-md-4 col-sm-12">
+								Film Title:
+							</div>
+							<div class="col-8 col-md-8 col-sm-12">
+								<a href="#" id="title" data-type="text" data-title="Please enter film title">
+									{{film?.title}}
+								</a>
+							</div>
+						</div>
+						<div class="col-6 row">
+							<div class="col-5 col-md-5 col-sm-12">
+								Inventory amount:
+							</div>
+							<div class="col-7 col-md-7 col-sm-12">
+								<p>{{film?.amount}}</p>
+							</div>
+						</div>
+					</div>
+					<hr />
+
+					<div class="row">
+						<div class="col-2 col-md-2 col-sm-12">
+							Film Description:
+						</div>
+						<div class="col-10 col-md-10 col-sm-12">
+							<a href="#" id="description" data-type="textarea"
+								data-title="Please enter film description">{{film?.description}}</a>
+						</div>
+					</div>
+					<hr />
+
+					<div class="row">
+						<div class="col-2 col-md-2 col-sm-12">
+							Film Category:
+						</div>
+						<div class="col-10 col-md-10 col-sm-12">
+							<a href="#" id="category_id" data-type="select" data-title="Please choose a film category.">{{
+								film?.category}}</a>
+						</div>
+					</div>
+					<hr />
+
+					<div class="row">
+						<div class="row col-6">
+							<div class="col-12 col-md-5 col-sm-12">
+								Release Year:
+							</div>
+							<div class="col-12 col-md-7 col-sm-12">
+								<a href="#" id="release_year" data-type="text"
+									data-title="Please enter a release year">{{film?.release_year}}</a>
+							</div>
+						</div>
+						<div class="row col-6">
+							<div class="col-12 col-md-5 col-sm-12">
+								Language:
+							</div>
+							<div class="col-12 col-md-7 col-sm-12">
+								<a href="#" id="language_id" data-type="select"
+									data-title="Please choose a film langugage.">{{film?.language}}</a>
+							</div>
+						</div>
+					</div>
+					<hr />
+
+					<div class="row">
+						<div class="row col-6">
+							<div class="col-12 col-md-5 col-sm-12">
+								Rental Duration:
+							</div>
+							<div class="col-12 col-md-7 col-sm-12">
+								<a href="#" id="rental_duration" data-type="text" data-title="Please enter rental duration.">
+									{{ film?.rental_duration }}
+								</a> Days
+							</div>
+						</div>
+						<div class="row col-6">
+							<div class="col-12 col-md-5 col-sm-12">Length:</div>
+							<div class="col-12 col-md-7 col-sm-12">
+								<a href="#" id="length" data-type="text" data-title="Please enter film length.">
+									{{ film?.length }}</a> Minutes
+							</div>
+						</div>
+					</div>
+					<hr />
+
+					<div class="row">
+						<div class="row col-6">
+							<div class="col-12 col-md-5 col-sm-12">
+								Replacement Cost:
+							</div>
+							<div class="col-12 col-md-7 col-sm-12">
+								$ <a href="#" id="replacement_cost" data-type="text" data-title="Please enter replacement cost.">
+									{{ (+film?.replacement_cost).toFixed(2) }}
+								</a>
+							</div>
+						</div>
+						<div class="row col-6">
+							<div class="col-12 col-md-5 col-sm-12">
+								Rating:
+							</div>
+							<div class="col-12 col-md-7 col-sm-12">
+								<a href="#" id="rating" data-type="select" data-title="Please select a film rate.">
+									{{ film?.rating}}
+								</a>
+							</div>
+						</div>
+					</div>
+					<hr />
+
+					<div class="row">
+						<div class="row col-6">
+							<div class="col-12 col-md-5 col-sm-12">
+								Features:
+							</div>
+							<div class="col-12 col-md-7 col-sm-12">
+								<a href="#" id="special_features" data-type="text" data-title="Please enter film features.">{{
+									film?.special_features }}</a>
+							</div>
+						</div>
+						<div class="row col-6">
+							<div class="col-12 col-md-5 col-sm-12">
+								Last Updated:
+							</div>
+							<div class="col-12 col-md-7 col-sm-12">
+								<p>{{ film?.last_update }}</p>
+							</div>
+						</div>
+					</div>
 
 				</div>
 			</div>
