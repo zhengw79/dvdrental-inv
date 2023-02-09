@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-film-actor',
@@ -21,6 +22,8 @@ export class FilmActorComponent implements OnInit {
 
   ngAfterViewInit() {
     const bearer_token = localStorage.getItem("access_token");
+    const baseUrl = environment.apiUrl;
+
     this.$("#actorTable").DataTable({
       responsive: true,
       processing: true,
@@ -40,7 +43,7 @@ export class FilmActorComponent implements OnInit {
         }
       ],
       ajax: {
-        url: "graphql",
+        url: `${baseUrl}graphql`,
         type: "post",
         contentType: "application/json",
         headers: {

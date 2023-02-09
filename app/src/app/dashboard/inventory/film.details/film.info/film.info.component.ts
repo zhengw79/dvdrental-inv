@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Apollo, gql } from 'apollo-angular';
 import { BLOCK_CSS } from 'src/app/constants';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-film-info',
@@ -23,9 +24,11 @@ export class FilmInfoComponent implements OnInit {
 
   ngOnInit(): void {
     const bear_token = localStorage.getItem("access_token");
+    const apiUrl = environment.apiUrl;
+
     this.$.fn.editable.defaults.mode = "inline";
     this.$.fn.editable.defaults.pk = this.film_id;
-    this.$.fn.editable.defaults.url = "graphql";
+    this.$.fn.editable.defaults.url = `${apiUrl}graphql`;
 
     this.$.fn.editable.defaults.ajaxOptions = {
       headers: {
