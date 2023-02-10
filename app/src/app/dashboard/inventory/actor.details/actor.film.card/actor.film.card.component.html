@@ -1,0 +1,21 @@
+<div class="col mb-4">
+  <div class="card">
+    <img src="https://via.placeholder.com/150" class="card-img-top">
+    <div class="card-body">
+      <h5 class="card-title">{{ film?.title }}</h5>
+      <small class="text-muted">Inventory amount: {{ film?.amount }}</small><br/>
+      <small class="text-muted">Category: {{ film?.categories }}</small><br/>
+      <small class="text-muted">Language: {{ film?.language }}</small>
+    </div>
+    <div class="card-footer">
+      <div class="row justify-content-between">
+        <div class="col-8">
+          <small class="text-muted">{{ film?.film_last_update }}</small>
+        </div>
+        <div class="col-4">
+          <button class="btn btn-primary btn-sm" (click)="handleClickFilmDetail()">Detail</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

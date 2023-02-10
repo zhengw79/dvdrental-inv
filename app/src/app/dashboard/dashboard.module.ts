@@ -13,6 +13,8 @@ import { FilmDetailsComponent } from './inventory/film.details/film.details.comp
 import { FilmInfoComponent } from './inventory/film.details/film.info/film.info.component';
 import { FilmActorComponent } from './inventory/film.details/film.actor/film.actor.component';
 import { ActorsComponent } from './inventory/actors/actors.component';
+import { ActorDetailsComponent } from './inventory/actor.details/actor.details.component';
+import { ActorFilmCardComponent } from './inventory/actor.details/actor.film.card/actor.film.card.component';
 
 
 
@@ -28,7 +30,9 @@ import { ActorsComponent } from './inventory/actors/actors.component';
     FilmDetailsComponent,
     FilmInfoComponent,
     FilmActorComponent,
-    ActorsComponent
+    ActorsComponent,
+    ActorDetailsComponent,
+    ActorFilmCardComponent
   ],
   imports: [
     CommonModule,

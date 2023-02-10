@@ -149,7 +149,6 @@ export class FilmInfoComponent implements OnInit {
           });
         }, 500);
       }
-      console.log(data);
     });
   }
 }

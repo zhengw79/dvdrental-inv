@@ -1,0 +1,57 @@
+<div class="d-sm-flex align-items-center justify-content-start mb-4">
+	<a class="btn btn-primary" [routerLink]="['/inventory/actor']">
+		<i class="fas fa-arrow-left"></i>
+	</a>&nbsp;
+	<h1 class="h3 mb-0 text-gray-800">Actor Information</h1>
+</div>
+
+<div class="row">
+	<div class="col-lg-9">
+		<div class="card shadow mb-4" id="actor_info">
+			<div class="card-header py-3">
+				<h6 class="m-0 font-weight-bold text-primary">
+					{{ actor?.first_name }} {{ actor?.last_name }}
+				</h6>
+			</div>
+			<div class="card-body">
+				<div class="container">
+					<div class="row">
+						<div class="row col-4 col-md-4 col-sm-12">
+							First Name:
+						</div>
+						<div class="col-8 col-md-8 col-sm-12">
+							<a href="#" id="first_name" data-type="text"
+								data-title="Please enter actor first name.">{{actor?.first_name}}</a>
+						</div>
+					</div>
+					<div class="row">
+						<div class="row col-4 col-md-4 col-sm-12">
+							Last Name:
+						</div>
+						<div class="col-8 col-md-8 col-sm-12">
+							<a href="#" id="last_name" data-type="text"
+								data-title="Please enter actor last name.">{{actor?.last_name}}</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-lg-12">
+    <div class="card shadow mb-4" id='actor'>
+      <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">
+          Film list
+        </h6>
+      </div>
+      <div class="card-body" id="actor_films">
+        <div class="container">
+          <div class="row row-cols-1 row-cols-md-3">
+            <app-actor-film-card *ngFor="let film of films" [film]="film"></app-actor-film-card>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

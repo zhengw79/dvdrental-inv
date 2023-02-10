@@ -39,7 +39,7 @@ export class FilmActorComponent implements OnInit {
         {
           target: 3,
           data: "actor_id",
-          render: (data: any) => '<div class="btn-group"><a class="btn btn-primary btn-sm" href="#/inventory/actors/' + data + '"><i class="fas fa-eye"></i></a></div>'
+          render: (data: any) => '<div class="btn-group"><a class="btn btn-primary btn-sm" href="#/inventory/actor/' + data + '"><i class="fas fa-eye"></i></a></div>'
         }
       ],
       ajax: {
