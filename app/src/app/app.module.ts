@@ -34,7 +34,6 @@ import { setContext } from '@apollo/client/link/context';
 		{
 			provide: APOLLO_OPTIONS,
 			useFactory(httpLink: HttpLink) {
-				const baseUri = environment.apiUrl;
 				const basic = setContext((operation, context) => ({
 					headers: {
 						Accept: 'charset=utf-8'
@@ -63,7 +62,17 @@ import { setContext } from '@apollo/client/link/context';
 
 				return {
 					link,
-					cache
+					cache,
+					defaultOptions: {
+						watchQuery: {
+							fetchPolicy: 'no-cache',
+							errorPolicy: "ignore"
+						},
+						query: {
+							fetchPolicy: "no-cache",
+							errorPolicy: "all"
+						}
+					}
 				}
 			},
 			deps: [HttpLink]

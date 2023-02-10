@@ -92,7 +92,7 @@ export class ActorDetailsComponent implements OnInit {
         this.router.navigate(["/login"]);
       } else {
         const { retrieveActorFilmCardsById: { actor, films } } = data as any;
-        this.actor = actor;
+        this.actor = Object.assign({}, actor);
         this.films = films;
 
         const arr = [

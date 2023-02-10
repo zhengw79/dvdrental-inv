@@ -84,8 +84,7 @@ export class FilmInfoComponent implements OnInit {
         this.router.navigate(["/login"]);
       } else {
         const { retrieveFilmEditable: { film, categories, languages, ratings } } = data as any;
-
-        this.film = film;
+        this.film = Object.assign({}, film);
 
         const arr = [
           { field: "title", msg: "Please enter a film title." },
@@ -93,11 +92,11 @@ export class FilmInfoComponent implements OnInit {
           { field: "category_id", msg: "Please choose a film category." },
           { field: "release_year", msg: "Please enter release_year" },
           { field: "language_id", msg: "Please choose a langauge." },
-          { field: "rental_duration", msg: "Please enter film's rental duration."},
-          { field: "length", msg: "Please enter the film's length."},
-          { field: "replacement_cost", msg: "Please enter film's replacement cost."},
-          { field: "rating", msg: "Please choose the film's rate."},
-          { field: "special_features", msg: "Please enter the film's special features."}
+          { field: "rental_duration", msg: "Please enter film's rental duration." },
+          { field: "length", msg: "Please enter the film's length." },
+          { field: "replacement_cost", msg: "Please enter film's replacement cost." },
+          { field: "rating", msg: "Please choose the film's rate." },
+          { field: "special_features", msg: "Please enter the film's special features." }
         ];
 
         setTimeout(() => {
@@ -132,7 +131,7 @@ export class FilmInfoComponent implements OnInit {
                   value: this.film.rating,
                   source: ratings.map((rate: string) => ({
                     value: rate,
-                    text:rate
+                    text: rate
                   }))
                 })
                 break;
