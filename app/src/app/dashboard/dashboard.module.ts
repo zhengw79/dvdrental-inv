@@ -5,7 +5,7 @@ import { LayoutComponent } from './layout/layout.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { RouterModule } from '@angular/router';
 import { TopbarComponent } from './topbar/topbar.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FooterComponent } from './footer/footer.component';
 import { FilmsComponent } from './inventory/films/films.component';
 import { InventoryComponent } from './inventory/inventory.component';
@@ -15,6 +15,7 @@ import { FilmActorComponent } from './inventory/film.details/film.actor/film.act
 import { ActorsComponent } from './inventory/actors/actors.component';
 import { ActorDetailsComponent } from './inventory/actor.details/actor.details.component';
 import { ActorFilmCardComponent } from './inventory/actor.details/actor.film.card/actor.film.card.component';
+import { SearchComponent } from './inventory/films/search/search.component';
 
 
 
@@ -32,12 +33,14 @@ import { ActorFilmCardComponent } from './inventory/actor.details/actor.film.car
     FilmActorComponent,
     ActorsComponent,
     ActorDetailsComponent,
-    ActorFilmCardComponent
+    ActorFilmCardComponent,
+    SearchComponent
   ],
   imports: [
     CommonModule,
     FormsModule,
-    RouterModule
+    RouterModule,
+    ReactiveFormsModule
   ]
 })
 export class DashboardModule { }
