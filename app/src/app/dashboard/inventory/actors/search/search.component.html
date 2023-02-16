@@ -1,0 +1,25 @@
+<div class="card">
+	<div class="card-body">
+		<form class="form-inline mr-auto w-100 navbar-search" [formGroup]="searchFormModel" (ngSubmit)="onSubmit()">
+			<div class="input-group">
+				<input type="text" class="form-control bg-light border-0 small" placeholder="Search for actor(s) by first name, last name or film title/category/language..." aria-label="Search"
+					aria-describedby="basic-addon2" name="searching_text" formControlName="searching_text">
+				<div class="input-group-append">
+					<button class="btn btn-primary" type="submit">
+						<i class="fas fa-search fa-sm"></i>
+					</button>
+				</div>
+			</div>
+			<div *ngIf="searching_text && searching_text.invalid && (searching_text.dirty || searching_text.touched)">
+				<div *ngIf="searching_text.errors?.['required']" class="help-error">
+					Please enter searching content.
+				</div>
+			</div>
+		</form>
+
+		<div class="datatable mt-4">
+			<table class="display" id="actorES_table">
+			</table>
+		</div>
+	</div>
+</div>

@@ -2,15 +2,29 @@
 	<h1 class="h3 mb-0 text-gray-800">Actors</h1>
 </div>
 
-<div class="datatable">
-	<table id="actorTable" class="display">
-		<thead>
-			<tr>
-				<th>Actor Id</th>
-				<th>First Name</th>
-				<th>Last Name</th>
-				<th></th>
-			</tr>
-		</thead>
-	</table>
+<div class="row">
+	<div class="col-12 mb-4">
+		<app-actor-search></app-actor-search>
+	</div>
+	<div class="col-12 mb-4">
+		<div class="card">
+			<div class="card-header">
+				Actor List
+			</div>
+			<div class="card-body">
+				<div class="datatable">
+					<table id="actorTable" class="display">
+						<thead>
+							<tr>
+								<th>Actor Id</th>
+								<th>First Name</th>
+								<th>Last Name</th>
+								<th></th>
+							</tr>
+						</thead>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>

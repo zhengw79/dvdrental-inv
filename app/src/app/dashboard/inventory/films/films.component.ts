@@ -91,6 +91,7 @@ export class FilmsComponent implements OnInit {
           return JSON.stringify(query);
         },
         "dataSrc": (json: any) => {
+          //TODO: should check auth status and redirect if need.
           json.recordsTotal = json.data?.retrieveFilmDatatableRowsPagination?.totalCount;
           json.recordsFiltered = json.data?.retrieveFilmDatatableRowsPagination?.totalCount;
           return json.data?.retrieveFilmDatatableRowsPagination?.data;

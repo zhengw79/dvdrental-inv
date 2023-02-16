@@ -15,8 +15,8 @@ import { FilmActorComponent } from './inventory/film.details/film.actor/film.act
 import { ActorsComponent } from './inventory/actors/actors.component';
 import { ActorDetailsComponent } from './inventory/actor.details/actor.details.component';
 import { ActorFilmCardComponent } from './inventory/actor.details/actor.film.card/actor.film.card.component';
-import { SearchComponent } from './inventory/films/search/search.component';
-
+import { SearchComponent as FilmSearchComponent } from './inventory/films/search/search.component';
+import { SearchComponent as ActorSearchComponent } from './inventory/actors/search/search.component';
 
 
 @NgModule({
@@ -34,7 +34,8 @@ import { SearchComponent } from './inventory/films/search/search.component';
     ActorsComponent,
     ActorDetailsComponent,
     ActorFilmCardComponent,
-    SearchComponent
+    FilmSearchComponent,
+    ActorSearchComponent
   ],
   imports: [
     CommonModule,
