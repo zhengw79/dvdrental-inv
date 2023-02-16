@@ -1,11 +1,9 @@
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { ApolloLink, InMemoryCache, split } from '@apollo/client/core';
-import { getMainDefinition } from '@apollo/client/utilities';
+import { ApolloLink, InMemoryCache } from '@apollo/client/core';
 import { ApolloModule, APOLLO_OPTIONS } from 'apollo-angular';
 import { HttpLink } from "apollo-angular/http";
-import { environment } from 'src/environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthHttpInterceptorService } from './auth/auth.http.interceptor.service';
