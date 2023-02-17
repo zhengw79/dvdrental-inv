@@ -4,7 +4,8 @@
 	</div>
 	<div class="card-body">
 		<!-------||Searching existed actors||------>
-		<form class="form-inline mr-auto w-100 navbar-search mb-3"  [formGroup]="fg_searchActors" (ngSubmit)="searchActors()">
+		<form class="form-inline mr-auto w-100 navbar-search mb-3" [formGroup]="fg_searchActors"
+			(ngSubmit)="searchActors()">
 			<div class="input-group">
 				<input type="text" class="form-control bg-light border-0 small" placeholder="Search for actor..."
 					aria-label="Search" aria-describedby="basic-addon2" name="searching_text" formControlName="searching_text">
@@ -19,10 +20,10 @@
 		<hr />
 
 		<!------||Adding new actors||----->
-		<form class="user" [formGroup]="formModel">
+		<form class="user" [formGroup]="fg_formModel" (ngSubmit)="saveActors()">
 			<div class="row mb-3">
 				<div class="col-5">
-					<button class="btn btn-primary btn-user btn-block" (click)="addActor()">New Actor</button>
+					<button type="button" class="btn btn-primary btn-user btn-block" (click)="addActor()">New Actor</button>
 				</div>
 			</div>
 
@@ -32,10 +33,18 @@
 						<div class="col-sm-5 mb-3 mb-sm-0">
 							<input type="text" class="form-control form-control-user" placeholder="Actor's first name"
 								formControlName="first_name" />
+								<div class="help-error"
+								*ngIf="actor.get('first_name') && actor.get('first_name')?.invalid &&(actor.get('first_name')?.dirty || actor.get('first_name')?.touched)">
+								Please enter actor's first name.
+							</div>
 						</div>
 						<div class="col-sm-5 mb-3 mb-sm-0">
 							<input type="text" class="form-control form-control-user" placeholder="Actor's last name"
 								formControlName="last_name" />
+							<div class="help-error"
+								*ngIf="actor.get('last_name') && actor.get('last_name')?.invalid &&(actor.get('last_name')?.dirty || actor.get('last_name')?.touched)">
+								Please enter actor's last name.
+							</div>
 						</div>
 						<div class="col-sm-2 mt-1 mb-3 mb-sm-0">
 							<button class="btn btn-danger btn-circle" (click)="removeActor(i)"><i class="fas fa-trash"></i></button>
@@ -43,14 +52,12 @@
 					</div>
 				</div>
 			</div>
-		</form>
-		<hr />
+			<hr />
 
-		<!-------||Save actors||------>
-		<form class="user">
+			<!-------||Save actors||------>
 			<div class="form-group row mb-3">
 				<div class="col">
-					<button class="btn btn-success btn-user btn-block" type="button">Save</button>
+					<button class="btn btn-success btn-user btn-block" type="submit">Save</button>
 				</div>
 				<div class="col">
 					<button class="btn btn-secondary btn-user btn-block" type="reset">Reset</button>

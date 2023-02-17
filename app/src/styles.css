@@ -88,3 +88,7 @@ div.help-txt:before {
 #actorTable > tbody {
 	text-align: center;
 }
+
+.form-control-checkbox {
+	font-size: 0.1rem;
+}

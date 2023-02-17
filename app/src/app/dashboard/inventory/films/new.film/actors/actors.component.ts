@@ -1,43 +1,68 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActorService } from '../../../../service/actor.service';
+import { remove } from "lodash";
 
 @Component({
   selector: 'app-new-film-actors',
   templateUrl: './actors.component.html',
-  styleUrls: ['./actors.component.css']
+  styleUrls: ['./actors.component.css'],
+  host: { "(window:onSelectActor)": "onSelectActor($event)" }
 })
 export class ActorsComponent implements OnInit {
+  @ViewChild("actors_table") actors_table?: ElementRef<any>;
+
   fg_searchActors: FormGroup;
-  formModel: FormGroup = new FormGroup({
+  fg_formModel: FormGroup = new FormGroup({
     actors: new FormArray([])
   });
 
-  @ViewChild("actors_table") actors_table?: ElementRef<any>;
+  actors: any = [];
+
   // @ts-ignore
   $: any = window.jQuery;
 
-  constructor(private actorService: ActorService) {
+  constructor(
+    private actorService: ActorService
+  ) {
     this.fg_searchActors = new FormGroup({
       searching_text: new FormControl("", [Validators.required])
     });
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    //@ts-ignore
+    window["onSelectActor"] = this.onSelectActor.bind(this);
+  }
 
   getActorControls() {
-    return (this.formModel.get("actors") as FormArray).controls
+    return (this.fg_formModel.get("actors") as FormArray).controls
   }
 
   addActor() {
-    (this.formModel.get("actors") as FormArray).push(new FormGroup({
-      first_name: new FormControl(),
-      last_name: new FormControl()
+    (this.fg_formModel.get("actors") as FormArray).push(new FormGroup({
+      first_name: new FormControl("", [Validators.required]),
+      last_name: new FormControl("", [Validators.required])
     }));
   }
 
   removeActor(index: number) {
-    (this.formModel.get("actors") as FormArray).removeAt(index);
+    (this.fg_formModel.get("actors") as FormArray).removeAt(index);
+  }
+
+  /**
+   * associate existed actor
+   * @param actor_id
+   */
+  onSelectActor(event: any) {
+    const { target: { checked, defaultValue } } = event;
+    if (checked) {
+      this.actors.push({ actor_id: defaultValue, first_name: "", last_name: "" });
+    } else {
+      remove(this.actors, (actor: any) => {
+        return actor.actor_id === defaultValue;
+      });
+    }
   }
 
   async searchActors() {
@@ -46,7 +71,6 @@ export class ActorsComponent implements OnInit {
 
     const { retrieveActorES } = data;
     const tableElem = this.actors_table?.nativeElement;
-    console.log(tableElem);
     if (this.$.fn.DataTable.isDataTable(tableElem)) {
       this.$(tableElem).DataTable().clear();
       this.$(tableElem).DataTable().destroy();
@@ -61,7 +85,8 @@ export class ActorsComponent implements OnInit {
       columns: [
         {
           title: "Select",
-          data: "actor_id"
+          data: "actor_id",
+          render: (data: any) => `<input type="checkbox" name="actors" class="form-control form-control-user form-control-checkbox" value=${data} onClick="onSelectActor(event)"/>`
         },
         {
           title: "First name",
@@ -73,5 +98,19 @@ export class ActorsComponent implements OnInit {
         }
       ]
     })
+  }
+
+  saveActors() {
+    this.fg_formModel.markAllAsTouched();
+
+    if (!this.fg_formModel.valid) {
+      return;
+    }
+
+    const { actors } = this.fg_formModel.value;
+    const temp = this.actors.concat(actors.map((actor: any) => ({ actor_id: null, ...actor })));
+    console.log(temp);
+
+    // submit to portal
   }
 }
