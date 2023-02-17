@@ -8,6 +8,7 @@ import { ActorDetailsComponent } from './dashboard/inventory/actor.details/actor
 import { ActorsComponent } from './dashboard/inventory/actors/actors.component';
 import { FilmDetailsComponent } from './dashboard/inventory/film.details/film.details.component';
 import { FilmsComponent } from './dashboard/inventory/films/films.component';
+import { NewFilmComponent } from './dashboard/inventory/films/new.film/new.film.component';
 import { InventoryComponent } from './dashboard/inventory/inventory.component';
 import { MainComponent } from './dashboard/main/main.component';
 
@@ -22,6 +23,7 @@ const routes: Routes = [
     component: InventoryComponent,
     children: [
       { path: "film", component: FilmsComponent },
+      { path: "film/new", component: NewFilmComponent},
       { path: "film/:film_id", component: FilmDetailsComponent },
       { path: "actor", component: ActorsComponent },
       { path: "actor/:actor_id", component: ActorDetailsComponent }

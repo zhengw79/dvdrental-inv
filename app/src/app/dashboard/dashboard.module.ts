@@ -17,7 +17,9 @@ import { ActorDetailsComponent } from './inventory/actor.details/actor.details.c
 import { ActorFilmCardComponent } from './inventory/actor.details/actor.film.card/actor.film.card.component';
 import { SearchComponent as FilmSearchComponent } from './inventory/films/search/search.component';
 import { SearchComponent as ActorSearchComponent } from './inventory/actors/search/search.component';
-
+import { NewFilmComponent } from './inventory/films/new.film/new.film.component';
+import { InfoComponent as NewInfoComponent } from './inventory/films/new.film/info/info.component';
+import { ActorsComponent as NewFilmActorComponent } from './inventory/films/new.film/actors/actors.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,10 @@ import { SearchComponent as ActorSearchComponent } from './inventory/actors/sear
     ActorDetailsComponent,
     ActorFilmCardComponent,
     FilmSearchComponent,
-    ActorSearchComponent
+    ActorSearchComponent,
+    NewFilmComponent,
+    NewInfoComponent,
+    NewFilmActorComponent
   ],
   imports: [
     CommonModule,
