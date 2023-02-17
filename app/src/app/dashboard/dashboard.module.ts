@@ -20,6 +20,8 @@ import { SearchComponent as ActorSearchComponent } from './inventory/actors/sear
 import { NewFilmComponent } from './inventory/films/new.film/new.film.component';
 import { InfoComponent as NewInfoComponent } from './inventory/films/new.film/info/info.component';
 import { ActorsComponent as NewFilmActorComponent } from './inventory/films/new.film/actors/actors.component';
+import { ActorService } from './service/actor.service';
+import { FilmService } from './service/film.service';
 
 @NgModule({
   declarations: [
@@ -47,6 +49,7 @@ import { ActorsComponent as NewFilmActorComponent } from './inventory/films/new.
     FormsModule,
     RouterModule,
     ReactiveFormsModule
-  ]
+  ],
+  providers: [ActorService, FilmService]
 })
 export class DashboardModule { }
