@@ -3,26 +3,30 @@
 		Film Actors
 	</div>
 	<div class="card-body">
-		<form class="user">
+		<form class="user" [formGroup]="formModel">
 			<div class="row mb-3">
-				<div class="col-6">
-					<button class="btn btn-primary btn-user btn-block">New Actor</button>
+				<div class="col-5">
+					<button class="btn btn-primary btn-user btn-block" (click)="addActor()">New Actor</button>
 				</div>
 			</div>
 
-			<div class="form-group row">
-				<ul formArrayName="first_name" class="no-bullets">
-					<li *ngFor="let e of getFirstNameControls(); let i=index">
-						<input type="text" class="form-control form-control-user" placeholder="First Name" [formControlName]="i"/>
-					</li>
-				</ul>
-				<div class="col-sm-6 mb-3 mb-sm-0">
-
+			<div formArrayName="actors">
+				<div *ngFor="let actor of getActorControls(); let i=index">
+					<div class="form-group row mb-3" [formGroupName]="i">
+						<div class="col-sm-5 mb-3 mb-sm-0">
+							<input type="text" class="form-control form-control-user" placeholder="Actor's first name"
+								formControlName="first_name" />
+						</div>
+						<div class="col-sm-5 mb-3 mb-sm-0">
+							<input type="text" class="form-control form-control-user" placeholder="Actor's last name" formControlName="last_name"/>
+						</div>
+						<div class="col-sm-2 mt-1 mb-3 mb-sm-0">
+							<button class="btn btn-danger btn-circle" (click)="removeActor(i)"><i class="fas fa-trash"></i></button>
+						</div>
+					</div>
 				</div>
-				<!-- <div class="col-sm-6 mb-3 mb-sm-0">
-					<input type="text" class="form-control form-control-user" placeholder="First Name" />
-				</div> -->
 			</div>
+
 		</form>
 	</div>
 </div>
