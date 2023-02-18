@@ -29,4 +29,21 @@ export class FilmService {
 
     return data;
   }
+
+  async fetchFilmSettings() {
+    const { data, errors } = await this.apollo.query({
+      query: gql`
+        query { fetchFilmSettings {
+          ratings
+          languages { language_id name }
+          categories { category_id name }
+        }}
+      `}).toPromise() as any;
+
+    if (errors && errors[0] && errors[0].message === "Unauthorized") {
+      this.router.navigate(["/login"]);
+    }
+
+    return data;
+  }
 }
