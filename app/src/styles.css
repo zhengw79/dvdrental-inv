@@ -92,3 +92,32 @@ div.help-txt:before {
 .form-control-checkbox {
 	font-size: 0.1rem;
 }
+
+.selection .select2-selection {
+	font-size: 0.8rem;
+	border-radius: 10rem;
+	padding: 1.5rem;
+	border: 1px solid #d1d3e2 !important;
+	color: #6e707e;
+	line-height: 12px !important;
+}
+
+.select2-selection__arrow {
+	top: 12px !important;
+}
+
+.select2-selection__rendered {
+	position: absolute;
+	top: 12px;
+	left: 5px;
+	color: #6e707e !important;
+}
+
+.select2-selection.select2-selection--multiple {
+	font-size: 0.8rem;
+	border-radius: 10rem;
+	padding: 0.8rem;
+	border: 1px solid #d1d3e2 !important;
+	color: #6e707e;
+	line-height: 12px !important;
+}

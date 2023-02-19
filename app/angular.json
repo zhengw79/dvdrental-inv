@@ -29,6 +29,7 @@
               "src/assets/vex/css/vex.css",
               "src/assets/vex/css/vex-theme-os.css",
               "src/assets/datastrap-datepicker/css/bootstrap-datepicker.standalone.min.css",
+              "node_modules/select2/dist/css/select2.min.css",
               "src/styles.css"
             ],
             "scripts": [
@@ -42,7 +43,8 @@
               "src/assets/jquery.blockUI.js",
               "src/assets/vex/js/vex.combined.min.js",
               "src/assets/vex/js/vex.min.js",
-              "src/assets/datastrap-datepicker/js/bootstrap-datepicker.min.js"
+              "src/assets/datastrap-datepicker/js/bootstrap-datepicker.min.js",
+              "node_modules/select2/dist/js/select2.full.min.js"
             ]
           },
           "configurations": {

@@ -3,7 +3,7 @@
 		Film Info
 	</div>
 	<div class="card-body">
-		<form class="user" [formGroup]="fg_film" (ngSubmit)="onSubmit()">
+		<form class="user" [formGroup]="fg_film" (ngSubmit)="onSubmit()" (ngReset)="onReset()">
 			<div class="form-group row">
 				<div class="col-sm-12 mb-3 mb-sm-0">
 					<label class="form-span mx-2">Film title*</label>
@@ -35,18 +35,27 @@
 				<div class="col-sm-6 mb-3 mb-sm-0">
 					<label class="form-span mx-2">Rental duration*</label>
 					<input type="text" class="form-control form-control-user" formControlName="rental_duration" />
+					<div *ngIf="rental_duration && rental_duration.invalid && (rental_duration.dirty || rental_duration.touched)"
+						class="help-error">
+						Please enter film's rental duration.
+					</div>
 				</div>
 			</div>
 
 			<div class="form-group row">
 				<div class="col-sm-6 mb-3 mb-sm-0">
 					<label class="form-span mx-2">Length*</label>
-					<input type="text" class="form-control form-control-user" formControlName="length" />
+					<input type="text" class="form-control form-control-user" formControlName="length" #length_el/>
+					<div *ngIf="length && length.invalid && (length.dirty || length.touched)" class="help-error">
+						<div *ngIf="length.errors?.['required']">Please enter film's length.</div>
+						<div *ngIf="length.errors?.['max']">Film's length should be less than 250 mintues.</div>
+					</div>
 				</div>
 				<div class="col-sm-6 mb-3 mb-sm-0">
 					<label class="form-span mx-2">Replacement cost*</label>
 					<input type="text" class="form-control form-control-user" formControlName="replacement_cost"
 						#replacement_cost_el />
+					<div *ngIf="replacement_cost && replacement_cost.invalid && (replacement_cost.dirty || replacement_cost.touched)" class="help-error">Please enter film's replacement cost.</div>
 				</div>
 			</div>
 
@@ -54,38 +63,46 @@
 				<div class="col-sm-6 mb-3 mb-sm-0">
 					<label class="form-span mx-2">Rating*</label>
 					<select class="form-control form-control-user form-control-select" formControlName="rating">
-						<option value="" disabled selected>
+						<option value=null selected disabled>
 							Please select a rate.</option>
 						<option *ngFor="let rating of ratings" [value]="rating">{{ rating }}</option>
 					</select>
+					<div *ngIf="rating && rating.invalid && (rating.dirty || rating.touched)" class="help-error">
+						Please choose film's rating.
+					</div>
 				</div>
 				<div class="col-sm-6 mb-3 mb-sm-0">
 					<label class="form-span mx-2">Release year*</label>
-					<select class="form-control form-control-user form-control-select">
+					<select class="form-control form-control-user form-control-select" formControlName="year" #year_el>
 						<option value="" disabled selected>Please select a release year.</option>
-						<option *ngFor="let year of years" [value]="year">{{ year }}</option>
 					</select>
+					<div *ngIf="year && year.invalid && (year.dirty || year.touched)" class="help-error">
+						Please choose film's year.
+					</div>
 				</div>
 			</div>
 
 			<div class="form-group row">
 				<div class="col-sm-6 mb-3 mb-sm-0">
 					<label class="form-span mx-2">Category*</label>
-					<select class="form-control form-control-user form-control-select" formControlName="category">
+					<select class="form-control form-control-user form-control-select" formControlName="category" #category_el
+						multiple="multiple">
 						<option value="" disabled selected>
 							Please select a category.
 						</option>
-						<option *ngFor="let category of categories" [value]="category.category_id">{{ category.name }}</option>
 					</select>
+					<div *ngIf="category && category.invalid && (category.dirty || category.touched)" class="help-error">Please
+						choose film's category.</div>
 				</div>
 				<div class="col-sm-6 mb-3 mb-sm-0">
 					<label class="form-span mx-2">Language*</label>
-					<select class="form-control form-control-user form-control-select">
+					<select class="form-control form-control-user form-control-select" #language_el>
 						<option value="" selected>
 							Please select a language.
 						</option>
-						<option *ngFor="let language of languages" [value]="language.language_id">{{ language.name }}</option>
 					</select>
+					<div *ngIf="language && language.invalid && (language.dirty || language.touched)" class="help-error">Please
+						choose a language.</div>
 				</div>
 			</div>
 
@@ -94,7 +111,7 @@
 					<button class="btn btn-primary btn-user btn-block" type="submit">Save</button>
 				</div>
 				<div class="col">
-					<button class="btn btn-secondary btn-user btn-block" type="reset">Cancel</button>
+					<button class="btn btn-secondary btn-user btn-block" type="button" (click)="onReset()">Cancel</button>
 				</div>
 			</div>
 		</form>
