@@ -20,7 +20,7 @@ import { setContext } from '@apollo/client/link/context';
 		AppRoutingModule,
 		AuthModule,
 		BrowserModule,
-		DashboardModule,
+		// DashboardModule,
 		HttpClientModule
 	],
 	providers: [

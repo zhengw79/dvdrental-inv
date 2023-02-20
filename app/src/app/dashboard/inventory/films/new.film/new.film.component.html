@@ -3,7 +3,8 @@
 		<a class="btn btn-primary" type="button" [routerLink]="['/inventory/film']">
 			<i class="fas fa-arrow-circle-left"></i>
 		</a>&nbsp;
-		New Film
+		<span *ngIf="!film_id">New Film</span>
+		<span *ngIf="film_id">Edit Film</span>
 	</h1>
 </div>
 

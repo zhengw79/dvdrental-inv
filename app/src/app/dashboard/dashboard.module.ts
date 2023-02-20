@@ -23,6 +23,7 @@ import { ActorsComponent as NewFilmActorComponent } from './inventory/films/new.
 import { ActorService } from './service/actor.service';
 import { FilmService } from './service/film.service';
 import { ValidatorService } from './service/validator.service';
+import { DashboardRoutingModule } from './dashboard-routing.module';
 
 @NgModule({
   declarations: [
@@ -47,9 +48,10 @@ import { ValidatorService } from './service/validator.service';
   ],
   imports: [
     CommonModule,
+    DashboardRoutingModule,
     FormsModule,
     RouterModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   providers: [ActorService, FilmService, ValidatorService]
 })

@@ -33,6 +33,11 @@ export class InfoComponent implements OnInit {
   sel_categories: any;
   sel_language: any;
 
+  im_rental_rate: any;
+  im_rental_duration: any;
+  im_length: any;
+  im_replacement_cost: any;
+
   constructor(
     private filmService: FilmService,
     private validatorService: ValidatorService,
@@ -49,12 +54,33 @@ export class InfoComponent implements OnInit {
       replacement_cost: new FormControl("", [Validators.required, validatorService.filmNumberValidator]),
       rating: new FormControl(null, [Validators.required]),
       categories: new FormControl("", [Validators.required]),
-      fulltext: new FormControl("", [Validators.required])
+      fulltext: new FormControl("", [Validators.required]),
+      special_features: new FormControl("", [Validators.required])
     });
   }
 
-  get title() {
-    return this.fg_film.get("title");
+  get category() {
+    return this.fg_film.get("categories");
+  }
+
+  get description() {
+    return this.fg_film.get("description");
+  }
+
+  get fulltext() {
+    return this.fg_film.get("fulltext");
+  }
+
+  get language() {
+    return this.fg_film.get("language_id");
+  }
+
+  get length() {
+    return this.fg_film.get("length");
+  }
+
+  get rating() {
+    return this.fg_film.get("rating");
   }
 
   get rental_rate() {
@@ -69,31 +95,22 @@ export class InfoComponent implements OnInit {
     return this.fg_film.get("release_year");
   }
 
-  get category() {
-    return this.fg_film.get("categories");
-  }
-
-  get language() {
-    return this.fg_film.get("language_id");
-  }
-
-  get rating() {
-    return this.fg_film.get("rating");
-  }
-
-  get length() {
-    return this.fg_film.get("length");
-  }
-
   get replacement_cost() {
     return this.fg_film.get("replacement_cost");
   }
 
-  get fulltext() {
-    return this.fg_film.get("fulltext");
+  get special_features() {
+    return this.fg_film.get("special_features");
   }
 
-  async ngOnInit(): Promise<void> {
+  get title() {
+    return this.fg_film.get("title");
+  }
+
+  async ngOnInit(): Promise<void> { }
+
+  async ngAfterViewInit() {
+    //**--------------|| Featch film UI setting ||----------------- */
     this.$(this.film_info_card_el?.nativeElement).block({
       message: null,
       css: BLOCK_CSS
@@ -102,8 +119,52 @@ export class InfoComponent implements OnInit {
     const { fetchFilmSettings: { categories, languages, ratings } } = await this.filmService.fetchFilmSettings();
 
     this.$(this.film_info_card_el?.nativeElement).unblock();
+    //**-------------|| END of fetching ||------------------------- */
 
-    //**--------------||Initial select drop down||------------ */
+    this.im_rental_rate = IMask(this.rental_rate_el?.nativeElement, {
+      mask: Number,
+      scale: 2,
+      radix: ".",
+      signed: false,
+      max: 100,
+      lazy: false,
+      commit: (value: any, masked: any) => {
+        this.rental_rate?.setValue(value);
+      }
+    });
+    this.im_replacement_cost = IMask(this.replacement_cost_el?.nativeElement, {
+      mask: Number,
+      scale: 2,
+      radix: ".",
+      signed: false,
+      max: 100,
+      lazy: false,
+      commit: (value: any) => {
+        this.replacement_cost?.setValue(value);
+      }
+    });
+    this.im_length = IMask(this.length_el?.nativeElement, {
+      mask: Number,
+      scale: 0,
+      signed: false,
+      max: 240,
+      commit: (value: any) => {
+        this.length?.setValue(value);
+      }
+    });
+    this.im_rental_duration = IMask(this.rental_duration_el?.nativeElement, {
+      mask: Number,
+      scale: 0,
+      signed: false,
+      max: 7,
+      commit: (value: any) => {
+        if (value) {
+          this.rental_duration?.setValue(value);
+        }
+      }
+    });
+
+    //**--------------|| Initial select drop down ||------------ */
     this.ratings = ratings;
     this.sel_language = this.$(this.language_el?.nativeElement).select2({
       "data": languages.map((language: any) => ({
@@ -143,16 +204,23 @@ export class InfoComponent implements OnInit {
     //**----------------|| END OF SELECT DROP DOWN ||-------------- */
 
     if (this.film_id) {
-      const { retrieveFilmEntityById: { film: { title, description, language_id, length, rating, release_year, rental_duration, rental_rate, replacement_cost }, categories, language } } = await this.filmService.retrieveFilm(this.film_id);
+      const { retrieveFilmEntityById: { film: { title, description, language_id, length, rating, release_year, rental_duration, rental_rate, replacement_cost, special_features, fulltext }, categories } } = await this.filmService.retrieveFilm(this.film_id);
 
       this.title?.setValue(title);
-      this.fg_film.get("description")?.setValue(description);
+      this.description?.setValue(description);
       this.rental_rate?.setValue(rental_rate);
-      this.rental_duration?.setValue(rental_duration);
-      this.length?.setValue(length);
-      this.replacement_cost?.setValue(replacement_cost);
-      this.rating?.setValue(rating);
+      this.im_rental_rate.updateValue();
 
+      this.rental_duration?.setValue(rental_duration);
+      this.im_rental_duration.updateValue();
+
+      this.length?.setValue(length);
+      this.im_length.updateValue();
+
+      this.replacement_cost?.setValue(replacement_cost);
+      this.im_replacement_cost.updateValue();
+
+      this.rating?.setValue(rating);
       this.release_year?.setValue(release_year);
       this.sel_year.val(release_year).trigger("change.select2");
 
@@ -162,52 +230,9 @@ export class InfoComponent implements OnInit {
       const cate_ids = categories.map((cate: any) => cate.category_id);
       this.category?.setValue(cate_ids.join(","))
       this.sel_categories.val(cate_ids).trigger("change.select2");
+      this.special_features?.setValue(special_features);
+      this.fulltext?.setValue(fulltext);
     }
-  }
-
-  async ngAfterViewInit() {
-    IMask(this.rental_rate_el?.nativeElement, {
-      mask: Number,
-      scale: 2,
-      radix: ".",
-      signed: false,
-      max: 100,
-      lazy: false,
-      commit: (value: any, masked: any) => {
-        this.rental_rate?.setValue(value);
-      }
-    });
-    IMask(this.replacement_cost_el?.nativeElement, {
-      mask: Number,
-      scale: 2,
-      radix: ".",
-      signed: false,
-      max: 100,
-      lazy: false,
-      commit: (value: any) => {
-        this.replacement_cost?.setValue(value);
-      }
-    });
-    IMask(this.length_el?.nativeElement, {
-      mask: Number,
-      scale: 0,
-      signed: false,
-      max: 240,
-      commit: (value: any) => {
-        this.length?.setValue(value);
-      }
-    });
-    IMask(this.rental_duration_el?.nativeElement, {
-      mask: Number,
-      scale: 0,
-      signed: false,
-      max: 7,
-      commit: (value: any) => {
-        if (value) {
-          this.rental_duration?.setValue(value);
-        }
-      }
-    });
   }
 
   async onSubmit() {
@@ -216,10 +241,29 @@ export class InfoComponent implements OnInit {
     if (!this.fg_film.valid) {
       return;
     }
+
+    this.$(this.film_info_card_el?.nativeElement).block({
+      message: null,
+      css: BLOCK_CSS
+    });
     if (this.film_id) {
-      // update film
+      const payload = this.fg_film.value;
+
+      let temp = {
+        ...payload,
+        film_id: +this.film_id,
+        rental_duration: +payload.rental_duration,
+        length: +payload.length
+      };
+      let { fulltext, ..._temp } = temp;
+      await this.filmService.updateFilm(_temp);
+      this.$(this.film_info_card_el?.nativeElement).unblock();
+
+      this.ngAfterViewInit();
     } else {
       const { insertFilm: { film_id } } = await this.filmService.insertFilm(this.fg_film.value);
+      this.$(this.film_info_card_el?.nativeElement).unblock();
+
       this.router.navigate([`/inventory/film/update/${film_id}`]);
     }
   }

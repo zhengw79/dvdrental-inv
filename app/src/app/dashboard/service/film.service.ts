@@ -48,7 +48,8 @@ export class FilmService {
           "replacement_cost": +payload.replacement_cost!,
           "rating": payload.rating,
           "categories": payload.categories,
-          "fulltext": payload.fulltext
+          "fulltext": payload.fulltext,
+          "special_features": payload.special_features
         }
       }
     }).toPromise() as any;
@@ -81,8 +82,31 @@ export class FilmService {
     const { data, errors } = await this.apollo.query({
       query: gql`
       query { retrieveFilmEntityById(film_id: ${film_id}) {
-        film { film_id title description fulltext release_year rental_duration rental_rate replacement_cost rating language_id length fulltext } categories { category_id name } language { language_id name } actors { actor_id first_name last_name }
+        film { film_id title description fulltext release_year rental_duration rental_rate replacement_cost rating special_features language_id length fulltext } categories { category_id name } language { language_id name } actors { actor_id first_name last_name }
       }}`}).toPromise() as any;
+
+    if (errors && errors[0] && errors[0].message === "Unauthorized") {
+      this.router.navigate(["/login"]);
+    }
+
+    return data;
+  }
+
+  async updateFilm(payload: any) {
+    const { data, errors } = await this.apollo.mutate({
+      mutation: gql`
+      mutation editFilm($payload: UpdateFilmInput!) {
+        editFilm(payload:$payload) {
+          film {
+            film_id title description rental_rate rental_duration length replacement_cost rating replacement_cost release_year special_features language_id
+          },
+          categories { category_id name },
+          language { language_id name },
+          actors { first_name last_name actor_id }
+        }
+      }`,
+      variables: { payload }
+    }).toPromise() as any;
 
     if (errors && errors[0] && errors[0].message === "Unauthorized") {
       this.router.navigate(["/login"]);

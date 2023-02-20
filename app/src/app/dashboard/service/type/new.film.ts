@@ -33,4 +33,7 @@ export class NewFilmType {
 
 	@IsString()
 	categories?: string;
+
+	@IsString()
+	special_features?:string;
 }

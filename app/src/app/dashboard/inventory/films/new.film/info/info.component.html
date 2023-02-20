@@ -23,18 +23,6 @@
 				</div>
 			</div>
 
-			<div class="form-group row" *ngIf="!film_id">
-				<div class="col-sm-12 mb-3 mb-sm-0">
-					<label class="form-span mx-2">Film full text* (up to 150 words.)</label>
-					<textarea type="textarea" class="form-control form-control-textarea" formControlName="fulltext" maxlength="150" rows="5"></textarea>
-					<div *ngIf="fulltext && fulltext.invalid && (fulltext.dirty || fulltext.touched)">
-						<div *ngIf="fulltext.errors?.['required']" class="help-error">
-							Please enter film's full text.
-						</div>
-					</div>
-				</div>
-			</div>
-
 			<div class="form-group row">
 				<div class="col-sm-6 mb-3 mb-sm-0">
 					<label class="form-span mx-2">Rental rate* (0~99)</label>
@@ -50,10 +38,13 @@
 				</div>
 				<div class="col-sm-6 mb-3 mb-sm-0">
 					<label class="form-span mx-2">Rental duration*</label>
-					<input type="text" class="form-control form-control-user" formControlName="rental_duration" #rental_duration_el />
+					<input type="text" class="form-control form-control-user" formControlName="rental_duration"
+						#rental_duration_el />
 					<div *ngIf="rental_duration && rental_duration.invalid && (rental_duration.dirty || rental_duration.touched)">
-						<div *ngIf="rental_duration.errors?.['required']" class="help-error">Please enter film's rental duration.</div>
-						<div *ngIf="rental_duration.errors?.['valid_number']" class="help-error">Film rental duration should be between 0 and 7.</div>
+						<div *ngIf="rental_duration.errors?.['required']" class="help-error">Please enter film's rental duration.
+						</div>
+						<div *ngIf="rental_duration.errors?.['valid_number']" class="help-error">Film rental duration should be
+							between 0 and 7.</div>
 					</div>
 				</div>
 			</div>
@@ -63,9 +54,11 @@
 					<label class="form-span mx-2">Length*</label>
 					<input type="text" class="form-control form-control-user" formControlName="length" #length_el />
 					<div *ngIf="length && length.invalid && (length.dirty || length.touched)">
-						<div *ngIf="length.errors?.['required']" class="help-error">Please enter film's length between 0 and 240.</div>
+						<div *ngIf="length.errors?.['required']" class="help-error">Please enter film's length between 0 and 240.
+						</div>
 						<div *ngIf="length.errors?.['max']" class="help-error">Film's length should be less than 250 mintues.</div>
-						<div *ngIf="length.errors?.['valid_number']" class="help-error">Please enter a valid number between 0 and 250.</div>
+						<div *ngIf="length.errors?.['valid_number']" class="help-error">Please enter a valid number between 0 and
+							250.</div>
 					</div>
 				</div>
 				<div class="col-sm-6 mb-3 mb-sm-0">
@@ -101,7 +94,8 @@
 					<select class="form-control form-control-user form-control-select" formControlName="release_year" #year_el>
 						<option value="" selected></option>
 					</select>
-					<div *ngIf="release_year && release_year.invalid && (release_year.dirty || release_year.touched)" class="help-error">
+					<div *ngIf="release_year && release_year.invalid && (release_year.dirty || release_year.touched)"
+						class="help-error">
 						Please choose film's year.
 					</div>
 				</div>
@@ -124,6 +118,31 @@
 					</select>
 					<div *ngIf="language && language.invalid && (language.dirty || language.touched)" class="help-error">Please
 						choose a language.</div>
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<div class="col-sm-12 mb-3 mb-sm-0">
+					<label class="form-span mx-2">Special features*<br/><span class="small">(multiple features separated by ';')</span></label>
+					<textarea type="textarea" class="form-control form-control-textarea" formControlName="special_features"
+						maxlength="100" rows="2"></textarea>
+					<div
+						*ngIf="special_features && special_features.invalid && (special_features.dirty || special_features.touched)">
+						<div class="help-error">Please enter film's special features</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group row" *ngIf="!film_id">
+				<div class="col-sm-12 mb-3 mb-sm-0">
+					<label class="form-span mx-2">Film full text* (up to 150 words.)</label>
+					<textarea type="textarea" class="form-control form-control-textarea" formControlName="fulltext"
+						maxlength="150" rows="5"></textarea>
+					<div *ngIf="fulltext && fulltext.invalid && (fulltext.dirty || fulltext.touched)">
+						<div *ngIf="fulltext.errors?.['required']" class="help-error">
+							Please enter film's full text.
+						</div>
+					</div>
 				</div>
 			</div>
 
