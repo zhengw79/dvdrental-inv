@@ -53,7 +53,7 @@ export class SearchComponent implements OnInit {
           title: "Id",
           data: "film_id",
           render: (data: any) => {
-            return `<a type="button" class="btn btn-primary btn-sm" href="#/inventory/film/${data}"><i class="fas fa-solid fa-eye"></i></a>`
+            return `<a type="button" class="btn btn-primary btn-sm" href="#/inventory/film/view/${data}"><i class="fas fa-solid fa-eye"></i></a>`
           }
         },
         { title: "Title", data: "title", width: "20%" },

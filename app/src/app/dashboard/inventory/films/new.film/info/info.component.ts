@@ -103,7 +103,7 @@ export class InfoComponent implements OnInit {
 
     this.$(this.film_info_card_el?.nativeElement).unblock();
 
-    /**--------------||Initial select drop down||------------ */
+    //**--------------||Initial select drop down||------------ */
     this.ratings = ratings;
     this.sel_language = this.$(this.language_el?.nativeElement).select2({
       "data": languages.map((language: any) => ({
