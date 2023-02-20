@@ -1,9 +1,9 @@
 <div class="card mb-4">
 	<div class="card-header">
-		Film Info
+		Film Info <span *ngIf="film_id">(ID: {{ film_id }})</span>
 	</div>
-	<div class="card-body">
-		<form class="user" [formGroup]="fg_film" (ngSubmit)="onSubmit()" (ngReset)="onReset()">
+	<div class="card-body" #film_info_card_el>
+		<form class="user" [formGroup]="fg_film" (ngSubmit)="onSubmit()">
 			<div class="form-group row">
 				<div class="col-sm-12 mb-3 mb-sm-0">
 					<label class="form-span mx-2">Film title*</label>
@@ -23,21 +23,37 @@
 				</div>
 			</div>
 
+			<div class="form-group row" *ngIf="!film_id">
+				<div class="col-sm-12 mb-3 mb-sm-0">
+					<label class="form-span mx-2">Film full text* (up to 150 words.)</label>
+					<textarea type="textarea" class="form-control form-control-textarea" formControlName="fulltext" maxlength="150" rows="5"></textarea>
+					<div *ngIf="fulltext && fulltext.invalid && (fulltext.dirty || fulltext.touched)">
+						<div *ngIf="fulltext.errors?.['required']" class="help-error">
+							Please enter film's full text.
+						</div>
+					</div>
+				</div>
+			</div>
+
 			<div class="form-group row">
 				<div class="col-sm-6 mb-3 mb-sm-0">
-					<label class="form-span mx-2">Rental rate*</label>
-					<input type="text" class="form-control form-control-user" #rental_rate_el formControlName="rental_rate" />
-					<div *ngIf="rental_rate && rental_rate.invalid && (rental_rate.dirty || rental_rate.touched)"
-						class="help-error">
-						Please enter film's rental rate.
+					<label class="form-span mx-2">Rental rate* (0~99)</label>
+					<input type="text" class="form-control form-control-user" formControlName="rental_rate" #rental_rate_el />
+					<div *ngIf="rental_rate && rental_rate.invalid && (rental_rate.dirty || rental_rate.touched)">
+						<div *ngIf="rental_rate.errors?.['required']" class="help-error">
+							Please enter film's rental rate.
+						</div>
+						<div *ngIf="rental_rate.errors?.['valid_number']" class="help-error">
+							Film rental rate should be a number between 0 and 99.
+						</div>
 					</div>
 				</div>
 				<div class="col-sm-6 mb-3 mb-sm-0">
 					<label class="form-span mx-2">Rental duration*</label>
-					<input type="text" class="form-control form-control-user" formControlName="rental_duration" />
-					<div *ngIf="rental_duration && rental_duration.invalid && (rental_duration.dirty || rental_duration.touched)"
-						class="help-error">
-						Please enter film's rental duration.
+					<input type="text" class="form-control form-control-user" formControlName="rental_duration" #rental_duration_el />
+					<div *ngIf="rental_duration && rental_duration.invalid && (rental_duration.dirty || rental_duration.touched)">
+						<div *ngIf="rental_duration.errors?.['required']" class="help-error">Please enter film's rental duration.</div>
+						<div *ngIf="rental_duration.errors?.['valid_number']" class="help-error">Film rental duration should be between 0 and 7.</div>
 					</div>
 				</div>
 			</div>
@@ -45,17 +61,26 @@
 			<div class="form-group row">
 				<div class="col-sm-6 mb-3 mb-sm-0">
 					<label class="form-span mx-2">Length*</label>
-					<input type="text" class="form-control form-control-user" formControlName="length" #length_el/>
-					<div *ngIf="length && length.invalid && (length.dirty || length.touched)" class="help-error">
-						<div *ngIf="length.errors?.['required']">Please enter film's length.</div>
-						<div *ngIf="length.errors?.['max']">Film's length should be less than 250 mintues.</div>
+					<input type="text" class="form-control form-control-user" formControlName="length" #length_el />
+					<div *ngIf="length && length.invalid && (length.dirty || length.touched)">
+						<div *ngIf="length.errors?.['required']" class="help-error">Please enter film's length between 0 and 240.</div>
+						<div *ngIf="length.errors?.['max']" class="help-error">Film's length should be less than 250 mintues.</div>
+						<div *ngIf="length.errors?.['valid_number']" class="help-error">Please enter a valid number between 0 and 250.</div>
 					</div>
 				</div>
 				<div class="col-sm-6 mb-3 mb-sm-0">
 					<label class="form-span mx-2">Replacement cost*</label>
 					<input type="text" class="form-control form-control-user" formControlName="replacement_cost"
 						#replacement_cost_el />
-					<div *ngIf="replacement_cost && replacement_cost.invalid && (replacement_cost.dirty || replacement_cost.touched)" class="help-error">Please enter film's replacement cost.</div>
+					<div
+						*ngIf="replacement_cost && replacement_cost.invalid && (replacement_cost.dirty || replacement_cost.touched)">
+						<div *ngIf="replacement_cost.errors?.['required']" class="help-error">
+							Please enter film's replacement cost.
+						</div>
+						<div *ngIf="replacement_cost.errors?.['valid_number']" class="help-error">
+							Film replacement cost should be less than 100.
+						</div>
+					</div>
 				</div>
 			</div>
 
@@ -64,7 +89,7 @@
 					<label class="form-span mx-2">Rating*</label>
 					<select class="form-control form-control-user form-control-select" formControlName="rating">
 						<option value=null selected disabled>
-							Please select a rate.</option>
+							Select a film's rate.</option>
 						<option *ngFor="let rating of ratings" [value]="rating">{{ rating }}</option>
 					</select>
 					<div *ngIf="rating && rating.invalid && (rating.dirty || rating.touched)" class="help-error">
@@ -73,10 +98,10 @@
 				</div>
 				<div class="col-sm-6 mb-3 mb-sm-0">
 					<label class="form-span mx-2">Release year*</label>
-					<select class="form-control form-control-user form-control-select" formControlName="year" #year_el>
-						<option value="" disabled selected>Please select a release year.</option>
+					<select class="form-control form-control-user form-control-select" formControlName="release_year" #year_el>
+						<option value="" selected></option>
 					</select>
-					<div *ngIf="year && year.invalid && (year.dirty || year.touched)" class="help-error">
+					<div *ngIf="release_year && release_year.invalid && (release_year.dirty || release_year.touched)" class="help-error">
 						Please choose film's year.
 					</div>
 				</div>
@@ -85,11 +110,9 @@
 			<div class="form-group row">
 				<div class="col-sm-6 mb-3 mb-sm-0">
 					<label class="form-span mx-2">Category*</label>
-					<select class="form-control form-control-user form-control-select" formControlName="category" #category_el
+					<select class="form-control form-control-user form-control-select" formControlName="categories" #category_el
 						multiple="multiple">
-						<option value="" disabled selected>
-							Please select a category.
-						</option>
+						<option value="" selected></option>
 					</select>
 					<div *ngIf="category && category.invalid && (category.dirty || category.touched)" class="help-error">Please
 						choose film's category.</div>
@@ -97,9 +120,7 @@
 				<div class="col-sm-6 mb-3 mb-sm-0">
 					<label class="form-span mx-2">Language*</label>
 					<select class="form-control form-control-user form-control-select" #language_el>
-						<option value="" selected>
-							Please select a language.
-						</option>
+						<option value="" selected></option>
 					</select>
 					<div *ngIf="language && language.invalid && (language.dirty || language.touched)" class="help-error">Please
 						choose a language.</div>

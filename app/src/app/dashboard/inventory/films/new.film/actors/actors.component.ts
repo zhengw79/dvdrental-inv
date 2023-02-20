@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActorService } from '../../../../service/actor.service';
 import { remove } from "lodash";
@@ -10,6 +10,7 @@ import { remove } from "lodash";
   host: { "(window:onSelectActor)": "onSelectActor($event)" }
 })
 export class ActorsComponent implements OnInit {
+  @Input() film_id?: number;
   @ViewChild("actors_table") actors_table?: ElementRef<any>;
 
   fg_searchActors: FormGroup;
@@ -33,6 +34,8 @@ export class ActorsComponent implements OnInit {
   ngOnInit(): void {
     //@ts-ignore
     window["onSelectActor"] = this.onSelectActor.bind(this);
+
+    console.log("receive film id::" + this.film_id);
   }
 
   getActorControls() {

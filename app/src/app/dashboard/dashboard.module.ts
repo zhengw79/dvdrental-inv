@@ -22,6 +22,7 @@ import { InfoComponent as NewInfoComponent } from './inventory/films/new.film/in
 import { ActorsComponent as NewFilmActorComponent } from './inventory/films/new.film/actors/actors.component';
 import { ActorService } from './service/actor.service';
 import { FilmService } from './service/film.service';
+import { ValidatorService } from './service/validator.service';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,6 @@ import { FilmService } from './service/film.service';
     RouterModule,
     ReactiveFormsModule
   ],
-  providers: [ActorService, FilmService]
+  providers: [ActorService, FilmService, ValidatorService]
 })
 export class DashboardModule { }

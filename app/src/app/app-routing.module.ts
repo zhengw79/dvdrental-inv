@@ -22,9 +22,10 @@ const routes: Routes = [
     path: "inventory",
     component: InventoryComponent,
     children: [
+      { path: "film/create", component: NewFilmComponent, pathMatch: "full" },
+      { path: "film/update/:film_id", component: NewFilmComponent },
+      { path: "film/view/:film_id", component: FilmDetailsComponent },
       { path: "film", component: FilmsComponent },
-      { path: "film/new", component: NewFilmComponent},
-      { path: "film/:film_id", component: FilmDetailsComponent },
       { path: "actor", component: ActorsComponent },
       { path: "actor/:actor_id", component: ActorDetailsComponent }
     ]

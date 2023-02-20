@@ -31,7 +31,7 @@ export class FilmsComponent implements OnInit {
           target: 0,
           data: "film_id",
           render: function (data: any, type: any, row: any, meta: any) {
-            return `<a type="button" class="btn btn-primary btn-sm" href="#/inventory/film/${data}"><i class="fas fa-solid fa-eye"></i></a>`;
+            return `<a type="button" class="btn btn-primary btn-sm" href="#/inventory/film/view/${data}"><i class="fas fa-solid fa-eye"></i></a>`;
           }
         },
         { target: 1, data: "title" },

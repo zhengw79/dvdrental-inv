@@ -9,9 +9,9 @@
 
 <div class="row">
 	<div class="col-lg-6">
-		<app-new-film-info></app-new-film-info>
+		<app-new-film-info [film_id]="film_id"></app-new-film-info>
 	</div>
-	<div class="col-lg-6">
-		<app-new-film-actors></app-new-film-actors>
+	<div class="col-lg-6" *ngIf="film_id">
+		<app-new-film-actors [film_id]="film_id"></app-new-film-actors>
 	</div>
 </div>
