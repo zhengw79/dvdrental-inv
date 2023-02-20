@@ -3,6 +3,9 @@
 		Film Actors
 	</div>
 	<div class="card-body">
+		<!----------|| List film's actors ||-------->
+		<table #actors_table class="display"></table>
+		<hr />
 		<!-------||Searching existed actors||------>
 		<form class="form-inline mr-auto w-100 navbar-search mb-3" [formGroup]="fg_searchActors"
 			(ngSubmit)="searchActors()">
@@ -16,7 +19,7 @@
 				</div>
 			</div>
 		</form>
-		<table #actors_table class="display"></table>
+		<table #actorEs_table class="display"></table>
 		<hr />
 
 		<!------||Adding new actors||----->

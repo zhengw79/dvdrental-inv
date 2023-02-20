@@ -7,10 +7,14 @@ import { remove } from "lodash";
   selector: 'app-new-film-actors',
   templateUrl: './actors.component.html',
   styleUrls: ['./actors.component.css'],
-  host: { "(window:onSelectActor)": "onSelectActor($event)" }
+  host: {
+    "(window:onSelectActor)": "onSelectActor($event)",
+    "(window:onDeleteActor)": "onDeleteActor($event)"
+  }
 })
 export class ActorsComponent implements OnInit {
   @Input() film_id?: number;
+  @ViewChild("actorEs_table") actorEs_table?: ElementRef<any>;
   @ViewChild("actors_table") actors_table?: ElementRef<any>;
 
   fg_searchActors: FormGroup;
@@ -33,9 +37,42 @@ export class ActorsComponent implements OnInit {
 
   ngOnInit(): void {
     //@ts-ignore
-    window["onSelectActor"] = this.onSelectActor.bind(this);
+    window["onSelectActor" as any] = this.onSelectActor.bind(this);
+    //@ts-ignore
+    window["onDeleteActor" as any] = this.onDeleteActor.bind(this);
+  }
 
-    console.log("receive film id::" + this.film_id);
+  async ngAfterViewInit() {
+    const { retrieveActorsByFilmId } = await this.actorService.retrieveActorsByFilmId(this.film_id!);
+    const actors_tbl = this.actors_table?.nativeElement;
+
+    if (this.$.fn.DataTable.isDataTable(actors_tbl)) {
+      this.$(actors_tbl).DataTable().clear();
+      this.$(actors_tbl).DataTable().destroy();
+    }
+    this.$(actors_tbl).DataTable({
+      data: retrieveActorsByFilmId,
+      responsive: true,
+      searching: false,
+      paging: false,
+      bLengthChange: false,
+      info: false,
+      columns: [
+        {
+          title: "Delete",
+          data: "actor_id",
+          render: (data: any) => `<button class="btn btn-danger btn-circle btn-sm" onClick="onDeleteActor(${data})"><i class="fas fa-times"></i></button>`
+        },
+        {
+          title: "First name",
+          data: "first_name"
+        },
+        {
+          title: "Last name",
+          data: "last_name"
+        }
+      ]
+    });
   }
 
   getActorControls() {
@@ -68,12 +105,17 @@ export class ActorsComponent implements OnInit {
     }
   }
 
+  async onDeleteActor(actor_id: number) {
+    await this.actorService.removeFilmActor(+this.film_id!, +actor_id);
+    this.ngAfterViewInit();
+  }
+
   async searchActors() {
     const { searching_text } = this.fg_searchActors.value;
     const data = await this.actorService.retrieveActorES(searching_text) as any;
 
     const { retrieveActorES } = data;
-    const tableElem = this.actors_table?.nativeElement;
+    const tableElem = this.actorEs_table?.nativeElement;
     if (this.$.fn.DataTable.isDataTable(tableElem)) {
       this.$(tableElem).DataTable().clear();
       this.$(tableElem).DataTable().destroy();

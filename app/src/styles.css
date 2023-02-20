@@ -81,11 +81,11 @@ div.help-txt:before {
 	border-radius: 0 10px 10px 0;
 }
 
-#actorTable > thead > tr > * {
+table.display > thead > tr > * {
 	text-align: center;
 }
 
-#actorTable > tbody {
+table.display > tbody {
 	text-align: center;
 }
 
