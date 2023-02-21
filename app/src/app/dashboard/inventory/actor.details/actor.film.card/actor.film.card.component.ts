@@ -16,6 +16,6 @@ export class ActorFilmCardComponent implements OnInit {
   }
 
   handleClickFilmDetail() {
-    this.router.navigate([`/inventory/film/${this.film.film_id}`]);
+    this.router.navigate([`/inventory/film/view/${this.film.film_id}`]);
   }
 }
