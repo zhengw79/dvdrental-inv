@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Apollo, gql } from 'apollo-angular';
+import { IFilmActorsInput } from './type/Ifilm.actors.input';
 import { NewFilmType } from './type/new.film';
 
 @Injectable({
@@ -106,6 +107,27 @@ export class FilmService {
         }
       }`,
       variables: { payload }
+    }).toPromise() as any;
+
+    if (errors && errors[0] && errors[0].message === "Unauthorized") {
+      this.router.navigate(["/login"]);
+    }
+
+    return data;
+  }
+
+  async addFilmActors(payload: IFilmActorsInput) {
+    const { data, errors } = await this.apollo.mutate({
+      mutation: gql`
+      mutation addFilmActors($payload: FilmActorInput!) {
+        addFilmActors(payload: $payload) {
+          first_name
+          last_name
+          actor_id
+        }}`,
+      variables: {
+        payload
+      }
     }).toPromise() as any;
 
     if (errors && errors[0] && errors[0].message === "Unauthorized") {

@@ -2,6 +2,8 @@ import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActorService } from '../../../../service/actor.service';
 import { remove } from "lodash";
+import { FilmService } from '../../../../service/film.service';
+import { BLOCK_CSS } from 'src/app/constants';
 
 @Component({
   selector: 'app-new-film-actors',
@@ -16,6 +18,7 @@ export class ActorsComponent implements OnInit {
   @Input() film_id?: number;
   @ViewChild("actorEs_table") actorEs_table?: ElementRef<any>;
   @ViewChild("actors_table") actors_table?: ElementRef<any>;
+  @ViewChild("film_actor_card_el") film_actor_card_el?: ElementRef<any>;
 
   fg_searchActors: FormGroup;
   fg_formModel: FormGroup = new FormGroup({
@@ -28,7 +31,8 @@ export class ActorsComponent implements OnInit {
   $: any = window.jQuery;
 
   constructor(
-    private actorService: ActorService
+    private actorService: ActorService,
+    private filmService: FilmService
   ) {
     this.fg_searchActors = new FormGroup({
       searching_text: new FormControl("", [Validators.required])
@@ -40,10 +44,26 @@ export class ActorsComponent implements OnInit {
     window["onSelectActor" as any] = this.onSelectActor.bind(this);
     //@ts-ignore
     window["onDeleteActor" as any] = this.onDeleteActor.bind(this);
+
+    //**--------------|| RESET PAGE ||----------------*//
+    const tableElem = this.actorEs_table?.nativeElement;
+    if (this.$.fn.DataTable.isDataTable(tableElem)) {
+      this.$(tableElem).DataTable().destroy();
+      this.$(tableElem).empty();
+    }
+    this.fg_searchActors.get("searching_text")?.reset();
+    (this.fg_formModel.get("actors") as FormArray).clear();
+    //**-------------|| RESET SEARCHING END ||---------------*//
   }
 
   async ngAfterViewInit() {
+    this.$(this.film_actor_card_el?.nativeElement).block({
+      message: null,
+      css: BLOCK_CSS
+    });
     const { retrieveActorsByFilmId } = await this.actorService.retrieveActorsByFilmId(this.film_id!);
+    this.$(this.film_actor_card_el?.nativeElement).unblock();
+
     const actors_tbl = this.actors_table?.nativeElement;
 
     if (this.$.fn.DataTable.isDataTable(actors_tbl)) {
@@ -97,7 +117,7 @@ export class ActorsComponent implements OnInit {
   onSelectActor(event: any) {
     const { target: { checked, defaultValue } } = event;
     if (checked) {
-      this.actors.push({ actor_id: defaultValue, first_name: "", last_name: "" });
+      this.actors.push({ actor_id: +defaultValue, first_name: "", last_name: "" });
     } else {
       remove(this.actors, (actor: any) => {
         return actor.actor_id === defaultValue;
@@ -145,7 +165,7 @@ export class ActorsComponent implements OnInit {
     })
   }
 
-  saveActors() {
+  async saveActors() {
     this.fg_formModel.markAllAsTouched();
 
     if (!this.fg_formModel.valid) {
@@ -154,8 +174,19 @@ export class ActorsComponent implements OnInit {
 
     const { actors } = this.fg_formModel.value;
     const temp = this.actors.concat(actors.map((actor: any) => ({ actor_id: null, ...actor })));
-    console.log(temp);
 
-    // submit to portal
+    this.$(this.film_actor_card_el?.nativeElement).block({
+      message: null,
+      css: BLOCK_CSS
+    });
+
+    await this.filmService.addFilmActors({
+      film_id: +this.film_id!,
+      actors: temp
+    });
+    this.$(this.film_actor_card_el?.nativeElement).unblock();
+
+    this.ngOnInit();
+    this.ngAfterViewInit();
   }
 }
