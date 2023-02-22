@@ -21,8 +21,8 @@ export class LoginComponent implements OnInit {
 		private _router: Router
 	) {
 		this.loginFormModel = new FormGroup({
-			email: new FormControl('', [Validators.required, Validators.email]),
-			password: new FormControl('', [Validators.required]),
+			email: new FormControl('wuwlacoj@veldit.il', [Validators.required, Validators.email]),
+			password: new FormControl('12345678', [Validators.required]),
 			remember_me: new FormControl('')
 		});
 

@@ -12,6 +12,8 @@ import { FilmService } from 'src/app/dashboard/service/film.service';
 export class SearchComponent implements OnInit {
   searchFormModel: FormGroup;
 
+  @ViewChild("filmES_table") filmES_table?: ElementRef<HTMLTableElement>;
+
   // @ts-ignore
   private $ = window.jQuery;
 
@@ -25,8 +27,7 @@ export class SearchComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   get searching_text() {
     return this.searchFormModel.get("searching_text");
@@ -36,13 +37,14 @@ export class SearchComponent implements OnInit {
     const { searching_text } = this.searchFormModel.value;
     const data = await this.filmService.retrieveFilmES(searching_text) as any;
 
-    if (this.$.fn.DataTable.isDataTable('#filmES_table')) {
-      this.$("#filmES_table").DataTable().clear();
-      this.$("#filmES_table").DataTable().destroy();
+    const filmES_table_el = this.$(this.filmES_table?.nativeElement);
+    if (this.$.fn.DataTable.isDataTable(filmES_table_el)) {
+      this.$(filmES_table_el).DataTable().clear();
+      this.$(filmES_table_el).DataTable().destroy();
     }
 
     const { retrieveFilmES } = data as any;
-    this.$("#filmES_table").DataTable({
+    this.$(filmES_table_el).DataTable({
       responsive: true,
       data: retrieveFilmES,
       searching: false,

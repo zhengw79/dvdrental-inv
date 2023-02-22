@@ -121,10 +121,7 @@ export class FilmService {
       mutation: gql`
       mutation addFilmActors($payload: FilmActorInput!) {
         addFilmActors(payload: $payload) {
-          first_name
-          last_name
-          actor_id
-        }}`,
+          first_name last_name actor_id }}`,
       variables: {
         payload
       }
