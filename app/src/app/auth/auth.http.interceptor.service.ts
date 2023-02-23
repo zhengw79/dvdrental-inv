@@ -31,7 +31,7 @@ export class AuthHttpInterceptorService {
 		return next.handle(req).pipe(
 		  catchError((error: any) => {
 				if (error.status === 401) {
-					this._router.navigate(["/login"]);
+					this._router.navigate(["/auth/login"]);
 				}
 				return throwError(error);
 			})

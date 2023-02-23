@@ -48,7 +48,7 @@ export class VerifyEmailComponent implements OnInit {
       if (staff) {
         const { email, email_verified_at } = staff as any;
         if (email_verified_at) {
-          this._router.navigate(["/login"]);
+          this._router.navigate(["/auth/login"]);
         } else {
           this.email?.setValue(email);
         }
@@ -78,7 +78,7 @@ export class VerifyEmailComponent implements OnInit {
     this.httpClient.post<any>("api/auth/verify", this.formModel.value).subscribe(resp => {
       const { status, code } = resp;
       if (status === "ok" && code === "verified") {
-        this._router.navigate(["/login"]);
+        this._router.navigate(["/auth/login"]);
       } else if (status === "ok" && code === "email_sent") {
         this.email_sent = true;
       } else if (status === "failed" && code === "invalid_email") {

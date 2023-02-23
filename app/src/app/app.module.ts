@@ -7,29 +7,25 @@ import { HttpLink } from "apollo-angular/http";
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthHttpInterceptorService } from './auth/auth.http.interceptor.service';
-import { AuthModule } from './auth/auth.module';
-import { DashboardModule } from './dashboard/dashboard.module';
 import { setContext } from '@apollo/client/link/context';
 
 @NgModule({
-	declarations: [
-		AppComponent
-	],
-	imports: [
-		ApolloModule,
-		AppRoutingModule,
-		AuthModule,
-		BrowserModule,
-		// DashboardModule,
-		HttpClientModule
-	],
-	providers: [
-		{
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    ApolloModule,
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule
+  ],
+  providers: [
+    {
 			provide: HTTP_INTERCEPTORS,
 			useClass: AuthHttpInterceptorService,
 			multi: true
 		},
-		{
+    {
 			provide: APOLLO_OPTIONS,
 			useFactory(httpLink: HttpLink) {
 				const basic = setContext((operation, context) => ({
@@ -75,7 +71,7 @@ import { setContext } from '@apollo/client/link/context';
 			},
 			deps: [HttpLink]
 		}
-	],
-	bootstrap: [AppComponent]
+  ],
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

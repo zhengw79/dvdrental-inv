@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BLOCK_CSS } from '../../constants';
-// import { Apollo, gql } from 'apollo-angular';
 
 @Component({
 	selector: 'app-register',

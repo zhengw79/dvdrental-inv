@@ -1,21 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AppComponent } from './app.component';
-import { LoginComponent } from './auth/login/login.component';
-import { RegisterComponent } from './auth/register/register.component';
-import { VerifyEmailComponent } from './auth/verify.email/verify.email.component';
-import { MainComponent } from './dashboard/main/main.component';
 
 const routes: Routes = [
-  { path: "", component: AppComponent },
-  { path: "login", component: LoginComponent },
-  { path: "verify-email/:id", component: VerifyEmailComponent },
-  { path: "register", component: RegisterComponent },
-  { path: "main", component: MainComponent },
+  {
+    path: "auth",
+    loadChildren: () => import("./auth/auth.module").then(m => m.AuthModule)
+  },
   {
     path: "inventory",
-    loadChildren: () => import("./dashboard/dashboard.module").then(m => m.DashboardModule)
-  },
+    loadChildren: () => import("./inventory/inventory.module").then(m => m.InventoryModule)
+  }
 ];
 
 @NgModule({

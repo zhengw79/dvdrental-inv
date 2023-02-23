@@ -1,5 +1,3 @@
-<AuthLayout>
-	<ng-template #child>
 		<!------Nested Row within Card Body -->
 		<div class="row">
 			<div class="col-lg-6 d-none d-lg-block bg-password-image"></div>
@@ -31,14 +29,12 @@
 						</form>
 						<hr>
 						<div class="text-center">
-							<a class="small" [routerLink]="['/register']">Create an Account!</a>
+							<a class="small" [routerLink]="['/auth/register']">Create an Account!</a>
 						</div>
 						<div class="text-center">
-							<a class="small" [routerLink]="['/login']">Already have an account? Login!</a>
+							<a class="small" [routerLink]="['/auth/login']">Already have an account? Login!</a>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</ng-template>
-</AuthLayout>

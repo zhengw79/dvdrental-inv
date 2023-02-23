@@ -21,7 +21,7 @@ export class TopbarComponent implements OnInit {
     this.httpClient.get("api/auth/loggedin").subscribe({
       next: (data) => {
         if (!data) {
-          this.router.navigate(['/login']);
+          this.router.navigate(['/auth/login']);
         }
       },
       error: (error) => {},
@@ -36,7 +36,7 @@ export class TopbarComponent implements OnInit {
         if (data.status === 'ok') {
           localStorage.clear();
           this.apollo.client.resetStore();
-          this.router.navigate(['/login']);
+          this.router.navigate(['/auth/login']);
         }
       });
   }

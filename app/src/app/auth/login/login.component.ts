@@ -55,7 +55,7 @@ export class LoginComponent implements OnInit {
 			next: resp => {
 				localStorage.setItem("access_token", resp.access_token);
 				localStorage.setItem("remember_token", resp.remember_token);
-				this._router.navigate(["/main"]);
+				this._router.navigate(["/inventory"]);
 			},
 			error: (resp: HttpErrorResponse) => {
 				const {error: { response: { statusCode, message }}} = resp;
