@@ -96,7 +96,7 @@ export class ActorsComponent implements OnInit {
   }
 
   getActorControls() {
-    return (this.fg_formModel.get("actors") as FormArray).controls
+    return (this.fg_formModel.get("actors") as FormArray).controls;
   }
 
   addActor() {

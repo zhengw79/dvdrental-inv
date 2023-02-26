@@ -1,6 +1,6 @@
-<div class="card mb-4">
-	<div class="card-header">
-		Film Info <span *ngIf="film_id">(ID: {{ film_id }})</span>
+<div class="card shadow mb-4">
+	<div class="card-header py-3">
+		<h6 class="m-0 font-weight-bold text-primary">Film Info <span *ngIf="film_id">(ID: {{ film_id }})</span></h6>
 	</div>
 	<div class="card-body" #film_info_card_el>
 		<form class="user" [formGroup]="fg_film" (ngSubmit)="onSubmit()">
@@ -151,7 +151,7 @@
 					<button class="btn btn-primary btn-user btn-block" type="submit">Save</button>
 				</div>
 				<div class="col">
-					<button class="btn btn-secondary btn-user btn-block" type="button" (click)="onReset()">Cancel</button>
+					<button class="btn btn-secondary btn-user btn-block" type="button" (click)="onReset()">Reset</button>
 				</div>
 			</div>
 		</form>

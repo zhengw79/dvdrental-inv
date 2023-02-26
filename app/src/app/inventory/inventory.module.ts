@@ -18,6 +18,12 @@ import { ActorsComponent } from './actors/actors.component';
 import { SearchComponent as ActorSearchComponent } from './actors/search/search.component';
 import { ActorDetailsComponent } from './actor.details/actor.details.component';
 import { ActorFilmCardComponent } from './actor.details/actor.film.card/actor.film.card.component';
+import { StoresComponent } from './stores/stores.component';
+import { StoreComponent } from './stores/store/store.component';
+import { AddressComponent } from './components/address/address.component';
+import { ManagerComponent } from './components/manager/manager.component';
+import { NewCountryComponent } from './components/address/new.country/new.country.component';
+
 
 
 
@@ -36,7 +42,12 @@ import { ActorFilmCardComponent } from './actor.details/actor.film.card/actor.fi
     ActorsComponent,
     ActorSearchComponent,
     ActorDetailsComponent,
-    ActorFilmCardComponent
+    ActorFilmCardComponent,
+    StoresComponent,
+    StoreComponent,
+    AddressComponent,
+    ManagerComponent,
+    NewCountryComponent
   ],
   imports: [
     CommonModule,

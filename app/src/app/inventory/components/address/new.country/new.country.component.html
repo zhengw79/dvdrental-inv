@@ -1,0 +1,67 @@
+<!-- Modal -->
+<div class="modal fade" id="countryModal" tabindex="-1" role="dialog" aria-labelledby="countryModalLabel"
+	aria-hidden="true" data-backdrop="static" data-keyboard="false">
+	<div class="modal-dialog" role="document">
+		<form class="user" (ngSubmit)="onSubmit()" [formGroup]="fg_country">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="countryModalLabel">Add new country</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="form-group row">
+						<div class="col-sm-5 mb-3 mb-sm-0">
+							<label class="form-span mx-2">Country*</label>
+							<input type="text" class="form-control form-control-user" formControlName="country"/>
+							<div *ngIf="country && country.invalid && (country.dirty || country.touched)">
+								<div *ngIf="country.errors?.['required']" class="help-error">
+									Please enter the country name.
+								</div>
+							</div>
+						</div>
+
+						<div class="col-sm-7 mb-3 mb-sm-0">
+							<div formArrayName="cities">
+								<div *ngFor="let city of getCityControls(); let i=index">
+									<label class="form-span mx-2">City*</label>
+									<div class="row">
+										<div class="col-sm-9">
+											<input type="text" class="form-control form-control-user" [formControlName]="i"/>
+											<div *ngIf="city && city.invalid && (city.dirty || city.touched)">
+												<div *ngIf="city.errors?.['required']" class="help-error">Please enter the city name.</div>
+											</div>
+										</div>
+										<div class="col-sm-3 new-city">
+											<button type="button" class="btn btn-danger btn-circle" (click)="removeCity(i)">
+												<i class="fas fa-trash"></i>
+											</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="form-group row">
+						<div class="col-sm-6 mb-3 mb-sb-0"></div>
+						<div class="col-sm-6 mb-3 mb-sb-0 justify-content-end" style="display:flex">
+							<button type="button" class="btn btn-info btn-user btn-sm" (click)="addCity()">Add new city</button>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<div class="form-group row justify-content-between">
+						<div class="col-sm-6 mb-3 mb-sm-0">
+							<button type="submit" class="btn btn-primary btn-user btn-block">Save</button>
+						</div>
+						<div class="col-sm-6 mb-3 mb-sm-0">
+							<button type="button" class="btn btn-secondary btn-user " (click)="onClose()">Close</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>

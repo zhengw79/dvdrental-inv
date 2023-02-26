@@ -1,0 +1,19 @@
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+	<h1 class="h3 mb-0 text-gray-800">
+		<a class="btn btn-primary" type="button" [routerLink]="['/inventory/store']">
+			<i class="fas fa-arrow-circle-left"></i>
+		</a>&nbsp;
+		<span *ngIf="!store_id">New Store</span>
+		<span *ngIf="store_id">Edit Store</span>
+	</h1>
+</div>
+
+<div class="row">
+	<div class="col-lg-6">
+		<app-address *ngIf="!store_id || address" [address_ety]="address"></app-address>
+	</div>
+	<div class="col-lg-6">
+		<app-manager *ngIf="!store_id || manager" [manager_ety]="manager
+		"></app-manager>
+	</div>
+</div>

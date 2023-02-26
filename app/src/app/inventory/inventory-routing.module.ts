@@ -8,6 +8,8 @@ import { FilmDetailsComponent } from './film.details/film.details.component';
 import { NewFilmComponent } from './films/new.film/new.film.component';
 import { ActorsComponent } from './actors/actors.component';
 import { ActorDetailsComponent } from './actor.details/actor.details.component';
+import { StoresComponent } from './stores/stores.component';
+import { StoreComponent } from './stores/store/store.component';
 
 const routes: Routes = [
   {
@@ -36,8 +38,26 @@ const routes: Routes = [
         "path": "film",
         "component": FilmsComponent
       },
-      { "path": "actor", "component": ActorsComponent },
-      { "path": "actor/:actor_id", "component": ActorDetailsComponent }
+      {
+        "path": "actor",
+        "component": ActorsComponent
+      },
+      {
+        "path": "actor/:actor_id",
+        "component": ActorDetailsComponent
+      },
+      {
+        "path": "store",
+        "component": StoresComponent
+      },
+      {
+        "path": "store/create",
+        "component": StoreComponent
+      },
+      {
+        "path": "store/update/:store_id",
+        "component": StoreComponent
+      }
     ]
   }
 ];

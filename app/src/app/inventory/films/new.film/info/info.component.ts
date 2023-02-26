@@ -1,8 +1,8 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import IMask from 'imask';
-import { BLOCK_CSS } from 'src/app/constants';
+import { BLOCK_CSS } from '../../../../constants';
 import { ValidatorService } from '../../../../services/validator.service';
 import { FilmService } from '../../../../services/film.service';
 

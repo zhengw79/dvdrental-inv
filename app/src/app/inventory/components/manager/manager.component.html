@@ -1,0 +1,37 @@
+<div class="card shadow mb-4" #card_manager_el>
+	<div class="card-header py-3 d-flex flex-row align-item-center justify-content-between">
+		<h6 class="m-0 font-weight-bold text-primary">Store Manager</h6>
+	</div>
+
+	<div class="card-body">
+		<form class="user" [formGroup]="fg_manager" (ngSubmit)="onSubmit">
+			<div class="form-group row">
+				<div class="col-sm-6 mb-3 mb-sm-0">
+					<label class="form-span mx-2">First name*</label>
+					<input type="text" class="form-control form-control-user" formControlName="first_name" />
+				</div>
+				<div class="col-sm-6 mb-3 mb-sm-0">
+					<label class="form-span mx-2">Last name*</label>
+					<input type="text" class="form-control form-control-user" formControlName="last_name" />
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<div class="col-sm-6 mb-3 mb-sm-0">
+					<label class="form-span mx-2">Email*</label>
+					<input class="form-control form-control-user" formControlName="email" />
+				</div>
+			</div>
+
+			<hr />
+			<div class="form-group row justify-content-between">
+				<div class="col-sm-6 mb-3 mb-sm-0">
+					<button class="btn btn-primary btn-user btn-block" type="submit">Save</button>
+				</div>
+				<div class="col-sm-6 mb-3 mb-sm-0">
+					<button class="btn btn-secondary btn-user btn-block" type="button" (click)="onReset()">Reset</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>

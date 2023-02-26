@@ -121,3 +121,23 @@ table.display > tbody {
 	color: #6e707e;
 	line-height: 12px !important;
 }
+
+.form-control-select {
+	padding: 7px !important;
+	height: calc(1.5em + 0.75rem + 20px);
+	width: inherit;
+	border: 1px solid #d1d3e2;
+	color: #6e707e;
+	transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.form-control-textarea {
+	font-size: 0.8rem;
+	color: #6e707e;
+	border-radius: 10px;
+}
+
+.form-span {
+	font-size: 0.8rem;
+	color: #6e707e;
+}
