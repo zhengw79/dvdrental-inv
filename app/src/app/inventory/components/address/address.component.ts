@@ -4,7 +4,7 @@ import IMask from 'imask';
 import { BLOCK_CSS } from '../../../constants';
 import { IaddressInput } from '../../../services/type/iaddress.input';
 import { Router } from '@angular/router';
-import { AddressType } from 'src/app/services/dto/address.type';
+import { AddressType } from '../../../services/dto/address.type';
 import { CityType } from 'src/app/services/dto/city.type';
 import { CountryType } from 'src/app/services/dto/country.type';
 import { ValidatorService } from 'src/app/services/validator.service';
@@ -31,6 +31,7 @@ export class AddressComponent implements OnInit {
 	// @ts-ignore
 	$: any = window.jQuery;
 
+	address_id: any;
 	im_postcode: any;
 	im_phone: any;
 	sel_country: any;
@@ -94,6 +95,7 @@ export class AddressComponent implements OnInit {
 	prefillFormGroup() {
 
 		if (this.address_ety) {
+			this.address_id = this.address_ety.address_id;
 			this.address?.setValue(this.address_ety?.address);
 			this.address2?.setValue(this.address_ety.address2);
 			this.district?.setValue(this.address_ety.district);
@@ -212,6 +214,7 @@ export class AddressComponent implements OnInit {
 	}
 
 	async onSubmit() {
+
 		this.fg_address.markAllAsTouched();
 
 		if (!this.fg_address.valid) {
@@ -240,6 +243,7 @@ export class AddressComponent implements OnInit {
 			// create new address
 			const { address_id } = await this.addressService.insertAddress(payload);
 			this.evt_setAddressId.emit(address_id);
+			this.address_id = address_id;
 		}
 		this.$(this.card_address_el?.nativeElement).unblock();
 	}

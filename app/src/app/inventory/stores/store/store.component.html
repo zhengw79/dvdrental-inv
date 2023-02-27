@@ -1,5 +1,5 @@
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-	<h1 class="h3 mb-0 text-gray-800">
+	<h1 class="h3 mb-1 text-gray-800">
 		<a class="btn btn-primary" type="button" [routerLink]="['/inventory/store']">
 			<i class="fas fa-arrow-circle-left"></i>
 		</a>&nbsp;
@@ -7,15 +7,24 @@
 		<span *ngIf="store_id">Edit Store</span>
 	</h1>
 
-	<button class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" *ngIf="!store_id" [disabled]="!address_id || !manager_staff_id" (click)="onCreateStore()"><i
-		class="fas fa-download fa-sm text-white-50"></i> Create store</button>
+	<button class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" *ngIf="!store_id"
+		[disabled]="!address_id || !manager_staff_id" (click)="onCreateStore()"><i
+			class="fas fa-download fa-sm text-white-50"></i> Create store</button>
 </div>
+
+<ul class="mb-4 form-span text-gray-800" *ngIf="!store_id">
+	<li>Please provide both store address info and manager info.</li>
+	<li>To find a manager please seach either first name, last name or email.</li>
+	<li>"Create store" button will be available when both information ready.</li>
+	<li>Please don't refresh page before clicking "Create store" button.</li>
+</ul>
 
 <div class="row" #store_el>
 	<div class="col-lg-6">
-		<app-address *ngIf="!store_id || address" [address_ety]="address" (evt_reloadStore)="ngOnInit()" (evt_setAddressId)="setAddressId($event)"></app-address>
+		<app-address *ngIf="!store_id || address" [address_ety]="address" (evt_reloadStore)="ngOnInit()"
+			(evt_setAddressId)="setAddressId($event)"></app-address>
 	</div>
-	<div class="col-lg-6" >
+	<div class="col-lg-6">
 		<app-manager *ngIf="manager" [manager_ety]="manager
 		" (evt_reloadStaff)="ngOnInit()"></app-manager>
 		<app-search-manager *ngIf="!store_id" (evt_setManagerId)="setManagerId($event)"></app-search-manager>
