@@ -22,7 +22,7 @@ export class SearchManagerComponent implements OnInit {
 		private staffService: StaffService
 	) {
 		this.fg_search = new FormGroup({
-			search_txt: new FormControl("", [Validators.required])
+			search_txt: new FormControl("")
 		});
 
 		//@ts-ignore
