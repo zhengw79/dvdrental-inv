@@ -67,6 +67,7 @@
 						<div class="help-error" *ngIf="phone.errors?.['required']">
 							Please enter phone number.
 						</div>
+						<div class="help-error" *ngIf="phone.errors?.['valid_phone']">Please enter a valid phone number.</div>
 					</div>
 				</div>
 			</div>

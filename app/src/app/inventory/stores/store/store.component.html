@@ -6,14 +6,18 @@
 		<span *ngIf="!store_id">New Store</span>
 		<span *ngIf="store_id">Edit Store</span>
 	</h1>
+
+	<button class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" *ngIf="!store_id" [disabled]="!address_id || !manager_staff_id" (click)="onCreateStore()"><i
+		class="fas fa-download fa-sm text-white-50"></i> Create store</button>
 </div>
 
-<div class="row">
+<div class="row" #store_el>
 	<div class="col-lg-6">
-		<app-address *ngIf="!store_id || address" [address_ety]="address" (evt_reloadStore)="ngOnInit()"></app-address>
+		<app-address *ngIf="!store_id || address" [address_ety]="address" (evt_reloadStore)="ngOnInit()" (evt_setAddressId)="setAddressId($event)"></app-address>
 	</div>
-	<div class="col-lg-6">
-		<app-manager *ngIf="!store_id || manager" [manager_ety]="manager
+	<div class="col-lg-6" >
+		<app-manager *ngIf="manager" [manager_ety]="manager
 		" (evt_reloadStaff)="ngOnInit()"></app-manager>
+		<app-search-manager *ngIf="!store_id" (evt_setManagerId)="setManagerId($event)"></app-search-manager>
 	</div>
 </div>

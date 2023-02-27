@@ -33,4 +33,16 @@ export class AddressService extends BaseService {
 		this.redirectToLoginIfError(errors);
 		return (data as any).updateAddress;
 	}
+
+	async insertAddress(payload: AddressType) {
+		const {data, errors} = await lastValueFrom(this.apollo.mutate({
+			mutation: gql`mutation insertAddress($payload: AddressInput!) {
+				insertAddress(payload: $payload) {
+					address_id address address2 city_id }}`,
+			variables: { payload }
+		}));
+
+		this.redirectToLoginIfError(errors);
+		return (data as any).insertAddress;
+	}
 }

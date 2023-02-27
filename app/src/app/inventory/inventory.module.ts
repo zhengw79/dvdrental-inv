@@ -23,6 +23,7 @@ import { StoreComponent } from './stores/store/store.component';
 import { AddressComponent } from './components/address/address.component';
 import { ManagerComponent } from './components/manager/manager.component';
 import { NewCountryComponent } from './components/address/new.country/new.country.component';
+import { SearchManagerComponent } from './components/search.manager/search.manager.component';
 
 
 
@@ -47,7 +48,8 @@ import { NewCountryComponent } from './components/address/new.country/new.countr
     StoreComponent,
     AddressComponent,
     ManagerComponent,
-    NewCountryComponent
+    NewCountryComponent,
+    SearchManagerComponent
   ],
   imports: [
     CommonModule,

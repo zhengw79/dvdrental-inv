@@ -19,4 +19,10 @@ export class ValidatorService {
     const valid = !value || value.match(/^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$/i);
     return valid ? null : { valid_postalcode: true };
   }
+
+  phoneNumberValidator(control: FormControl): ValidationErrors | null {
+    const value = String(control.value) || '';
+    const valid = !value || value.match(/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/);
+    return valid ? null: { valid_phone: true};
+  }
 }

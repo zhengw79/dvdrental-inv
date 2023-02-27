@@ -1,0 +1,29 @@
+<div class="card shadow mb-4" #card_manager_el>
+	<div class="card-header py-3 d-flex flex-row align-item-center justify-content-between">
+		<h6 class="m-0 font-weight-bold text-primary">Store Manager</h6>
+	</div>
+
+	<div class="card-body">
+		<form class="form-inline mr-auto w-100 navbar-search" [formGroup]="fg_search" (ngSubmit)="onSubmit()">
+			<label class="form-span my-2">(Hint: Searching terms separated by ';')</label>
+			<div class="input-group">
+				<input type="text" class="form-control bg-light border-0 small"
+					placeholder="Search a manager by first name, last name or email" aria-label="Search"
+					aria-describedby="basic-addon2" formControlName="search_txt">
+				<div class="input-group-append">
+					<button class="btn btn-primary" type="submit">
+						<i class="fas fa-search fa-sm"></i>
+					</button>
+				</div>
+			</div>
+
+			<div *ngIf="search_txt && search_txt.invalid && (search_txt.dirty || search_txt.touched)">
+				<div class="help-error" *ngIf="search_txt.errors?.['required']">Please enter searching content.</div>
+			</div>
+		</form>
+
+		<div class="datatable mt-4">
+			<table #manager_tbl></table>
+		</div>
+	</div>
+</div>

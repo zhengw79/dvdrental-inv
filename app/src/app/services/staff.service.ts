@@ -9,7 +9,7 @@ import { StaffType } from "./dto/staff.type";
 })
 export class StaffService extends BaseService {
 	async editStaff(payload: StaffType) {
-		const {data, errors} = await lastValueFrom(this.apollo.mutate({
+		const { data, errors } = await lastValueFrom(this.apollo.mutate({
 			mutation: gql`mutation editStaff($payload: StaffInput!){
 				editStaff(payload: $payload) {
 					staff_id first_name last_name email }}`,
@@ -19,5 +19,18 @@ export class StaffService extends BaseService {
 		this.redirectToLoginIfError(errors);
 
 		return (data as any).editStaff;
+	}
+
+	async retrieveStaffsByFLNameOrEmail(payload: string) {
+		const { data, errors } = await lastValueFrom(this.apollo.query({
+			query: gql`query retrieveStaffsByFLNameOrEmail($payload: String!) {
+				retrieveStaffsByFLNameOrEmail(payload: $payload) {
+					staff_id first_name last_name email}}`,
+			variables: { payload }
+		}));
+
+		this.redirectToLoginIfError(errors);
+
+		return (data as any).retrieveStaffsByFLNameOrEmail;
 	}
 }

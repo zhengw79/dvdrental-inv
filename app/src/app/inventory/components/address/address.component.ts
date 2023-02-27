@@ -20,6 +20,7 @@ export class AddressComponent implements OnInit {
 	fg_address: FormGroup;
 	@Input() address_ety?: AddressType;
 	@Output() evt_reloadStore: EventEmitter<any>;
+	@Output() evt_setAddressId: EventEmitter<number>;
 
 	@ViewChild("country_el") country_el?: ElementRef<HTMLSelectElement>;
 	@ViewChild("city_el") city_el?: ElementRef<HTMLSelectElement>;
@@ -44,6 +45,7 @@ export class AddressComponent implements OnInit {
 		private router: Router
 	) {
 		this.evt_reloadStore = new EventEmitter;
+		this.evt_setAddressId = new EventEmitter<number>;
 
 		this.fg_address = new FormGroup({
 			address: new FormControl(this.address_ety?.address, [Validators.required]),
@@ -52,7 +54,7 @@ export class AddressComponent implements OnInit {
 			city_id: new FormControl({ value: "", disabled: true }, [Validators.required]),
 			district: new FormControl("", [Validators.required]),
 			postal_code: new FormControl("", [Validators.required, validatorService.postalcodeValidator]),
-			phone: new FormControl("", [Validators.required])
+			phone: new FormControl("", [Validators.required, validatorService.phoneNumberValidator])
 		});
 	}
 
@@ -85,7 +87,36 @@ export class AddressComponent implements OnInit {
 			}
 		});
 
-		//**--------------|| RESET Country dropdown ||----------------- */
+		await this.initCountry();
+		this.initCity([]);
+	}
+
+	prefillFormGroup() {
+
+		if (this.address_ety) {
+			this.address?.setValue(this.address_ety?.address);
+			this.address2?.setValue(this.address_ety.address2);
+			this.district?.setValue(this.address_ety.district);
+
+			this.postcode?.setValue(this.address_ety.postal_code);
+			this.im_postcode.value = this.address_ety.postal_code;
+
+			this.phone?.setValue(this.address_ety.phone);
+			this.im_phone.value = this.address_ety.phone;
+
+			this.country?.setValue(this.address_ety.city?.country?.country_id);
+			this.sel_country.val(this.address_ety.city?.country?.country_id).trigger("change");
+
+			this.city?.setValue(this.address_ety.city_id);
+			const country = this.countries?.find(country => country.country_id === this.address_ety?.city?.country?.country_id) as any;
+			if (country) {
+				this.initCity(country.cities, this.address_ety?.city_id?.toString());
+			}
+		}
+	}
+
+	async initCountry() {
+
 		this.$(this.card_address_el?.nativeElement).block({
 			message: null,
 			css: BLOCK_CSS
@@ -113,40 +144,6 @@ export class AddressComponent implements OnInit {
 			});
 		}
 
-		//**--------------|| Disable city dropdown ||------------------ */
-		const $_city_el = this.$(this.city_el?.nativeElement);
-		if ($_city_el.hasClass('select2-hidden-accessible')) {
-			$_city_el.empty().trigger("change");
-			$_city_el.select2("destroy");
-			this.city?.disable();
-		}
-	}
-
-	prefillFormGroup() {
-
-		console.log(this.address_ety);
-
-		if (this.address_ety) {
-			this.address?.setValue(this.address_ety?.address);
-			this.address2?.setValue(this.address_ety.address2);
-			this.district?.setValue(this.address_ety.district);
-
-			this.postcode?.setValue(this.address_ety.postal_code);
-			this.im_postcode.value = this.address_ety.postal_code;
-
-			this.phone?.setValue(this.address_ety.phone);
-			this.im_phone.value = this.address_ety.phone;
-
-			this.country?.setValue(this.address_ety.city?.country?.country_id);
-			this.sel_country.val(this.address_ety.city?.country?.country_id).trigger("change");
-
-			this.city?.setValue(this.address_ety.city_id);
-			const country = this.countries?.find(country => country.country_id === this.address_ety?.city?.country?.country_id) as any;
-			if (country) {
-				this.initCity(country.cities, this.address_ety?.city_id?.toString());
-			}
-		}
-
 		this.country?.valueChanges.subscribe(value => {
 			this.sel_country.val(value).trigger("change");
 			const country = (this.countries?.find(country => country.country_id === value)) as any;
@@ -155,7 +152,6 @@ export class AddressComponent implements OnInit {
 				this.initCity(country.cities);
 			}
 		});
-
 	}
 
 	initCity(cities: Array<CityType>, city_id?: string) {
@@ -226,6 +222,7 @@ export class AddressComponent implements OnInit {
 			message: null,
 			css: BLOCK_CSS
 		});
+
 		const payload: IaddressInput = {
 			address_id: this.address_ety?.address_id,
 			address: this.address?.value,
@@ -237,37 +234,34 @@ export class AddressComponent implements OnInit {
 		};
 
 		if (this.address_ety?.address_id) {
-			// update store address
-			const data = await this.addressService.updateAddress(payload);
+			await this.addressService.updateAddress(payload);
 			this.evt_reloadStore.emit();
 		} else {
-			// const { insertAddress: { address_id } } = await this.storeService.insertAddress(payload);
-			// this.$(this.card_address_el?.nativeElement).unblock();
-			// this.router.navigate([`/inventory/store/update/${address_id}`]);
+			// create new address
+			const { address_id } = await this.addressService.insertAddress(payload);
+			this.evt_setAddressId.emit(address_id);
 		}
 		this.$(this.card_address_el?.nativeElement).unblock();
 	}
 
 	onReset() {
 		this.fg_address.reset();
-
-		console.log(this.fg_address.value);
-
 		this.im_postcode.destroy();
 		this.im_phone.destroy();
 		this.initFormPlugin();
 	}
 
-	onReloadCountry(_: any) {
+	async onReloadCountry(_: any) {
 		this.showCountryModal = false;
-		// this.initCountry();
+		await this.initCountry();
+		this.initCity([]);
 	}
 
 	onShowCountryModal() {
 		this.showCountryModal = true;
 	}
 
-	onCloseCountryModal(e: any) {
+	onCloseCountryModal(_: any) {
 		this.showCountryModal = false;
 	}
 }
