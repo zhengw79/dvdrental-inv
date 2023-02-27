@@ -2,6 +2,9 @@ import { IsInt, IsObject, IsString } from "class-validator";
 import { CityEntityType } from "./city.entity.type";
 
 export class AddressType {
+	@IsInt()
+	address_id?: number;
+
 	@IsString()
 	address?: string;
 

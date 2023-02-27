@@ -1,13 +1,14 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { StoreService } from '../../../services/store.service';
 import IMask from 'imask';
 import { BLOCK_CSS } from '../../../constants';
 import { IaddressInput } from '../../../services/type/iaddress.input';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { AddressType } from 'src/app/services/dto/address.type';
 import { CityType } from 'src/app/services/dto/city.type';
 import { CountryType } from 'src/app/services/dto/country.type';
+import { ValidatorService } from 'src/app/services/validator.service';
+import { AddressService } from 'src/app/services/address.service';
 
 @Component({
 	selector: 'app-address',
@@ -18,6 +19,8 @@ export class AddressComponent implements OnInit {
 
 	fg_address: FormGroup;
 	@Input() address_ety?: AddressType;
+	@Output() evt_reloadStore: EventEmitter<any>;
+
 	@ViewChild("country_el") country_el?: ElementRef<HTMLSelectElement>;
 	@ViewChild("city_el") city_el?: ElementRef<HTMLSelectElement>;
 	@ViewChild("postcode_el") postcode_el?: ElementRef<HTMLInputElement>;
@@ -34,16 +37,19 @@ export class AddressComponent implements OnInit {
 	showCountryModal: boolean = false;
 
 	constructor(
-		private storeService: StoreService,
+		private addressService: AddressService,
+		private validatorService: ValidatorService,
 		private router: Router
 	) {
+		this.evt_reloadStore = new EventEmitter;
+
 		this.fg_address = new FormGroup({
 			address: new FormControl(this.address_ety?.address, [Validators.required]),
 			address2: new FormControl("", [Validators.maxLength(20)]),
 			country_id: new FormControl("", [Validators.required]),
 			city_id: new FormControl({ value: "", disabled: true }, [Validators.required]),
 			district: new FormControl("", [Validators.required]),
-			postal_code: new FormControl("", [Validators.required]),
+			postal_code: new FormControl("", [Validators.required, validatorService.postalcodeValidator]),
 			phone: new FormControl("", [Validators.required])
 		});
 	}
@@ -56,7 +62,7 @@ export class AddressComponent implements OnInit {
 			mask: "a0a-0a0",
 			lazy: false,
 			placeholderChar: "#",
-			commit: (value: any, masked: any) => {
+			commit: (_: any, masked: any) => {
 				const { unmaskedValue } = masked;
 				this.postcode?.setValue(unmaskedValue.toUpperCase());
 			}
@@ -66,7 +72,7 @@ export class AddressComponent implements OnInit {
 			mask: "(000)000-0000",
 			lazy: false,
 			placeholderChar: "_",
-			commit: (value: any, masked: any) => {
+			commit: (_: any, masked: any) => {
 				const { unmaskedValue } = masked;
 				this.phone?.setValue(unmaskedValue);
 			}
@@ -74,6 +80,7 @@ export class AddressComponent implements OnInit {
 	}
 
 	ngAfterContentInit() {
+
 		if (this.address_ety) {
 			this.address?.setValue(this.address_ety?.address);
 			this.address2?.setValue(this.address_ety.address2);
@@ -94,7 +101,7 @@ export class AddressComponent implements OnInit {
 			css: BLOCK_CSS
 		});
 		try {
-			const countries = await this.storeService.retrieveCountryEntities();
+			const countries = await this.addressService.retrieveCountryEntities();
 
 			const $_country_el = this.$(this.country_el?.nativeElement);
 			if ($_country_el.hasClass("select2-hidden-accessible")) {
@@ -163,7 +170,7 @@ export class AddressComponent implements OnInit {
 			});
 
 			city_sel.val(city_id).trigger("change");
-
+			this.city?.setValue(city_id);
 			this.city?.enable();
 		}
 	}
@@ -198,6 +205,7 @@ export class AddressComponent implements OnInit {
 
 	async onSubmit() {
 		this.fg_address.markAllAsTouched();
+
 		if (!this.fg_address.valid) {
 			return;
 		}
@@ -207,6 +215,7 @@ export class AddressComponent implements OnInit {
 			css: BLOCK_CSS
 		});
 		const payload: IaddressInput = {
+			address_id: this.address_ety?.address_id,
 			address: this.address?.value,
 			address2: this.address2?.value,
 			district: this.district?.value,
@@ -214,10 +223,17 @@ export class AddressComponent implements OnInit {
 			phone: this.phone?.value,
 			city_id: +this.city?.value
 		};
-		const { insertAddress: { address_id } } = await this.storeService.insertAddress(payload);
-		console.log(address_id);
+
+		if (this.address_ety?.address_id) {
+			// update store address
+			const data = await this.addressService.updateAddress(payload);
+			this.evt_reloadStore.emit();
+		} else {
+			// const { insertAddress: { address_id } } = await this.storeService.insertAddress(payload);
+			// this.$(this.card_address_el?.nativeElement).unblock();
+			// this.router.navigate([`/inventory/store/update/${address_id}`]);
+		}
 		this.$(this.card_address_el?.nativeElement).unblock();
-		this.router.navigate([`/inventory/store/update/${address_id}`]);
 	}
 
 	onReset() {

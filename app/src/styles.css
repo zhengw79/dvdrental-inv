@@ -141,3 +141,8 @@ table.display > tbody {
 	font-size: 0.8rem;
 	color: #6e707e;
 }
+
+.select2-results__option, .select2-search__field {
+	font-size: 0.8rem;
+	color: #6e707e;
+}

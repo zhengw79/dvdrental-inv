@@ -51,9 +51,10 @@
 					<label class="form-span mx-2">Postal code*</label>
 					<input type="text" class="form-control form-control-user" formControlName="postal_code" #postcode_el />
 					<div *ngIf="postcode && postcode.invalid && (postcode.dirty || postcode.touched)">
-						<div class="help-error">
+						<div class="help-error" *ngIf="postcode.errors?.['required']">
 							Please enter store's postal code.
 						</div>
+						<div class="help-error" *ngIf="postcode.errors?.['valid_postalcode']">Please enter a valid postal code.</div>
 					</div>
 				</div>
 			</div>

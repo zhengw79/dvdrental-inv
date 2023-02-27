@@ -10,10 +10,10 @@
 
 <div class="row">
 	<div class="col-lg-6">
-		<app-address *ngIf="!store_id || address" [address_ety]="address"></app-address>
+		<app-address *ngIf="!store_id || address" [address_ety]="address" (evt_reloadStore)="ngOnInit()"></app-address>
 	</div>
 	<div class="col-lg-6">
 		<app-manager *ngIf="!store_id || manager" [manager_ety]="manager
-		"></app-manager>
+		" (evt_reloadStaff)="ngOnInit()"></app-manager>
 	</div>
 </div>

@@ -1,6 +1,9 @@
 import { IsInt, IsString } from "class-validator";
 
 export class IaddressInput {
+	@IsInt()
+	address_id?: number;
+
 	@IsString()
 	address?: string;
 

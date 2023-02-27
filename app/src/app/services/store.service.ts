@@ -1,6 +1,5 @@
-import { Inject, Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { Apollo, gql } from 'apollo-angular';
+import { Injectable } from '@angular/core';
+import { gql } from 'apollo-angular';
 import { BaseService } from './base.service';
 import { StoreEntityType } from './dto/store.entity.type';
 import { CountryCitiesInput } from './type/country.cities.input';
@@ -10,18 +9,6 @@ import { IaddressInput } from './type/iaddress.input';
   providedIn: 'root'
 })
 export class StoreService extends BaseService {
-
-  async retrieveCountryEntities(): Promise<any> {
-    const { data, errors } = await this.apollo.query({
-      query: gql`query {
-        retrieveCountries { country_id country
-          cities { city_id city }}}`
-    }).toPromise() as any;
-
-    this.redirectToLoginIfError(errors);
-
-    return data.retrieveCountries;
-  }
 
   async addCountryWithCitites(payload: CountryCitiesInput) {
     const { data, errors } = await this.apollo.mutate({
@@ -58,32 +45,15 @@ export class StoreService extends BaseService {
     const { data, errors } = await this.apollo.query({
       query: gql`query {
         retrieveStoreEntityById(store_id: ${store_id}) {
-          store_id manager_staff_id
-          address_id
+          store_id manager_staff_id address_id
           address {
-            address
-            address2
-            district
-            phone
-            postal_code
-            city_id
+            address_id address address2 district phone postal_code city_id
             city {
-              city {
-                city_id
-                city
-              }
-              country {
-                country
-                country_id
-              }
+              city { city_id city }
+              country { country country_id }
             }
           }
-          staff {
-            staff_id
-            first_name
-            last_name
-            email
-          }
+          staff { staff_id first_name last_name email }
         }
       }`
     }).toPromise() as any;

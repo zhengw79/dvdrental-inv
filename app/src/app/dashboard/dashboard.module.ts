@@ -5,9 +5,7 @@ import { TopbarComponent } from './topbar/topbar.component';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { FooterComponent } from './footer/footer.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
 import { LayoutComponent } from './layout/layout.component';
-import { FilmComponent } from './film/film.component';
 
 
 
@@ -17,8 +15,8 @@ import { FilmComponent } from './film/film.component';
     SidebarComponent,
     TopbarComponent,
     FooterComponent,
-    DashboardComponent,
-    FilmComponent
+    // DashboardComponent,
+    // FilmComponent
   ],
   imports: [
     CommonModule,
