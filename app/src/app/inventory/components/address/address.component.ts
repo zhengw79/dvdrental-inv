@@ -36,6 +36,8 @@ export class AddressComponent implements OnInit {
 	sel_city: any;
 	showCountryModal: boolean = false;
 
+	countries?: Array<CountryType>;
+
 	constructor(
 		private addressService: AddressService,
 		private validatorService: ValidatorService,
@@ -58,6 +60,11 @@ export class AddressComponent implements OnInit {
 
 	async ngAfterViewInit() {
 
+		await this.initFormPlugin();
+		this.prefillFormGroup();
+	}
+
+	async initFormPlugin() {
 		this.im_postcode = IMask(this.postcode_el?.nativeElement!, {
 			mask: "a0a-0a0",
 			lazy: false,
@@ -77,42 +84,26 @@ export class AddressComponent implements OnInit {
 				this.phone?.setValue(unmaskedValue);
 			}
 		});
-	}
 
-	ngAfterContentInit() {
-
-		if (this.address_ety) {
-			this.address?.setValue(this.address_ety?.address);
-			this.address2?.setValue(this.address_ety.address2);
-			this.district?.setValue(this.address_ety.district);
-			this.postcode?.setValue(this.address_ety.postal_code);
-			this.im_postcode?.updateValue();
-			this.phone?.setValue(this.address_ety.phone);
-			this.im_phone?.updateValue();
-			this.country?.setValue(this.address_ety.city?.country?.country_id);
-		}
-
-		this.initCountry();
-	}
-
-	async initCountry() {
+		//**--------------|| RESET Country dropdown ||----------------- */
 		this.$(this.card_address_el?.nativeElement).block({
 			message: null,
 			css: BLOCK_CSS
 		});
-		try {
-			const countries = await this.addressService.retrieveCountryEntities();
+		this.countries = await this.addressService.retrieveCountryEntities();
+		this.$(this.card_address_el?.nativeElement).unblock();
 
-			const $_country_el = this.$(this.country_el?.nativeElement);
-			if ($_country_el.hasClass("select2-hidden-accessible")) {
-				$_country_el.empty().trigger("change");
-				$_country_el.select2("destroy");
-			}
+		const $_country_el = this.$(this.country_el?.nativeElement);
+		if ($_country_el.hasClass("select2-hidden-accessible")) {
+			$_country_el.empty().trigger("change");
+			$_country_el.select2("destroy");
+		}
 
-			const country_sel = $_country_el.select2({
+		if (this.countries) {
+			this.sel_country = $_country_el.select2({
 				"data": [
 					{ "id": "", "text": "Please select a store's country." },
-					...countries.map((country: any) => ({
+					...this.countries!.map((country: any) => ({
 						"id": country.country_id,
 						"text": country.country
 					}))],
@@ -120,35 +111,56 @@ export class AddressComponent implements OnInit {
 				const { id } = e.params.data;
 				this.country?.setValue(+id);
 			});
-
-			//**------------|| prefill country ||----------- */
-			if (this.address_ety) {
-				country_sel.val(this.address_ety.city?.country?.country_id).trigger("change");
-			}
-
-			this.country?.valueChanges.subscribe(value => {
-				if (value > 0) {
-					const country = countries.find((country: any) => country.country_id === +value);
-
-					this.initCity(country.cities, "");
-				}
-			});
-
-			//**------------|| prefill city ||------------ */
-			if (this.address_ety?.city_id) {
-				const { cities } = countries.find((country: CountryType) => country.country_id === this.address_ety?.city?.country?.country_id);
-				this.initCity(cities, this.address_ety.city_id.toString());
-			}
-
-		} catch (error) {
-			console.error(error);
 		}
 
-		this.$(this.card_address_el?.nativeElement).unblock();
+		//**--------------|| Disable city dropdown ||------------------ */
+		const $_city_el = this.$(this.city_el?.nativeElement);
+		if ($_city_el.hasClass('select2-hidden-accessible')) {
+			$_city_el.empty().trigger("change");
+			$_city_el.select2("destroy");
+			this.city?.disable();
+		}
+	}
+
+	prefillFormGroup() {
+
+		console.log(this.address_ety);
+
+		if (this.address_ety) {
+			this.address?.setValue(this.address_ety?.address);
+			this.address2?.setValue(this.address_ety.address2);
+			this.district?.setValue(this.address_ety.district);
+
+			this.postcode?.setValue(this.address_ety.postal_code);
+			this.im_postcode.value = this.address_ety.postal_code;
+
+			this.phone?.setValue(this.address_ety.phone);
+			this.im_phone.value = this.address_ety.phone;
+
+			this.country?.setValue(this.address_ety.city?.country?.country_id);
+			this.sel_country.val(this.address_ety.city?.country?.country_id).trigger("change");
+
+			this.city?.setValue(this.address_ety.city_id);
+			const country = this.countries?.find(country => country.country_id === this.address_ety?.city?.country?.country_id) as any;
+			if (country) {
+				this.initCity(country.cities, this.address_ety?.city_id?.toString());
+			}
+		}
+
+		this.country?.valueChanges.subscribe(value => {
+			this.sel_country.val(value).trigger("change");
+			const country = (this.countries?.find(country => country.country_id === value)) as any;
+
+			if (country) {
+				this.initCity(country.cities);
+			}
+		});
+
 	}
 
 	initCity(cities: Array<CityType>, city_id?: string) {
 
+		//** ---------------|| Clean city dropdown ||------------------ */
 		const $_city_el = this.$(this.city_el?.nativeElement);
 		if ($_city_el.hasClass('select2-hidden-accessible')) {
 			$_city_el.empty().trigger("change");
@@ -157,7 +169,7 @@ export class AddressComponent implements OnInit {
 		}
 
 		if (cities && cities.length > 0) {
-			const city_sel = $_city_el.select2({
+			this.sel_city = $_city_el.select2({
 				"data": [
 					{ "id": "", text: "Please select a store's city." },
 					...cities?.map((city: any) => ({
@@ -169,7 +181,7 @@ export class AddressComponent implements OnInit {
 				this.city?.setValue(+id);
 			});
 
-			city_sel.val(city_id).trigger("change");
+			this.sel_city.val(city_id).trigger("change");
 			this.city?.setValue(city_id);
 			this.city?.enable();
 		}
@@ -238,14 +250,17 @@ export class AddressComponent implements OnInit {
 
 	onReset() {
 		this.fg_address.reset();
+
+		console.log(this.fg_address.value);
+
 		this.im_postcode.destroy();
 		this.im_phone.destroy();
-		this.ngAfterViewInit();
+		this.initFormPlugin();
 	}
 
-	onReloadCountry(event: any) {
+	onReloadCountry(_: any) {
 		this.showCountryModal = false;
-		this.initCountry();
+		// this.initCountry();
 	}
 
 	onShowCountryModal() {

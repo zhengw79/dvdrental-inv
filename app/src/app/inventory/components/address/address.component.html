@@ -63,6 +63,11 @@
 				<div class="col-sm-6 mb-3 mb-sm-0">
 					<label class="form-span mx-2">Phone number*</label>
 					<input type="text" class="form-control form-control-user" formControlName="phone" #phone_el/>
+					<div *ngIf="phone && phone.invalid && (phone.dirty || phone.touched)">
+						<div class="help-error" *ngIf="phone.errors?.['required']">
+							Please enter phone number.
+						</div>
+					</div>
 				</div>
 			</div>
 
