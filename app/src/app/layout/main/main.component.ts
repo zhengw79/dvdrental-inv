@@ -1,11 +1,11 @@
 import { Component, ContentChild, OnInit, TemplateRef } from '@angular/core';
 
 @Component({
-  selector: 'Dashboard',
-  templateUrl: './layout.component.html',
-  styleUrls: ['./layout.component.css']
+  selector: 'app-main',
+  templateUrl: './main.component.html',
+  styleUrls: ['./main.component.css']
 })
-export class LayoutComponent implements OnInit {
+export class MainComponent implements OnInit {
 
   @ContentChild('child') child?: TemplateRef<any>;
 

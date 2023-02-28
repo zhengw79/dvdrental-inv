@@ -1,9 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { InventoryComponent } from './inventory/inventory.component';
-import { DashboardModule } from '../dashboard/dashboard.module';
 import { RouterModule } from '@angular/router';
-import { MainComponent } from './main/main.component';
 import { InventoryRoutingModule } from './inventory-routing.module';
 import { FilmsComponent } from './films/films.component';
 import { SearchComponent as FilmSearchComponent } from './films/search/search.component';
@@ -24,6 +22,7 @@ import { AddressComponent } from './components/address/address.component';
 import { ManagerComponent } from './components/manager/manager.component';
 import { NewCountryComponent } from './components/address/new.country/new.country.component';
 import { SearchManagerComponent } from './components/search.manager/search.manager.component';
+import { LayoutModule } from '../layout/layout.module';
 
 
 
@@ -31,7 +30,6 @@ import { SearchManagerComponent } from './components/search.manager/search.manag
 @NgModule({
   declarations: [
     InventoryComponent,
-    MainComponent,
     FilmsComponent,
     FilmSearchComponent,
     FilmDetailsComponent,
@@ -53,12 +51,12 @@ import { SearchManagerComponent } from './components/search.manager/search.manag
   ],
   imports: [
     CommonModule,
-    DashboardModule,
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
-    InventoryRoutingModule
+    InventoryRoutingModule,
+    LayoutModule
   ],
-  exports: [MainComponent]
+  exports: []
 })
 export class InventoryModule { }

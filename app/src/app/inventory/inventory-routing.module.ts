@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { InventoryComponent } from './inventory/inventory.component';
-import { MainComponent } from './main/main.component';
 import { FilmsComponent } from './films/films.component';
 import { FilmDetailsComponent } from './film.details/film.details.component';
 import { NewFilmComponent } from './films/new.film/new.film.component';
@@ -16,11 +15,6 @@ const routes: Routes = [
     "path": "",
     "component": InventoryComponent,
     "children": [
-      {
-        "path": "main",
-        "component": MainComponent,
-        "pathMatch": "full"
-      },
       {
         "path": "film/create",
         "component": NewFilmComponent,
