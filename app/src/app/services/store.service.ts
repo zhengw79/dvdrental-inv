@@ -34,6 +34,18 @@ export class StoreService extends BaseService {
     return data.retrieveStoreEntityById;
   }
 
+  async retrieveStoreES(payload: string) {
+
+    const { data, errors } = await lastValueFrom(this.apollo.query({
+      query: gql`query { retrieveStoreES(payload: "${payload}") {
+        staff_id store_id address manager }}`
+    }));
+
+    this.redirectToLoginIfError(errors);
+
+    return (data as any).retrieveStoreES;
+  }
+
   async addCountryWithCitites(payload: CountryCitiesInput) {
     const { data, errors } = await this.apollo.mutate({
       mutation: gql`mutation addCountryWithCities($payload: CountryInput!){

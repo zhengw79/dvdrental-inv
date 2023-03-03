@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import {  Router } from '@angular/router';
 import { Apollo, gql } from 'apollo-angular';
 import { BLOCK_CSS } from 'src/app/constants';
 import { environment } from 'src/environments/environment';
@@ -11,6 +11,8 @@ import { environment } from 'src/environments/environment';
 })
 export class FilmInfoComponent implements OnInit {
   @Input() film_id?: number;
+
+  showFilmInvModal: boolean = false;
   film: any;
   $: any;
 
@@ -38,7 +40,7 @@ export class FilmInfoComponent implements OnInit {
       type: "post",
       statusCode: {
         401: () => {
-          this.router.navigate(["/login"]);
+          this.router.navigate(["/auth/login"]);
         }
       }
     };
@@ -81,7 +83,7 @@ export class FilmInfoComponent implements OnInit {
       }`
     }).subscribe(({ data, errors }) => {
       if (errors && errors[0] && errors[0].message === "Unauthorized") {
-        this.router.navigate(["/login"]);
+        this.router.navigate(["/auth/login"]);
       } else {
         const { retrieveFilmEditable: { film, categories, languages, ratings } } = data as any;
         this.film = Object.assign({}, film);
@@ -149,5 +151,14 @@ export class FilmInfoComponent implements OnInit {
         }, 500);
       }
     });
+  }
+
+  onClickAddFilmInv() {
+    this.showFilmInvModal = true;
+  }
+
+  onRefreshFilminfo() {
+    this.showFilmInvModal = false;
+    this.ngAfterViewInit();
   }
 }

@@ -1,0 +1,7 @@
+.modal-body {
+	font-size: 0.8rem;
+}
+
+.modal-body table.display {
+	width: 100% !important;
+}

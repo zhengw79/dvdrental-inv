@@ -116,7 +116,7 @@ export class InfoComponent implements OnInit {
       css: BLOCK_CSS
     });
 
-    const { fetchFilmSettings: { categories, languages, ratings } } = await this.filmService.fetchFilmSettings();
+    const { categories, languages, ratings } = await this.filmService.fetchFilmSettings();
 
     this.$(this.film_info_card_el?.nativeElement).unblock();
     //**-------------|| END of fetching ||------------------------- */
@@ -204,7 +204,7 @@ export class InfoComponent implements OnInit {
     //**----------------|| END OF SELECT DROP DOWN ||-------------- */
 
     if (this.film_id) {
-      const { retrieveFilmEntityById: { film: { title, description, language_id, length, rating, release_year, rental_duration, rental_rate, replacement_cost, special_features, fulltext }, categories } } = await this.filmService.retrieveFilm(this.film_id);
+      const { film: { title, description, language_id, length, rating, release_year, rental_duration, rental_rate, replacement_cost, special_features, fulltext }, categories } = await this.filmService.retrieveFilm(this.film_id);
 
       this.title?.setValue(title);
       this.description?.setValue(description);
@@ -261,7 +261,7 @@ export class InfoComponent implements OnInit {
 
       this.ngAfterViewInit();
     } else {
-      const { insertFilm: { film_id } } = await this.filmService.insertFilm(this.fg_film.value);
+      const { film_id } = await this.filmService.insertFilm(this.fg_film.value);
       this.$(this.film_info_card_el?.nativeElement).unblock();
 
       this.router.navigate([`/inventory/film/update/${film_id}`]);

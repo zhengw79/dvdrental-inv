@@ -103,7 +103,7 @@ export class RegisterComponent implements OnInit {
 			.subscribe((result) => {
 				if (result.access_token) {
 					localStorage.setItem("access_token", result.access_token);
-					this._router.navigate(["/main"]);
+					this._router.navigate(["/dashboard"]);
 				} else if (result.status === "failed" &&
 					result.code === "staff_email_unique") {
 					this.email?.setErrors({ 'DUP_EMAIL': true });

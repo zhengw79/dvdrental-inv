@@ -1,0 +1,19 @@
+<label class="form-span my-2">
+	(Hint: Searching store by address, terms separated by ';')
+</label>
+<form class="form-inline mr-auto w-100 navbar-search px-2" [formGroup]="fg_search" (ngSubmit)="onSubmit()">
+	<div class="form-group row">
+		<div class="input-group">
+			<input type="text" class="form-control bg-light border-0 small" aria-label="Search"
+				aria-describedby="basic-addon2" formControlName="search_txt"/>
+			<div class="input-group-append">
+				<button class="btn btn-primary" type="submit">
+					<i class="fas fa-search fa-sm"></i>
+				</button>
+			</div>
+		</div>
+	</div>
+</form>
+<div class="datatable mt-4">
+	<table #stores_tbl class="display"></table>
+</div>

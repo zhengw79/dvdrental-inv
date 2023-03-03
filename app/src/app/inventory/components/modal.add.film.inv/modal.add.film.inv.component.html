@@ -1,0 +1,28 @@
+<!-- Modal -->
+<div class="modal fade" id="filmInvModal" tabindex="-1" role="dialog" aria-labelledby="filmInvModalTitle"
+	aria-hidden="true" data-backdrop="static" data-keyboard="false">
+	<div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="filmInvModalTitle">Add film inventory</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<form class="user">
+				<div class="modal-body container">
+					<app-search-store [store_ids]="store_ids" [film_id]="film_id"></app-search-store>
+					<hr />
+					<table #store_tbl class="display"></table>
+				</div>
+				<div class="modal-footer">
+					<div class="form-group row justify-content-between">
+						<div class="col-sm-12 mb-3 mb-sm-0">
+							<button type="button" class="btn btn-secondary btn-user btn-block" data-dismiss="modal">Close</button>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

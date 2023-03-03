@@ -68,7 +68,7 @@ export class FilmActorComponent implements OnInit {
           if (json.data === null &&
             json.errors[0] &&
             json.errors[0].message === "Unauthorized") {
-            this.router.navigate(["/login"]);
+            this.router.navigate(["/auth/login"]);
           } else {
             const arr = json.data?.retrieveFilmActors;
             json.recordsTotal = arr ? arr.length : 0;

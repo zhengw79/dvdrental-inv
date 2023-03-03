@@ -1,19 +1,17 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Apollo, gql } from 'apollo-angular';
+import { lastValueFrom } from 'rxjs';
+import { BaseService } from './base.service';
 
 @Injectable({
 	providedIn: 'root'
 })
-export class ActorService {
-
-	constructor(
-		private apollo: Apollo,
-		private router: Router
-	) { }
+export class ActorService extends BaseService{
 
 	async retrieveActorES(searching_text: string) {
-		const { data, errors } = await this.apollo.query({
+
+		const { data, errors } = await lastValueFrom(this.apollo.query({
 			query: gql`
 				query retrieveActorES($searching_text: String!) {
 					retrieveActorES(searching_text: $searching_text) {
@@ -22,17 +20,16 @@ export class ActorService {
 			variables: {
 				searching_text
 			}
-		}).toPromise() as any;
+		}));
 
-		if (errors && errors[0] && errors[0].message === "Unauthorized") {
-			this.router.navigate(["/login"]);
-		}
+		this.redirectToLoginIfError(errors);
 
 		return data;
 	}
 
 	async retrieveActorsByFilmId(film_id: number) {
-		const { data, errors } = await this.apollo.query({
+
+		const { data, errors } = await lastValueFrom(this.apollo.query({
 			query: gql`
 			query retrieveActorsByFilmId($payload: Int!){
 				retrieveActorsByFilmId(film_id: $payload) {
@@ -41,17 +38,16 @@ export class ActorService {
 			variables: {
 				"payload": +film_id
 			}
-		}).toPromise() as any;
+		}));
 
-		if (errors && errors[0] && errors[0].message === "Unauthorized") {
-			this.router.navigate(["/login"]);
-		}
+		this.redirectToLoginIfError(errors);
 
 		return data;
 	}
 
 	async removeFilmActor(film_id: number, actor_id: number) {
-		const { data, errors } = await this.apollo.mutate({
+
+		const { data, errors } = await lastValueFrom(this.apollo.mutate({
 			mutation: gql`
       mutation removeFilmActor($film_id: Int!, $actor_id: Int!) {
         removeFilmActor(film_id: $film_id, actor_id: $actor_id) {
@@ -60,11 +56,9 @@ export class ActorService {
 				film_id,
 				actor_id
 			}
-		}).toPromise() as any;
+		}));
 
-		if (errors && errors[0] && errors[0].message === "Unauthorized") {
-			this.router.navigate(["/login"]);
-		}
+		this.redirectToLoginIfError(errors);
 
 		return data;
 	}

@@ -53,7 +53,6 @@ export class SearchManagerComponent implements OnInit {
 		}
 
 		const staffs = await this.staffService.retrieveStaffsByFLNameOrEmail(this.search_txt?.value);
-		console.log(staffs);
 
 		const manager_tbl_el = this.manager_tbl?.nativeElement;
 		if (this.$.fn.DataTable.isDataTable(manager_tbl_el)) {

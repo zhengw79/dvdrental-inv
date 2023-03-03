@@ -23,6 +23,8 @@ import { ManagerComponent } from './components/manager/manager.component';
 import { NewCountryComponent } from './components/address/new.country/new.country.component';
 import { SearchManagerComponent } from './components/search.manager/search.manager.component';
 import { LayoutModule } from '../layout/layout.module';
+import { ModalAddFilmInvComponent } from './components/modal.add.film.inv/modal.add.film.inv.component';
+import { SearchStoreComponent } from './components/search.store/search.store.component';
 
 
 
@@ -47,7 +49,9 @@ import { LayoutModule } from '../layout/layout.module';
     AddressComponent,
     ManagerComponent,
     NewCountryComponent,
-    SearchManagerComponent
+    SearchManagerComponent,
+    ModalAddFilmInvComponent,
+    SearchStoreComponent
   ],
   imports: [
     CommonModule,
