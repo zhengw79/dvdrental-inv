@@ -11,6 +11,23 @@ import { InewFilm } from './type/inew.film';
 })
 export class FilmService extends BaseService {
 
+  async retrieveFilmEditable(film_id: number) {
+    const { data, errors } = await lastValueFrom(this.apollo.query({
+      query: gql`query {
+				retrieveFilmEditable(film_id: ${film_id}) {
+					film { film_id title description release_year rental_duration rental_rate length replacement_cost rating special_features language language_id category_ids categories amount last_update fulltext }
+					categories { category_id name }
+					languages { language_id name }
+					ratings
+				}
+			}`
+    }));
+
+    this.redirectToLoginIfError(errors);
+
+    return (data as any).retrieveFilmEditable;
+  }
+
   async retrieveFilmES(searching_text: string) {
 
     const { data, errors } = await lastValueFrom(this.apollo.query({

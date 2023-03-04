@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
+import { EditableType } from './dto/editable.type';
 
 @Injectable({
   providedIn: 'root'
@@ -49,6 +50,29 @@ export class XeditableService {
       };
       return JSON.stringify(query);
     }
+  }
+
+  updateFilmEditableField(film_id: number) {
+    this.$.fn.editable.defaults.pk = film_id;
+    this.$.fn.editable.defaults.params = function (params: any) {
+			const gql = `mutation updateFilmEditableField($payload: UpdateFieldInput!) {
+				updateFilmEditableField(payload: $payload) {
+					film_id title description
+				}
+			}`;
+			const query = {
+				"operationName": null,
+				"query": gql,
+				"variables": {
+					"payload": {
+						"id": params.pk,
+						"field_name": params.name,
+						"field_value": params.value
+					}
+				}
+			};
+			return JSON.stringify(query);
+		};
   }
 
   updateFilmInventories(film_id: number, store_id: number) {

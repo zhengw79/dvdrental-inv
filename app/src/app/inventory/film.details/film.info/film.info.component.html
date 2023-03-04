@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="col-lg-12">
-		<div class="card shadow mb-4" id="film_info">
+		<div class="card shadow mb-4" #film_info>
 			<div class="card-header py-3">
 				<h6 class="m-0 font-weight-bold text-primary">
 					Film Information
@@ -15,7 +15,7 @@
 								Film Title:
 							</div>
 							<div class="col-8 col-md-8 col-sm-12">
-								<a href="#" id="title" data-type="text" data-title="Please enter film title">
+								<a href="#" data-type="text" data-title="Please enter film title" #film_title>
 									{{film?.title}}
 								</a>
 							</div>
@@ -39,8 +39,8 @@
 							Film Description:
 						</div>
 						<div class="col-10 col-md-10 col-sm-12">
-							<a href="#" id="description" data-type="textarea"
-								data-title="Please enter film description">{{film?.description}}</a>
+							<a href="#" data-type="textarea"
+								data-title="Please enter film description" #film_description>{{film?.description}}</a>
 						</div>
 					</div>
 					<hr />
@@ -50,7 +50,7 @@
 							Film Category:
 						</div>
 						<div class="col-10 col-md-10 col-sm-12">
-							<a href="#" id="category_id" data-type="select" data-title="Please choose a film category.">{{
+							<a href="#" data-type="select" data-title="Please choose a film category." #category_id>{{
 								film?.category}}</a>
 						</div>
 					</div>
@@ -62,8 +62,8 @@
 								Release Year:
 							</div>
 							<div class="col-12 col-md-7 col-sm-12">
-								<a href="#" id="release_year" data-type="text"
-									data-title="Please enter a release year">{{film?.release_year}}</a>
+								<a href="#" data-type="text"
+									data-title="Please enter a release year" #release_year>{{film?.release_year}}</a>
 							</div>
 						</div>
 						<div class="row col-6">
@@ -71,8 +71,8 @@
 								Language:
 							</div>
 							<div class="col-12 col-md-7 col-sm-12">
-								<a href="#" id="language_id" data-type="select"
-									data-title="Please choose a film langugage.">{{film?.language}}</a>
+								<a href="#" data-type="select"
+									data-title="Please choose a film langugage." #language_id>{{film?.language}}</a>
 							</div>
 						</div>
 					</div>
@@ -84,7 +84,7 @@
 								Rental Duration:
 							</div>
 							<div class="col-12 col-md-7 col-sm-12">
-								<a href="#" id="rental_duration" data-type="text" data-title="Please enter rental duration.">
+								<a href="#" data-type="text" data-title="Please enter rental duration." #rental_duration>
 									{{ film?.rental_duration }}
 								</a> Days
 							</div>
@@ -92,7 +92,7 @@
 						<div class="row col-6">
 							<div class="col-12 col-md-5 col-sm-12">Length:</div>
 							<div class="col-12 col-md-7 col-sm-12">
-								<a href="#" id="length" data-type="text" data-title="Please enter film length.">
+								<a href="#" data-type="text" data-title="Please enter film length." #length>
 									{{ film?.length }}</a> Minutes
 							</div>
 						</div>
@@ -105,7 +105,7 @@
 								Replacement Cost:
 							</div>
 							<div class="col-12 col-md-7 col-sm-12">
-								$ <a href="#" id="replacement_cost" data-type="text" data-title="Please enter replacement cost.">
+								$ <a href="#" data-type="text" data-title="Please enter replacement cost." #replacement_cost>
 									{{ (+film?.replacement_cost).toFixed(2) }}
 								</a>
 							</div>
@@ -115,7 +115,7 @@
 								Rating:
 							</div>
 							<div class="col-12 col-md-7 col-sm-12">
-								<a href="#" id="rating" data-type="select" data-title="Please select a film rate.">
+								<a href="#" data-type="select" data-title="Please select a film rate." #rating>
 									{{ film?.rating}}
 								</a>
 							</div>
@@ -129,7 +129,7 @@
 								Features:
 							</div>
 							<div class="col-12 col-md-7 col-sm-12">
-								<a href="#" id="special_features" data-type="text" data-title="Please enter film features.">{{
+								<a href="#" data-type="text" data-title="Please enter film features." #special_features>{{
 									film?.special_features }}</a>
 							</div>
 						</div>
