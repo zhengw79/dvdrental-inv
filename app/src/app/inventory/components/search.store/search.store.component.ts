@@ -46,12 +46,13 @@ export class SearchStoreComponent implements OnInit, OnDestroy {
 
 		this.$(stores_tbl_el).on("draw.dt", (e: any) => {
 			const { start, end } = this.$(stores_tbl_el).DataTable().page.info();
+			const datasource = this.$(stores_tbl_el).DataTable().data();
 
 			for (let i = start; i < end; i++) {
 				this.xeditableService.updateFilmInventories(
-					this.film_id, data[i].store_id
+					this.film_id, datasource[i].store_id
 				);
-				this.$(`#s1_${data[i].store_id}`).editable();
+				this.$(`#s1_${datasource[i].store_id}`).editable();
 			}
 		});
 

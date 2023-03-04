@@ -18,4 +18,7 @@ export class StaffType {
 
 	@IsString()
 	password?: string;
+
+	@IsString()
+	deleted_date?: string;
 }

@@ -1,6 +1,6 @@
 <div class="card shadow mb-4" #card_manager_el>
 	<div class="card-header py-3 d-flex flex-row align-item-center justify-content-between">
-		<h6 class="m-0 font-weight-bold text-primary">Store Manager</h6>
+		<h6 class="m-0 font-weight-bold text-primary">Store Manager <span class="text-gray-600" *ngIf="manager_ety?.deleted_date">(Inactive)</span></h6>
 	</div>
 
 	<div class="card-body">

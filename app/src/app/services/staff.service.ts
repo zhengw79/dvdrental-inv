@@ -25,7 +25,7 @@ export class StaffService extends BaseService {
 		const { data, errors } = await lastValueFrom(this.apollo.query({
 			query: gql`query retrieveStaffsByFLNameOrEmail($payload: String!) {
 				retrieveStaffsByFLNameOrEmail(payload: $payload) {
-					staff_id first_name last_name email}}`,
+					staff_id first_name last_name email }}`,
 			variables: { payload }
 		}));
 

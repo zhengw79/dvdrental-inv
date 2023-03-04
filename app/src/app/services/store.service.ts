@@ -24,7 +24,7 @@ export class StoreService extends BaseService {
               country { country country_id }
             }
           }
-          staff { staff_id first_name last_name email }
+          staff { staff_id first_name last_name email deleted_date }
         }
       }`
     }).toPromise() as any;

@@ -115,7 +115,7 @@ export class ModalAddFilmInvComponent implements OnInit {
 			}
 		});
 
-		this.$(stores_tbl_el).on("init.dt", () => {
+		this.$(stores_tbl_el).on("draw.dt", () => {
 
 			const data = stores_db.rows().data();
 			this.store_ids = [];
