@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { XeditableService } from '../../../services/xeditable.service';
 import { StoreService } from '../../../services/store.service';
@@ -8,7 +8,7 @@ import { StoreService } from '../../../services/store.service';
 	templateUrl: './search.store.component.html',
 	styleUrls: ['./search.store.component.css']
 })
-export class SearchStoreComponent implements OnInit {
+export class SearchStoreComponent implements OnInit, OnDestroy {
 
 	@Input() store_ids: any = [];
 	@Input() film_id: any;
@@ -45,7 +45,7 @@ export class SearchStoreComponent implements OnInit {
 		}
 
 		this.$(stores_tbl_el).on("init.dt", () => {
-			for (let i = 0; i < data.length; i++) {
+			for (let i = 0; i < data?.length; i++) {
 				this.xeditableService.updateFilmInventories(
 					this.film_id, data[i].store_id
 				);
@@ -86,5 +86,14 @@ export class SearchStoreComponent implements OnInit {
 				}
 			]
 		});
+	}
+
+	ngOnDestroy() {
+		const stores_tbl_el = this.stores_tbl?.nativeElement;
+		if (this.$.fn.DataTable.isDataTable(stores_tbl_el)) {
+			this.$(stores_tbl_el).DataTable().clear();
+			this.$(stores_tbl_el).DataTable().destroy();
+		}
+		this.fg_search.reset();
 	}
 }

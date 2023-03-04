@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import IMask from "imask";
 import { XeditableService } from 'src/app/services/xeditable.service';
@@ -14,6 +14,7 @@ export class ModalAddFilmInvComponent implements OnInit {
 	@Input() modal_film_inv?: ElementRef<HTMLDivElement>;
 	@Output() evt_reloadFilmInfo: EventEmitter<any>;
 	@ViewChild("store_tbl") store_tbl?: ElementRef<HTMLTableElement>;
+	@ViewChild("filmInvModal") filmInvModal?: ElementRef<HTMLDivElement>;
 
 	$: any;
 	store_ids: any = null;
@@ -127,9 +128,11 @@ export class ModalAddFilmInvComponent implements OnInit {
 
 		});
 
-		this.$("#filmInvModal").on("hide.bs.modal", () => {
-			console.log("close add inventories");
+		//**------- init modal event --------- */
+		const filmInvModal_el = this.filmInvModal?.nativeElement;
+		this.$(filmInvModal_el).on("hide.bs.modal", () => {
 			this.evt_reloadFilmInfo.emit();
 		});
+		this.$(filmInvModal_el).modal("show");
 	}
 }
