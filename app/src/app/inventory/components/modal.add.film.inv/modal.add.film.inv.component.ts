@@ -125,7 +125,6 @@ export class ModalAddFilmInvComponent implements OnInit {
 				this.$(`#s_${data[i].store_id}`).editable();
 				this.store_ids.push(data[i].store_id);
 			}
-
 		});
 
 		//**------- init modal event --------- */

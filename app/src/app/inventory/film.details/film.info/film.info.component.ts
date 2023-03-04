@@ -1,9 +1,7 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
 import { BLOCK_CSS } from 'src/app/constants';
 import { FilmService } from 'src/app/services/film.service';
 import { XeditableService } from 'src/app/services/xeditable.service';
-import { environment } from 'src/environments/environment';
 
 @Component({
 	selector: 'app-film-info',
