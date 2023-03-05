@@ -9,6 +9,23 @@ import { BaseService } from './base.service';
 })
 export class ActorService extends BaseService{
 
+	async retrieveActorFilmCardsById(actor_id: number) {
+		const { data, errors } = await lastValueFrom(this.apollo.query({
+			query: gql`query retrieveActorFilmCardsById($actor_id: Int!) {
+        retrieveActorFilmCardsById(actor_id: $actor_id) {
+          actor { actor_id first_name last_name  }
+          films { film_id title categories language amount}
+        }}`,
+			variables: {
+				actor_id: actor_id
+			}
+		}));
+
+		this.redirectToLoginIfError(errors);
+
+		return (data as any).retrieveActorFilmCardsById;
+	}
+
 	async retrieveActorES(searching_text: string) {
 
 		const { data, errors } = await lastValueFrom(this.apollo.query({

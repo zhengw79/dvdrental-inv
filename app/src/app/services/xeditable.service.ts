@@ -31,12 +31,13 @@ export class XeditableService {
         401: () => {
           router.navigate(["/auth/login"]);
         }
-      }
+      },
     };
   }
 
   insertFilmInventories(film_id: number, store_id: number) {
     this.$.fn.editable.defaults.pk = film_id;
+    this.$.fn.editable.defaults.ajaxOptions.success = null;
     this.$.fn.editable.defaults.params = function (params: any) {
       const gql = `mutation {
         insertFilmInventories(film_id:${film_id}, store_id: ${store_id}, amount: ${params.value}) {
@@ -54,6 +55,7 @@ export class XeditableService {
 
   updateFilmEditableField(film_id: number) {
     this.$.fn.editable.defaults.pk = film_id;
+    this.$.fn.editable.defaults.ajaxOptions.success = null;
     this.$.fn.editable.defaults.params = function (params: any) {
 			const gql = `mutation updateFilmEditableField($payload: UpdateFieldInput!) {
 				updateFilmEditableField(payload: $payload) {
@@ -77,6 +79,7 @@ export class XeditableService {
 
   updateFilmInventories(film_id: number, store_id: number) {
     this.$.fn.editable.defaults.pk = film_id;
+    this.$.fn.editable.defaults.ajaxOptions.success = null;
     this.$.fn.editable.defaults.params = function (params: any) {
       const gql = `mutation {
         updateFilmInventories(film_id:${film_id}, store_id:${store_id}, amount:${params.value}) {
@@ -91,5 +94,30 @@ export class XeditableService {
       };
       return JSON.stringify(query);
     }
+  }
+
+  updateActorEditable(actor_id: number, fn_success: Function) {
+    this.$.fn.editable.defaults.pk = actor_id;
+    this.$.fn.editable.defaults.ajaxOptions.success = fn_success;
+
+    this.$.fn.editable.defaults.params = function (params: any) {
+      const gql = `mutation updateActorEditable($payload: UpdateFieldInput!) {
+        updateActorEditable(payload: $payload) {
+          actor_id first_name last_name
+        }
+      }`;
+      const query = {
+        "operationName": null,
+        "query": gql,
+        "variables": {
+          "payload": {
+            "id": params.pk,
+            "field_name": params.name,
+            "field_value": params.value
+          }
+        }
+      };
+      return JSON.stringify(query);
+    };
   }
 }
