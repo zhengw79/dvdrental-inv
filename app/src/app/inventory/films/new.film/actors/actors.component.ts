@@ -53,6 +53,7 @@ export class ActorsComponent implements OnInit {
     }
     this.fg_searchActors.get("searching_text")?.reset();
     (this.fg_formModel.get("actors") as FormArray).clear();
+    this.actors = [];
     //**-------------|| RESET SEARCHING END ||---------------*//
   }
 
@@ -61,7 +62,7 @@ export class ActorsComponent implements OnInit {
       message: null,
       css: BLOCK_CSS
     });
-    const { retrieveActorsByFilmId } = await this.actorService.retrieveActorsByFilmId(this.film_id!);
+    const data = await this.actorService.retrieveActorsByFilmId(this.film_id!);
     this.$(this.film_actor_card_el?.nativeElement).unblock();
 
     const actors_tbl = this.actors_table?.nativeElement;
@@ -71,7 +72,7 @@ export class ActorsComponent implements OnInit {
       this.$(actors_tbl).DataTable().destroy();
     }
     this.$(actors_tbl).DataTable({
-      data: retrieveActorsByFilmId,
+      data,
       responsive: true,
       searching: false,
       paging: false,

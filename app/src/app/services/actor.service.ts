@@ -59,7 +59,7 @@ export class ActorService extends BaseService{
 
 		this.redirectToLoginIfError(errors);
 
-		return data;
+		return (data as any).retrieveActorsByFilmId;
 	}
 
 	async removeFilmActor(film_id: number, actor_id: number) {

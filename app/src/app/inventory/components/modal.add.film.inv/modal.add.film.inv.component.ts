@@ -122,7 +122,14 @@ export class ModalAddFilmInvComponent implements OnInit {
 			for(let i=0; i<data.length; i++) {
 				this.xeditableService.updateFilmInventories(
 					this.film_id!, data[i].store_id);
-				this.$(`#s_${data[i].store_id}`).editable();
+				this.$(`#s_${data[i].store_id}`).editable({
+					validate: (value: any) => {
+						if(this.$.trim(value) === "") {
+							return "Please enter the number of film inventories.";
+						}
+						return null;
+					}
+				});
 				this.store_ids.push(data[i].store_id);
 			}
 		});

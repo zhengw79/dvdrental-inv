@@ -52,7 +52,15 @@ export class SearchStoreComponent implements OnInit, OnDestroy {
 				this.xeditableService.updateFilmInventories(
 					this.film_id, datasource[i].store_id
 				);
-				this.$(`#s1_${datasource[i].store_id}`).editable();
+				this.$(`#s1_${datasource[i].store_id}`).editable({
+					value: 0,
+					validate: (value:any) => {
+						if(this.$.trim(value) === "") {
+							return "Please enter a inventory number.";
+						}
+						return null;
+					}
+				});
 			}
 		});
 

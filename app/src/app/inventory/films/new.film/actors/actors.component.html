@@ -60,7 +60,7 @@
 			<!-------||Save actors||------>
 			<div class="form-group row mb-3">
 				<div class="col">
-					<button class="btn btn-success btn-user btn-block" type="submit">Save</button>
+					<button class="btn btn-success btn-user btn-block" type="submit" [disabled]="actors.length === 0">Save</button>
 				</div>
 				<div class="col">
 					<button class="btn btn-secondary btn-user btn-block" type="reset">Reset</button>
