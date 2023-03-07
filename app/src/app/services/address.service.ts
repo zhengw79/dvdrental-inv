@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { gql } from "apollo-angular";
 import { lastValueFrom } from "rxjs";
 import { BaseService } from "./base.service";
+import { AddressInputType } from "./dto/address.input.type";
 import { AddressType } from "./dto/address.type";
 
 @Injectable({
@@ -21,7 +22,7 @@ export class AddressService extends BaseService {
     return data.retrieveCountries;
   }
 
-	async updateAddress(payload: AddressType): Promise<AddressType> {
+	async updateAddress(payload: AddressInputType): Promise<AddressType> {
 		const { data, errors } = await lastValueFrom(this.apollo.mutate({
 			mutation: gql`mutation updateAddress($payload: AddressInput!) {
 				updateAddress(payload: $payload) {
@@ -34,7 +35,7 @@ export class AddressService extends BaseService {
 		return (data as any).updateAddress;
 	}
 
-	async insertAddress(payload: AddressType) {
+	async insertAddress(payload: AddressInputType) {
 		const {data, errors} = await lastValueFrom(this.apollo.mutate({
 			mutation: gql`mutation insertAddress($payload: AddressInput!) {
 				insertAddress(payload: $payload) {

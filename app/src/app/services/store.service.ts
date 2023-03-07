@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { gql } from 'apollo-angular';
 import { lastValueFrom } from 'rxjs';
 import { BaseService } from './base.service';
+import { AddressType } from './dto/address.type';
 import { StoreEntityType } from './dto/store.entity.type';
 import { StoreType } from './dto/store.type';
 import { CountryCitiesInput } from './type/country.cities.input';
-import { IaddressInput } from './type/iaddress.input';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +13,7 @@ import { IaddressInput } from './type/iaddress.input';
 export class StoreService extends BaseService {
 
   async retrieveStoreEntityById(store_id: number): Promise<StoreEntityType> {
-    const { data, errors } = await this.apollo.query({
+    const { data, errors } = await lastValueFrom(this.apollo.query({
       query: gql`query {
         retrieveStoreEntityById(store_id: ${store_id}) {
           store_id manager_staff_id address_id
@@ -27,11 +27,11 @@ export class StoreService extends BaseService {
           staff { staff_id first_name last_name email deleted_date }
         }
       }`
-    }).toPromise() as any;
+    }));
 
     this.redirectToLoginIfError(errors);
 
-    return data.retrieveStoreEntityById;
+    return (data as any).retrieveStoreEntityById;
   }
 
   async retrieveStoreES(payload: string) {
@@ -63,7 +63,7 @@ export class StoreService extends BaseService {
     return data;
   }
 
-  async insertAddress(payload: IaddressInput) {
+  async insertAddress(payload: AddressType) {
     const { data, errors } = await this.apollo.mutate({
       mutation: gql`mutation insertAddress($payload: AddressInput!){
         insertAddress(payload:$payload) { address_id address address2 city_id postal_code } }`,

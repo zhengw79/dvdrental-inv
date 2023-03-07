@@ -1,28 +1,19 @@
-import { IsInt, IsObject, IsString } from "class-validator";
 import { CityEntityType } from "./city.entity.type";
 
-export class AddressType {
-	@IsInt()
+export interface AddressType {
 	address_id?: number;
 
-	@IsString()
-	address?: string;
+	address: string;
 
-	@IsString()
-	address2?: string;
+	address2: string;
 
-	@IsString()
-	district?: string;
+	district: string;
 
-	@IsString()
-	phone?: string;
+	phone: string;
 
-	@IsString()
-	postal_code?: string;
+	postal_code: string;
 
-	@IsInt()
-	city_id?: number;
+	city_id: number;
 
-	@IsObject()
-	city?: CityEntityType | null;
+	city: CityEntityType;
 }

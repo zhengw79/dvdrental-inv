@@ -1,0 +1,22 @@
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+	<h1 class="h3 mb-0 text-gray-800">Customers
+		<a class="btn btn-primary" type="button" [routerLink]="['/order/customer/create']">
+			<i class="fas fa-plus"></i>
+		</a>
+	</h1>
+</div>
+
+<div class="row">
+	<div ckass="col-12 mb-4"></div>
+</div>
+
+<div class="col-12 mb-4">
+	<div class="card shadow">
+		<div class="card-header">Customers</div>
+		<div class="card-body">
+			<div class="datatable">
+				<table #customer_tbl class="display"></table>
+			</div>
+		</div>
+	</div>
+</div>

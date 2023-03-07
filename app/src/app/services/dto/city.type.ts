@@ -1,9 +1,7 @@
 import { IsInt, IsString } from "class-validator";
 
-export class CityType {
-	@IsString()
-	city?: string;
-
-	@IsInt()
+export interface CityType {
 	city_id?: number;
+
+	city?: string;
 }
