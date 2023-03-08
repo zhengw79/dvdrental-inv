@@ -1,11 +1,12 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { CustomerEntityType } from '../../../app/services/dto/customer.entity.type';
+import { CustomerInfoType } from '../../../app/services/dto/customer.info.type';
 import { ValidatorService } from '../../../app/services/validator.service';
 import { OrderService } from '../../../app/services/order.service';
 import IMask from "imask";
 import { AddressService } from '../../../app/services/address.service';
+import { BLOCK_CSS } from 'src/app/constants';
 
 @Component({
   selector: 'app-customer',
@@ -14,6 +15,7 @@ import { AddressService } from '../../../app/services/address.service';
 })
 export class CustomerComponent implements OnInit {
 
+  @ViewChild("customer_card_el") customer_card_el?: ElementRef<HTMLDivElement>;
   @ViewChild("phone_el") phone_el?: ElementRef<HTMLInputElement>;
   @ViewChild("postal_el") postal_el?: ElementRef<HTMLInputElement>;
   @ViewChild("country_el") country_el?: ElementRef<HTMLInputElement>;
@@ -37,6 +39,8 @@ export class CustomerComponent implements OnInit {
     private validatorService: ValidatorService
   ) {
     this.fg_customer = new FormGroup({
+      customer_id: new FormControl(""),
+      address_id: new FormControl(""),
       first_name: new FormControl("", [Validators.required]),
       last_name: new FormControl("", [Validators.required]),
       email: new FormControl("", [Validators.required, Validators.email]),
@@ -86,15 +90,17 @@ export class CustomerComponent implements OnInit {
 
     await this.initCountry();
 
-    if(this.customer_id) {
+    if (this.customer_id) {
       const data = await this.orderService.retrieveCustomerEntityById(this.customer_id);
       this.prefillCustomerForm(data);
     }
   }
 
-  prefillCustomerForm(data: CustomerEntityType) {
-    const { first_name, last_name, email, create_date, address: { address, address2, district, phone, postal_code, city: { city: { city_id, city }, country: { country, country_id } } } } = data;
+  prefillCustomerForm(data: CustomerInfoType) {
+    const { first_name, last_name, email, create_date, address: { address_id, address, address2, district, phone, postal_code, city: { city: { city_id, city }, country: { country, country_id } } } } = data;
 
+    this._customer_id?.setValue(this.customer_id);
+    this.address_id?.setValue(address_id);
     this.first_name?.setValue(first_name);
     this.last_name?.setValue(last_name);
     this.email?.setValue(email);
@@ -123,7 +129,13 @@ export class CustomerComponent implements OnInit {
   }
 
   async initCountry() {
+    this.$(this.customer_card_el?.nativeElement).block({
+      message: null,
+      css: BLOCK_CSS
+    });
     const countries = await this.addressService.retrieveCountryEntities();
+    this.$(this.customer_card_el?.nativeElement).unblock();
+
     const $_country_el = this.$(this.country_el?.nativeElement);
 
     if ($_country_el.hasClass("select2-hidden-accessible")) {
@@ -178,6 +190,14 @@ export class CustomerComponent implements OnInit {
   }
 
   // #region---------|| Formcontroller ||--------------//
+  get address_id() {
+    return this.fg_customer.get("address_id");
+  }
+
+  get _customer_id() {
+    return this.fg_customer.get("customer_id");
+  }
+
   get first_name() {
     return this.fg_customer.get("first_name");
   }
@@ -223,14 +243,20 @@ export class CustomerComponent implements OnInit {
   }
   //#endregion--------------------
 
-  onSubmit() {
+  async onSubmit() {
     this.fg_customer.markAllAsTouched();
 
     if (this.fg_customer.invalid) {
       return;
     }
 
-    console.log(this.fg_customer.value);
+    const { country_id, ...payload } = this.fg_customer.value;
+    this.$(this.customer_card_el?.nativeElement).block({
+      message: null,
+      css: BLOCK_CSS
+    });
+    await this.orderService.updateCustomerInfo(payload);
+    this.$(this.customer_card_el?.nativeElement).unblock();
   }
 
   onReset() {

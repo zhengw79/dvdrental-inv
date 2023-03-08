@@ -9,7 +9,7 @@
 			<div class="card-header">
 				<h6 class="m-0 font-weight-bold text-primary">Customer Info</h6>
 			</div>
-			<div class="card-body">
+			<div class="card-body" #customer_card_el>
 				<form class="user" [formGroup]="fg_customer" (ngSubmit)="onSubmit()">
 					<div class="form-group row">
 						<div class="col-sm-6 mb-3 mb-sm-0">
@@ -117,7 +117,7 @@
 							<button class="btn btn-primary btn-user btn-block" type="submit">Save</button>
 						</div>
 						<div class="col">
-							<button class="btn btn-secondary btn-user btn-block" (click)="onReset()">Reset</button>
+							<button class="btn btn-secondary btn-user btn-block" type="button" (click)="onReset()">Reset</button>
 						</div>
 					</div>
 				</form>

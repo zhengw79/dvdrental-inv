@@ -1,6 +1,6 @@
 import { AddressType } from "./address.type";
 
-export interface CustomerEntityType {
+export interface CustomerInfoType {
 
 	customer_id: number;
 

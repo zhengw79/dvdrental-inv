@@ -62,9 +62,7 @@ export class AddressComponent implements OnInit {
 	ngOnInit(): void { }
 
 	async ngAfterViewInit() {
-
 		await this.initFormPlugin();
-		this.prefillFormGroup();
 	}
 
 	async initFormPlugin() {
