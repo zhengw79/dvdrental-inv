@@ -7,6 +7,8 @@ import { RouterModule } from '@angular/router';
 import { CustomersComponent } from './customers/customers.component';
 import { CustomerComponent } from './customer/customer.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { SearchAddressComponent } from './components/search.address/search.address.component';
+import { CustomerInfoComponent } from './components/customer.info/customer.info.component';
 
 
 
@@ -14,7 +16,9 @@ import { ReactiveFormsModule } from '@angular/forms';
   declarations: [
     OrderComponent,
     CustomersComponent,
-    CustomerComponent
+    CustomerComponent,
+    SearchAddressComponent,
+    CustomerInfoComponent
   ],
   imports: [
     CommonModule,

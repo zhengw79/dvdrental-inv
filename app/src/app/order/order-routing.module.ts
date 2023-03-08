@@ -17,6 +17,10 @@ const routes: Routes = [
       {
         "path": "customer/:customer_id",
         "component": CustomerComponent
+      },
+      {
+        "path": "customer/create",
+        "component": CustomerComponent
       }
     ]
   }
