@@ -7,14 +7,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CustomerComponent implements OnInit {
 
-  constructor() {
+  address_id?: number;
+  store?: number;
 
-  }
+  constructor() {}
 
   ngOnInit() { }
 
-  async ngAfterViewInit() {
+  async ngAfterViewInit() {}
 
+  onUpdateAddressId(address_id:any) {
+    this.address_id = address_id;
+  }
 
+  onUpdateStoreId(store: any) {
+    this.store = store;
   }
 }

@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { AddressService } from '../../../../app/services/address.service';
 
@@ -12,11 +12,11 @@ export class SearchAddressComponent implements OnInit {
   fg_search: FormGroup;
   fg_address: FormGroup;
 
+  @ViewChild("address_list") address_list?: ElementRef<HTMLDivElement>;
+  @Output("evt_updateAddressId") evt_updateAddressId: EventEmitter<number>;
+
   addresses: any = [];
   search_after?: number;
-
-  @ViewChild("address_list") address_list?: ElementRef<HTMLDivElement>;
-
   $: any;
 
   constructor(
@@ -25,12 +25,13 @@ export class SearchAddressComponent implements OnInit {
     this.fg_search = new FormGroup({
       search_txt: new FormControl("")
     });
-
-    // @ts-ignore
-    this.$ = window.jQuery;
     this.fg_address = new FormGroup({
       address_id: new FormControl()
     });
+
+    // @ts-ignore
+    this.$ = window.jQuery;
+    this.evt_updateAddressId = new EventEmitter<number>;
   }
 
   ngOnInit(): void { }
@@ -64,7 +65,7 @@ export class SearchAddressComponent implements OnInit {
     }
   }
 
-  selected(e: any) {
-    console.log(this.fg_address.value);
+  selected(_: any) {
+    this.evt_updateAddressId.emit(this.fg_address.value);
   }
 }

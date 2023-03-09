@@ -1,0 +1,32 @@
+<div class="card shadow mb-4">
+	<div class="card-header">
+		<h6 class="m-0 font-weight-bold text-primary">Search Store</h6>
+	</div>
+	<div class="card-body">
+		<form class="form-inline mr-auto navbar-search" [formGroup]="fg_search" (ngSubmit)="onSubmit()">
+			<div class="input-group w-100">
+				<input type="text" class="form-control bg-light border-0 small" placeholder="Search for store"
+					aria-label="Search" aria-describedby="search-stores" formControlName="search_txt" />
+				<div class="input-group-append">
+					<button class="btn btn-primary" type="submit"><i class="fas fa-search fa-sm"></i></button>
+				</div>
+			</div>
+		</form>
+
+		<div class="search-results mt-2" infiniteScroll [infiniteScrollDistance]="1" [infiniteScrollThrottle]="50"
+			[scrollWindow]="false" (scrolled)="onScroll()" *ngIf="stores.length">
+			<form [formGroup]="fg_store">
+				<div class="row my-2 p-2 border-bottom" *ngFor="let store of stores; let i=index">
+					<div class="col-2 center">
+						<input type="radio" class="form-control form-control-user" [value]="store.store_id" [id]="store.store_id" formControlName="store_id" (change)="selected($event)"/>
+					</div>
+					<div class="col-10 center">
+						<label class="form-span mx-2" [htmlFor]="store.store_id"><i class="fas fa-warehouse"></i>&nbsp;{{ store.address.replaceAll(";", ", ") }}<br/>
+							<i class="fas fa-user-tie"></i>&nbsp;{{ store.manager.replaceAll(";", " ") }}
+						</label>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

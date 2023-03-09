@@ -3,6 +3,7 @@ import { gql } from 'apollo-angular';
 import { lastValueFrom } from 'rxjs';
 import { BaseService } from './base.service';
 import { AddressType } from './dto/address.type';
+import { ScrollSearchInput } from './dto/scroll.search.input';
 import { StoreEntityType } from './dto/store.entity.type';
 import { StoreType } from './dto/store.type';
 import { CountryCitiesInput } from './type/country.cities.input';
@@ -46,6 +47,19 @@ export class StoreService extends BaseService {
     return (data as any).retrieveStoreES;
   }
 
+  async retrieveScrollStoreEs(payload: ScrollSearchInput) {
+    const {data, errors} = await lastValueFrom(this.apollo.query({
+      query: gql`query retrieveScrollStoreES($payload: ScrollInput!){
+        retrieveScrollStoreES(payload: $payload) {
+          total
+          data { staff_id store_id address manager } } }`,
+      variables: { payload }
+    }));
+
+    this.redirectToLoginIfError(errors);
+    return (data as any).retrieveScrollStoreES;
+  }
+
   async addCountryWithCitites(payload: CountryCitiesInput) {
     const { data, errors } = await this.apollo.mutate({
       mutation: gql`mutation addCountryWithCities($payload: CountryInput!){
@@ -64,13 +78,13 @@ export class StoreService extends BaseService {
   }
 
   async insertAddress(payload: AddressType) {
-    const { data, errors } = await this.apollo.mutate({
+    const { data, errors } = await lastValueFrom(this.apollo.mutate({
       mutation: gql`mutation insertAddress($payload: AddressInput!){
         insertAddress(payload:$payload) { address_id address address2 city_id postal_code } }`,
       variables: {
         payload
       }
-    }).toPromise() as any;
+    }));
 
     this.redirectToLoginIfError(errors);
 

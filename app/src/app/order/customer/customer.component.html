@@ -5,10 +5,11 @@
 
 <div class="row">
 	<div class="col-lg-6">
-		<app-customer-info></app-customer-info>
+		<app-customer-info [address_id]="address_id" [store]="store"></app-customer-info>
 	</div>
 
 	<div class="col-lg-6">
-		<app-customer-search-address></app-customer-search-address>
+		<app-search-store (evt_updateStoreId)="onUpdateStoreId($event)"></app-search-store>
+		<app-customer-search-address (evt_updateAddressId)="onUpdateAddressId($event)"></app-customer-search-address>
 	</div>
 </div>

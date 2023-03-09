@@ -48,6 +48,16 @@ export class AddressService extends BaseService {
 		return (data as any).insertAddress;
 	}
 
+	async retrieveAddress2ById(address_id: number) {
+		const { data, errors } = await lastValueFrom(this.apollo.query({
+			query: gql`query {
+				retrieveAddress2ById(address_id: ${address_id}) { address_id address address2 city_id country_id postal_code phone district }}`,
+		}));
+
+		this.redirectToLoginIfError(errors);
+		return (data as any).retrieveAddress2ById;
+	}
+
 	async retrieveScrollAddressES(payload: ScrollSearchInput) {
 		const { data, errors } = await lastValueFrom(this.apollo.query({
 			query: gql`query retrieveScrollAddressES($payload: ScrollInput!){

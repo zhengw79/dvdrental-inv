@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { AddressService } from 'src/app/services/address.service';
@@ -28,6 +28,7 @@ export class CustomerInfoComponent implements OnInit {
   im_postal: any;
   sel_country: any;
   sel_city: any;
+  _store: any;
 
   $: any;
   countries = [];
@@ -40,6 +41,7 @@ export class CustomerInfoComponent implements OnInit {
   ) {
     this.fg_customer = new FormGroup({
       customer_id: new FormControl(""),
+      store_id: new FormControl(""),
       address_id: new FormControl(""),
       first_name: new FormControl("", [Validators.required]),
       last_name: new FormControl("", [Validators.required]),
@@ -59,10 +61,18 @@ export class CustomerInfoComponent implements OnInit {
     this.$ = window.jQuery;
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 
   async ngAfterViewInit() {
+    await this.initFormPlugin();
+
+    if (this.customer_id) {
+      const data = await this.orderService.retrieveCustomerEntityById(this.customer_id);
+      this.prefillCustomerForm(data);
+    }
+  }
+
+  async initFormPlugin() {
     this.im_phone = IMask(
       this.phone_el?.nativeElement!,
       {
@@ -89,22 +99,53 @@ export class CustomerInfoComponent implements OnInit {
     );
 
     await this.initCountry();
+  }
 
-    if (this.customer_id) {
-      const data = await this.orderService.retrieveCustomerEntityById(this.customer_id);
-      this.prefillCustomerForm(data);
+  @Input("address_id")
+  set _address_id(val: any) {
+    if (val) {
+      this.addressService
+        .retrieveAddress2ById(val?.address_id)
+        .then(data => {
+          const { address_id, address, address2, city_id, country_id, district, phone, postal_code } = data;
+          this.address_id?.setValue(address_id);
+          this.address?.setValue(address);
+          this.address2?.setValue(address2);
+          this.district?.setValue(district);
+          this.phone?.setValue(phone);
+          this.im_phone.value = phone;
+
+          this.postal_code?.setValue(postal_code);
+          this.im_postal.value = postal_code;
+
+          this.country?.setValue(country_id);
+          this.sel_country.val(country_id).trigger("change");
+          this.city?.setValue(city_id);
+          this.initCity(country_id!);
+          this.sel_city.val(city_id).trigger("change");
+        });
+    }
+  }
+
+  @Input("store")
+  set store(val: any) {
+    if(val) {
+      this._store = val;
+      this.store_id?.setValue(val.store_id);
     }
   }
 
   prefillCustomerForm(data: CustomerInfoType) {
-    const { first_name, last_name, email, create_date, address: { address_id, address, address2, district, phone, postal_code, city: { city: { city_id, city }, country: { country, country_id } } } } = data;
+    const { store_id, first_name, last_name, email, create_date, address: { address_id, address, address2, district, phone, postal_code, city: { city: { city_id, city }, country: { country, country_id } } } } = data;
 
     this._customer_id?.setValue(this.customer_id);
+    this.store_id?.setValue(store_id);
     this.address_id?.setValue(address_id);
     this.first_name?.setValue(first_name);
     this.last_name?.setValue(last_name);
     this.email?.setValue(email);
     this.create_date?.setValue(create_date);
+
     this.address?.setValue(address);
     this.address2?.setValue(address2);
     this.district?.setValue(district?.toUpperCase());
@@ -195,6 +236,10 @@ export class CustomerInfoComponent implements OnInit {
     return this.fg_customer.get("address_id");
   }
 
+  get store_id() {
+    return this.fg_customer.get("store_id");
+  }
+
   get _customer_id() {
     return this.fg_customer.get("customer_id");
   }
@@ -259,7 +304,7 @@ export class CustomerInfoComponent implements OnInit {
     if (this.customer_id) {
       await this.orderService.updateCustomerInfo(payload);
     } else {
-
+      console.log(payload);
     }
     this.$(this.customer_card_el?.nativeElement).unblock();
   }

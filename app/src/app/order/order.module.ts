@@ -10,6 +10,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { SearchAddressComponent } from './components/search.address/search.address.component';
 import { CustomerInfoComponent } from './components/customer.info/customer.info.component';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { SearchStoreComponent } from './components/search.store/search.store.component';
 
 
 
@@ -19,7 +20,8 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
     CustomersComponent,
     CustomerComponent,
     SearchAddressComponent,
-    CustomerInfoComponent
+    CustomerInfoComponent,
+    SearchStoreComponent
   ],
   imports: [
     CommonModule,
