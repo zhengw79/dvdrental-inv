@@ -1,0 +1,27 @@
+.input-group>input {
+	font-size: 0.8rem;
+	padding: 19px;
+}
+
+.search-results {
+	height: 25rem;
+	overflow-y: auto;
+	overflow-x: hidden;
+	border: 1px solid #d1d3e2;
+	border-radius: 5px;
+}
+
+input[type='radio'] {
+	font-size: 0.3rem;
+}
+
+.center {
+	display: flex;
+	align-items: center;
+
+}
+
+.center label {
+	margin-bottom: 0px;
+	justify-content: start;
+}

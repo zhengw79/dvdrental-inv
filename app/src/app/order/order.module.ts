@@ -9,6 +9,7 @@ import { CustomerComponent } from './customer/customer.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SearchAddressComponent } from './components/search.address/search.address.component';
 import { CustomerInfoComponent } from './components/customer.info/customer.info.component';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 
 
@@ -25,7 +26,8 @@ import { CustomerInfoComponent } from './components/customer.info/customer.info.
     RouterModule,
     OrderRoutingModule,
     ReactiveFormsModule,
-    LayoutModule
+    LayoutModule,
+    InfiniteScrollModule
   ]
 })
 export class OrderModule { }

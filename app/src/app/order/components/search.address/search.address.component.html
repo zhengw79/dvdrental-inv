@@ -1,1 +1,33 @@
-<p>search.address works!</p>
+<div class="card shadow mb-4">
+	<div class="card-header">
+		<h6 class="m-0 font-weight-bold text-primary">Search Address</h6>
+	</div>
+	<div class="card-body">
+		<form class="form-inline mr-auto w-80 navbar-search" [formGroup]="fg_search" (ngSubmit)="onSubmit()">
+			<div class="input-group w-100">
+				<input type="text" class="form-control bg-light border-0 small" placeholder="Search for address"
+					aria-label="Search" aria-describedby="search-address" name="search_txt" formControlName="search_txt" />
+				<div class="input-group-append">
+					<button class="btn btn-primary" type="submit"><i class="fas fa-search fa-sm"></i></button>
+				</div>
+			</div>
+		</form>
+
+		<div class="search-results mt-2" infiniteScroll [infiniteScrollDistance]="1" [infiniteScrollThrottle]="50" [scrollWindow]="false"
+			(scrolled)="onScroll()" *ngIf="addresses.length">
+			<form [formGroup]="fg_address">
+				<div class="row my-2 py-2 border-bottom" *ngFor="let addr of addresses; let i=index">
+					<div class="col-2 center">
+						<input type="radio" class="form-control form-control-user" [value]="addr.address_id" [id]="addr.address_id"
+							formControlName="address_id" (change)="selected($event)" />
+					</div>
+					<div class="col-10 center">
+						<label class="form-span mx-2" [htmlFor]="addr.address_id">{{ addr.address }}, {{ addr.address2}},
+							{{ addr.district}}, {{ addr.city}}, {{ addr.country}}<br /> <i class="fas fa-mail-bulk"></i>: {{
+							addr.postal_code }} <br /> <i class="fas fa-phone-volume"></i>: {{ addr.phone }}</label>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
