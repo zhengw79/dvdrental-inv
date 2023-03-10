@@ -42,10 +42,12 @@
 				<div class="col-sm-12 mb-3 mb-sm-0">
 					<label class="form-span mx-2">Store*
 						<br />Id: {{ _store?.store_id}}
-						<br /><i class="fas fa-warehouse" *ngIf="_store"></i>&nbsp;{{ _store?.address.replaceAll(";", ", ") }}
-						<br /><i class="fas fa-user-tie" *ngIf="_store"></i>&nbsp;{{ _store?.manager.replaceAll(";", " ") }}
+						<br /><i class="fas fa-warehouse" *ngIf="_store"></i>&nbsp;{{ _store?.address?.replaceAll(";", ", ") }}
+						<br /><i class="fas fa-user-tie" *ngIf="_store"></i>&nbsp;{{ _store?.manager?.replaceAll(";", " ") }}
 					</label>
-
+					<div class="help-error" *ngIf="store_id && store_id.invalid && store_id.touched && store_id.errors?.['required']">
+						Please choose a store from right list.
+					</div>
 				</div>
 			</div>
 

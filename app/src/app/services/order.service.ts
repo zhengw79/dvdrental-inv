@@ -13,19 +13,13 @@ export class OrderService extends BaseService {
 
     const { data, errors } = await lastValueFrom(this.apollo.query({
       query: gql`query {
-        retrieveCustomerEntityById(customer_id: ${customer_id}) {
-          customer_id store_id first_name last_name email create_date
-          address { address_id address address2 district phone postal_code
-            city { city { city_id city }
-              country { country_id country }}}
-          rentals { rental_id rental_date return_date }
-          payments { payment_id payment_date paypal_request_id }
-        }}`
+          retrieveCustomerInfoById(customer_id: ${customer_id}) {
+            address_id customer_id store_id address address2 phone postal_code district first_name last_name email create_date store_manager store_address country_id city_id } }`
     }));
 
     this.redirectToLoginIfError(errors);
 
-    return (data as any).retrieveCustomerEntityById;
+    return (data as any).retrieveCustomerInfoById;
   }
 
   async updateCustomerInfo(payload: CustomerInfoType) {

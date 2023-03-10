@@ -1,9 +1,9 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormControlName, FormGroup } from '@angular/forms';
 import { StoreService } from 'src/app/services/store.service';
 
 @Component({
-  selector: 'app-search-store',
+  selector: 'app-customer-search-store',
   templateUrl: './search.store.component.html',
   styleUrls: ['./search.store.component.css']
 })
@@ -34,8 +34,7 @@ export class SearchStoreComponent implements OnInit {
     this.evt_updateStoreId = new EventEmitter<number>;
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   get search_txt() {
     return this.fg_search.get("search_txt");

@@ -41,7 +41,7 @@ export class CustomerInfoComponent implements OnInit {
   ) {
     this.fg_customer = new FormGroup({
       customer_id: new FormControl(""),
-      store_id: new FormControl(""),
+      store_id: new FormControl("", [Validators.required]),
       address_id: new FormControl(""),
       first_name: new FormControl("", [Validators.required]),
       last_name: new FormControl("", [Validators.required]),
@@ -136,10 +136,11 @@ export class CustomerInfoComponent implements OnInit {
   }
 
   prefillCustomerForm(data: CustomerInfoType) {
-    const { store_id, first_name, last_name, email, create_date, address: { address_id, address, address2, district, phone, postal_code, city: { city: { city_id, city }, country: { country, country_id } } } } = data;
+    const { store_id, first_name, last_name, email, create_date, address_id, address, address2, district, phone, postal_code, city_id, country_id, store_address, store_manager } = data;
 
     this._customer_id?.setValue(this.customer_id);
     this.store_id?.setValue(store_id);
+    this._store = { store_id, address: store_address, manager: store_manager };
     this.address_id?.setValue(address_id);
     this.first_name?.setValue(first_name);
     this.last_name?.setValue(last_name);

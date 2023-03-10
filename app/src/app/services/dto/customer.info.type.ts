@@ -14,11 +14,23 @@ export interface CustomerInfoType {
 
 	address_id: number;
 
-	activebool: boolean;
-
 	create_date: string;
 
-	address: AddressType;
+	address: string;
 
-	last_update?: string;
+	address2: string;
+
+	phone: string;
+
+	postal_code: string;
+
+	district: string;
+
+	store_manager: string;
+
+	store_address: string;
+
+	country_id: number;
+
+	city_id: number;
 }
