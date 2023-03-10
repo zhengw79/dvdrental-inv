@@ -34,4 +34,15 @@ export class OrderService extends BaseService {
 
     return (data as any).updateCustomerInfo;
   }
+
+  async insertCustomerInfo(payload: CustomerInfoType) {
+    const { address_id, customer_id, ...rest} = payload;
+    const { data, errors} = await lastValueFrom(this.apollo.mutate({
+      mutation: gql`mutation insertCustomerInfo($payload: CustomerInfoInput!) { insertCustomerInfo(payload: $payload) }`,
+      variables: { payload: rest }
+    }));
+
+    this.redirectToLoginIfError(errors);
+    return (data as any).insertCustomerInfo;
+  }
 }

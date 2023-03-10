@@ -1,6 +1,6 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AddressService } from 'src/app/services/address.service';
 import { OrderService } from 'src/app/services/order.service';
 import { ValidatorService } from 'src/app/services/validator.service';
@@ -37,7 +37,8 @@ export class CustomerInfoComponent implements OnInit {
     private orderService: OrderService,
     private addressService: AddressService,
     private _route: ActivatedRoute,
-    private validatorService: ValidatorService
+    private validatorService: ValidatorService,
+    private router: Router
   ) {
     this.fg_customer = new FormGroup({
       customer_id: new FormControl(""),
@@ -305,7 +306,8 @@ export class CustomerInfoComponent implements OnInit {
     if (this.customer_id) {
       await this.orderService.updateCustomerInfo(payload);
     } else {
-      console.log(payload);
+      const cid = await this.orderService.insertCustomerInfo(payload);
+      this.router.navigate([`/order/customer/${cid}`]);
     }
     this.$(this.customer_card_el?.nativeElement).unblock();
   }
