@@ -54,7 +54,7 @@
 			<hr />
 			<div class="form-group row">
 				<div class="col-sm-12 mb-3 mb-sm-0">
-					<label class="form-span mx-2">Address*</label>
+					<label class="form-span mx-2">Address*<span *ngIf="address_id">(Id: {{ address_id.value }})</span></label>
 					<input type="text" class="form-control form-control-user" formControlName="address" />
 					<div *ngIf="address && address.invalid && (address.dirty || address.touched)">
 						<div class="help-error" *ngIf="address.errors?.['required']">Please enter the customer's address.</div>

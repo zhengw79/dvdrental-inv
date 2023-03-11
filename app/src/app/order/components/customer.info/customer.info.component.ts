@@ -305,6 +305,7 @@ export class CustomerInfoComponent implements OnInit {
     });
     if (this.customer_id) {
       await this.orderService.updateCustomerInfo(payload);
+      this.ngAfterViewInit();
     } else {
       const cid = await this.orderService.insertCustomerInfo(payload);
       this.router.navigate([`/order/customer/${cid}`]);
